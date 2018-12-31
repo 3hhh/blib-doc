@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="David Hobach">
+  <title>blib Code Reference v1.0</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link href="data:text/css;charset=utf-8,body%20%7B%0Aborder%2Dleft%3A%201px%20solid%20black%3B%0Aborder%2Dright%3A%201px%20solid%20black%3B%0Apadding%2Dright%3A%201em%3B%0Apadding%2Dleft%3A%201em%3B%0Afont%2Dfamily%3A%20Verdana%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%20100%25%3B%0Aline%2Dheight%3A%20140%25%3B%0Aposition%3A%20relative%3B%0Atop%3A%200%3B%0Aleft%3A%20300px%3B%0Awidth%3A%20calc%2897%25%20%2D%20311px%29%3B%0Amargin%2Dleft%3A%2011px%3B%0Az%2Dindex%3A%20%2D1%3B%0A%7D%0Apre%20%7B%0Aborder%3A%201px%20dotted%20gray%3B%0Abackground%2Dcolor%3A%20%23ececec%3B%0Apadding%3A%200%2E5em%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20monospace%3B%0A%7D%0Aa%3Alink%2C%20a%3Avisited%2C%20a%3Ahover%2C%20a%3Aactive%20%7B%0Atext%2Ddecoration%2Dstyle%3A%20dotted%3B%0Acolor%3A%20%239000ff%3B%20%7D%0Ah4%2C%20h5%2C%20h6%20%7B%0Amargin%2Dbottom%3A%200%3B%0Apadding%2Dbottom%3A%200%3B%0A%7D%0Ah4%2Bp%2C%20h5%2Bp%2C%20h6%2Bp%20%7B%0Amargin%2Dtop%3A0%3B%0Apadding%2Dtop%3A%200%3B%0A%7D%0Ah1%20a%2C%20h2%20a%2C%20h3%20a%2C%20h4%20a%2C%20h5%20a%2C%20h6%20a%20%7B%20text%2Ddecoration%3A%20none%3B%0Acolor%3A%20%237a5ada%3B%20%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dweight%3A%20bold%3B%0Aborder%2Dbottom%3A%201px%20dotted%20black%3B%0Acolor%3A%20%237a5ada%3B%0A%7D%0Ah1%2C%20h2%20%7B%0Afont%2Dsize%3A%20130%25%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%20110%25%3B%0A%7D%0Ah4%20%7B%0Afont%2Dsize%3A%2095%25%3B%0A%7D%0Ah5%20%7B%0Afont%2Dsize%3A%2090%25%3B%0Afont%2Dstyle%3A%20italic%3B%0A%7D%0Ah6%20%7B%0Afont%2Dsize%3A%2085%25%3B%0Afont%2Dstyle%3A%20italic%3B%0A%7D%0Ah1%2Etitle%20%7B%0Afont%2Dsize%3A%20200%25%3B%0Afont%2Dweight%3A%20bold%3B%0Apadding%2Dtop%3A%200%2E2em%3B%0Apadding%2Dbottom%3A%200%2E2em%3B%0Atext%2Dalign%3A%20left%3B%0Aborder%3A%20none%3B%0A%7D%0Adt%20code%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Add%20p%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0A%23reflist%20%7B%0Amargin%2Dleft%3A%200%3B%0Apadding%2Dleft%3A10px%3B%0Aposition%3A%20fixed%3B%0Atop%3A%200%3B%0Aleft%3A%200%3B%0Awidth%3A%20300px%3B%0Aheight%3A%20100%25%3B%0Aoverflow%3A%20auto%3B%0Az%2Dindex%3A%201%3B%0Abackground%2Dcolor%3A%20white%3B%0A%7D%0A%23reflist%20p%20%7B%0Amargin%3A%200%3B%0Afont%2Dsize%3A%2080%25%3B%0A%7D%0A%2Eauthor%20%7B%0Adisplay%3A%20none%3B%0A%7D%0A%2Epar%2C%20%2Eann%2C%20%2Eret%20%7B%0Adisplay%3A%20block%3B%0A%7D%0A%2Epar%20%7B%0Amargin%2Dleft%3A%202em%3B%0Abackground%2Dcolor%3A%20%23ebf5fb%3B%0A%7D%0A" rel="stylesheet">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">blib Code Reference v1.0</h1>
+<h2 class="author">David Hobach</h2>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#blib">blib</a><ul>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#coding-conventions">Coding Conventions</a></li>
+<li><a href="#library-usage">Library Usage</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#imports">Imports</a></li>
+<li><a href="#global-variables">Global Variables</a></li>
+<li><a href="#global-aliases">Global Aliases</a></li>
+<li><a href="#functions">Functions</a></li>
+</ul></li>
+<li><a href="#arr">arr</a><ul>
+<li><a href="#dependencies-1">Dependencies</a></li>
+<li><a href="#imports-1">Imports</a></li>
+<li><a href="#functions-1">Functions</a></li>
+</ul></li>
+<li><a href="#cdoc">cdoc</a><ul>
+<li><a href="#dependencies-2">Dependencies</a></li>
+<li><a href="#imports-2">Imports</a></li>
+<li><a href="#functions-2">Functions</a></li>
+</ul></li>
+<li><a href="#date">date</a><ul>
+<li><a href="#dependencies-3">Dependencies</a></li>
+<li><a href="#imports-3">Imports</a></li>
+<li><a href="#functions-3">Functions</a></li>
+</ul></li>
+<li><a href="#flog">flog</a><ul>
+<li><a href="#dependencies-4">Dependencies</a></li>
+<li><a href="#imports-4">Imports</a></li>
+<li><a href="#global-variables-1">Global Variables</a></li>
+<li><a href="#functions-4">Functions</a></li>
+</ul></li>
+<li><a href="#fs">fs</a><ul>
+<li><a href="#dependencies-5">Dependencies</a></li>
+<li><a href="#imports-5">Imports</a></li>
+<li><a href="#functions-5">Functions</a></li>
+</ul></li>
+<li><a href="#http">http</a><ul>
+<li><a href="#dependencies-6">Dependencies</a></li>
+<li><a href="#imports-6">Imports</a></li>
+<li><a href="#functions-6">Functions</a></li>
+</ul></li>
+<li><a href="#ini">ini</a><ul>
+<li><a href="#dependencies-7">Dependencies</a></li>
+<li><a href="#imports-7">Imports</a></li>
+<li><a href="#functions-7">Functions</a></li>
+</ul></li>
+<li><a href="#mtx">mtx</a><ul>
+<li><a href="#dependencies-8">Dependencies</a></li>
+<li><a href="#imports-8">Imports</a></li>
+<li><a href="#functions-8">Functions</a></li>
+</ul></li>
+<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#dependencies-9">Dependencies</a></li>
+<li><a href="#imports-9">Imports</a></li>
+<li><a href="#functions-9">Functions</a></li>
+</ul></li>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#imports-10">Imports</a></li>
+<li><a href="#functions-10">Functions</a></li>
+</ul></li>
+<li><a href="#proc">proc</a><ul>
+<li><a href="#dependencies-10">Dependencies</a></li>
+<li><a href="#imports-11">Imports</a></li>
+<li><a href="#functions-11">Functions</a></li>
+</ul></li>
+<li><a href="#str">str</a><ul>
+<li><a href="#dependencies-11">Dependencies</a></li>
+<li><a href="#imports-12">Imports</a></li>
+<li><a href="#functions-12">Functions</a></li>
+</ul></li>
+<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#dependencies-12">Dependencies</a></li>
+<li><a href="#imports-13">Imports</a></li>
+<li><a href="#global-variables-2">Global Variables</a></li>
+<li><a href="#functions-13">Functions</a></li>
+</ul></li>
+<li><a href="#traps">traps</a><ul>
+<li><a href="#dependencies-13">Dependencies</a></li>
+<li><a href="#imports-14">Imports</a></li>
+<li><a href="#functions-14">Functions</a></li>
+</ul></li>
+<li><a href="#types">types</a><ul>
+<li><a href="#dependencies-14">Dependencies</a></li>
+<li><a href="#imports-15">Imports</a></li>
+<li><a href="#global-variables-3">Global Variables</a></li>
+<li><a href="#functions-15">Functions</a></li>
+</ul></li>
+<li><a href="#reflist">Reference List</a></li>
+</ul>
+</nav>
+<section id="blib" class="level2">
+<h2>blib</h2>
+<p>blib - a bash library</p>
+<p>The basic functions which are imported by default.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+version: Execute <code>blib version</code> or use <a href="#b_version">b_version</a>.</p>
+<section id="disclaimer" class="level3">
+<h3>Disclaimer</h3>
+<p>This program is free software: you can redistribute it and/or modify<br />
+it under the terms of the Lesser GNU General Public License as published by<br />
+the Free Software Foundation, either version 3 of the License, or<br />
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,<br />
+but WITHOUT ANY WARRANTY; without even the implied warranty of<br />
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the<br />
+Lesser GNU General Public License for more details.</p>
+<p>You should have received a copy of the Lesser GNU General Public License<br />
+along with this program. If not, see <a href="https://www.gnu.org/licenses/" class="uri">https://www.gnu.org/licenses/</a>.</p>
+<p><strong>The above statements apply to all modules of blib if not mentioned otherwise.</strong></p>
+</section>
+<section id="coding-conventions" class="level3">
+<h3>Coding Conventions</h3>
+<ol>
+<li>embrace the KISS principle</li>
+<li>some general guidelines: <a href="http://www.kfirlavi.com/blog/2012/11/14/defensive-bash-programming/" class="uri">http://www.kfirlavi.com/blog/2012/11/14/defensive-bash-programming/</a></li>
+<li>use b_[module]_[camel case function name] to denote functions meant to be used by users of the library, B_[module]_[upper case var name] for global variables</li>
+<li>use BLIB_[module]_[upper case var name] for global variables (to be avoided whenever possible) not meant to be used by library users (&quot;private&quot; variables); library users can use setters or getters</li>
+<li>use the BLIB_STORE with the above naming conventions for &quot;private&quot; variables whenever possible</li>
+<li>use blib_[module]_[camel case function name] to denote private functions not meant to be used by library users; the function name should not contain any underscores</li>
+<li>the blib module itself is the only exception which can use b_, B_, blib_, BLIB_ without module name</li>
+<li>prefixes such as t_, T_ and UTD_ are exclusively related to test code</li>
+<li>set exit codes (!= 0 --&gt; issue) wherever it makes sense</li>
+<li>keep the global namespace clean whenever possible</li>
+<li>declare -g must be used in order to allow sourcing from a function (<a href="#b_import">b_import</a>)</li>
+<li>modules must implement a function such as<br />
+<em>b_[module]_getDeps</em><br />
+<em>returns</em>: newline-separated list of dependencies of the module</li>
+<li>modules should provide a header similar to that of the blib source file in order to make the documentation generation work</li>
+<li>modules may be placed in subfolders of arbitrary depth</li>
+<li>use 0 to indicate true and 1 to indicate false for variables; for exit codes use a non-zero exit code to indicate the number of errors</li>
+<li>functions should be tagged with the following tags, if applicable:<br />
+<em><span class="citation" data-cites="StateChanging">@StateChanging</span></em> - the function changes the internal state of the script in a way that will not propagate to supershells (e.g. global variables) and should thus not be called from subshells (unless the user wants the state to only change in that shell)<br />
+<em><span class="citation" data-cites="B_E">@B_E</span></em> - the function uses <a href="#B_E">B_E</a> for error handling and may thus behave differently depending on the implemented error handler</li>
+</ol>
+</section>
+<section id="library-usage" class="level3">
+<h3>Library Usage</h3>
+<p>with the default bash options:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">source</span> blib
+ <span class="ex">b_import</span> [module]</code></pre></div>
+</section>
+<section id="dependencies" class="level3">
+<h3>Dependencies</h3>
+<p>dirname<br />
+readlink<br />
+whoami<br />
+sort<br />
+cat<br />
+mktemp<br />
+rm<br />
+su</p>
+</section>
+<section id="imports" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="global-variables" class="level3">
+<h3>Global Variables</h3>
+<section id="B_TEST_MODE" class="level4">
+<h4>B_TEST_MODE</h4>
+<p><small><em>blib/B_TEST_MODE</em></small></p>
+<p>blib will set this variable to 0, if blib is running in test mode.<br />
+This variable may be used to bypass code during testing, if bats cannot test that code due to its limitations (e.g. for EXIT traps which bats uses for itself).</p>
+</section>
+<section id="B_CALLER_NAME" class="level4">
+<h4>B_CALLER_NAME</h4>
+<p><small><em>blib/B_CALLER_NAME</em></small></p>
+<p>Name of the executable or script as String which called blib and any child libraries.</p>
+</section>
+<section id="B_ERR" class="level4">
+<h4>B_ERR</h4>
+<p><small><em>blib/B_ERR</em></small></p>
+<p>Global variable used for error handling throughout blib, cf. <a href="#B_E">B_E</a>.</p>
+<p>It is recommended to always set an at least partially static error message on confirmed errors as variables may be empty (which would indicate &quot;no error&quot; for <a href="#B_E">B_E</a>).</p>
+</section>
+<section id="B_RC" class="level4">
+<h4>B_RC</h4>
+<p><small><em>blib/B_RC</em></small></p>
+<p>Can be used to set the return code for <a href="#B_E">B_E</a> in the case of an error. It defaults to 1.</p>
+<p>This should be set to an integer value between 1 and 255. Any other value may cause undefined behaviour.</p>
+</section>
+<section id="B_SCRIPT" class="level4">
+<h4>B_SCRIPT</h4>
+<p><small><em>blib/B_SCRIPT</em></small></p>
+<p>Global variable which can be used to obtain the two global variables <a href="#B_SCRIPT_DIR">B_SCRIPT_DIR</a> and <a href="#B_SCRIPT_NAME">B_SCRIPT_NAME</a> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$B_SCRIPT</span><span class="st">&quot;</span></code></pre></div>
+</section>
+<section id="B_SCRIPT_NAME" class="level4">
+<h4>B_SCRIPT_NAME</h4>
+<p><small><em>blib/B_SCRIPT_NAME</em></small></p>
+<p>Path of the sourced or executed bash script executing the eval (symlinks are resolved) of <a href="#B_SCRIPT">B_SCRIPT</a>.</p>
+</section>
+<section id="B_SCRIPT_DIR" class="level4">
+<h4>B_SCRIPT_DIR</h4>
+<p><small><em>blib/B_SCRIPT_DIR</em></small></p>
+<p>Name of the sourced or executed bash script executing the eval (symlinks are resolved) of <a href="#B_SCRIPT">B_SCRIPT</a>.</p>
+</section>
+</section>
+<section id="global-aliases" class="level3">
+<h3>Global Aliases</h3>
+<p>Alias expansion is automatically enabled by blib as it is required for its core functionality. So if you have strange aliases defined in your shell environment, this may cause undefined blib behaviour.</p>
+<section id="B_E" class="level4">
+<h4>B_E</h4>
+<p><small><em>blib/B_E</em></small></p>
+<p><em>The</em> blib error handler: All blib modules use it whenever execution errors require special handling that the currently executing code cannot achieve.</p>
+<p>Syntax:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">B_ERR=</span><span class="st">&quot;This is an error message.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">;</span></code></pre></div>
+<p>If you need to set the return/exit code, you can do it with <a href="#B_RC">B_RC</a>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">B_ERR=</span><span class="st">&quot;This is another error message.&quot;</span> ; <span class="va">B_RC=</span>6 ; <span class="ex">B_E</span> <span class="kw">;</span></code></pre></div>
+<p>Calling <a href="#B_E">B_E</a> means:<br />
+Check <a href="#B_ERR">B_ERR</a> for an error message and if there is one, handle it. It can be placed at the end of a line or on its own line. <a href="#B_E">B_E</a> will then process the error message in the way defined by the error handler (cf. <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a>) and stop any further execution of code in the current context (function, script, ...) returning a non-zero exit code (1) unless the described error was fixed. In the latter unlikely case it'll let execution proceed.</p>
+<p>The error handler can be re-defined at runtime with <a href="#b_setErrorHandler">b_setErrorHandler</a>.</p>
+</section>
+</section>
+<section id="functions" class="level3">
+<h3>Functions</h3>
+<section id="b_printStackTrace" class="level4">
+<h4>b_printStackTrace [skip level]</h4>
+<p><small><em>blib/b_printStackTrace</em></small></p>
+<p><span class="par">[skip level]: skip that many levels of the stack trace (optional, default: 1 - skip this function call)</span><br />
+print the current stack trace in a human readable way</p>
+<p><span class="ret"><strong>returns</strong>: stack trace with the first levels skipped as defined</span></p>
+</section>
+<section id="b_nop" class="level4">
+<h4>b_nop</h4>
+<p><small><em>blib/b_nop</em></small></p>
+<p>Do nothing.</p>
+<p><span class="ret"><strong>returns</strong>: nothing; sets a zero exit code</span></p>
+</section>
+<section id="b_version" class="level4">
+<h4>b_version [part]</h4>
+<p><small><em>blib/b_version</em></small></p>
+<p>Get the version of this blib instance.</p>
+<p><span class="par">[part]: Optional parameter defining the part of the version to retrieve (0: all as String (default), 1: major as Integer, 2: minor as Integer).</span></p>
+<p><span class="ret"><strong>returns</strong>: blib version as string; always sets a zero exit code</span></p>
+</section>
+<section id="b_defaultErrorHandler" class="level4">
+<h4>b_defaultErrorHandler [error out] [print stderr] [print stack trace]</h4>
+<p><small><em>blib/b_defaultErrorHandler</em></small></p>
+<p>The blib default error handler.<br />
+As any error handler it must</p>
+<ol>
+<li>handle the error message (if not the error itself) lying in <a href="#B_ERR">B_ERR</a></li>
+<li>not take any non-numeric arguments</li>
+<li>not error out itself</li>
+<li>implement the below <em>[error out]</em> as its first parameter (to make <a href="#b_setBE">b_setBE</a> work)</li>
+<li>return one of the following exit codes:
+<ol type="a">
+<li>0: <strong>if and only if</strong> the error was fixed entirely and the caller may ignore the error (i.e. probably never)</li>
+<li>1: The error wasn't fixed. Functions should return to their caller indicating an error (non-zero status code). Direct shell calls will exit. <a href="#B_ERR">B_ERR</a> is <strong>not</strong> reset to blank, i.e. the next call to <a href="#B_E">B_E</a> in the same context will cause another error. The caller may use this to either <em>throw</em> the error further or handle and clear the error.</li>
+<li>2: Force a stop of execution in the current shell / error out.</li>
+</ol></li>
+</ol>
+<p><span class="par">[error out]: Whether or not to call exit after the error message handling, if the error couldn't be handled (default: 0 = always error out / call exit). If set to 1, <a href="#B_E">B_E</a> will allow e.g. functions to return to their callers.</span></p>
+<p><span class="par">[print stderr]: Whether or not to print the error message to stderr (default: 0 = print).</span></p>
+<p><span class="par">[print stack trace]: Whether or not to print a stack trace to stderr (default: 0 = print).</span></p>
+<p><span class="ret"><strong>returns</strong>: see the description above</span></p>
+</section>
+<section id="b_setBE" class="level4">
+<h4>b_setBE [error out]</h4>
+<p><small><em>blib/b_setBE</em></small></p>
+<p>Set the [error out] behaviour of the currently configured error handler.</p>
+<p>Contrary to <a href="#b_setErrorHandler">b_setErrorHandler</a> this function may be called by blib modules as all error handlers are required to support [error out] as parameter.</p>
+<p>Example for switching the error out behaviour:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="ex">b_setBE</span> 1
+ <span class="ex">funcThatMayCallB_E</span> <span class="co">#without subshell</span>
+ <span class="va">ret=$?</span>
+ <span class="ex">b_resetErrorHandler</span></code></pre></div>
+<p><span class="par">[error out]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 0)</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing, always sets a zero exit code</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_setErrorHandler" class="level4">
+<h4>b_setErrorHandler [handler]</h4>
+<p><small><em>blib/b_setErrorHandler</em></small></p>
+<p>Set the error handler for all future exections of <a href="#B_E">B_E</a> in the current scope.</p>
+<p>You can do this in e.g. subshells to limit the effect.</p>
+<p>blib modules should only use this function if absolutely necessary to temporarily modify the error behaviour whilst making sure that <a href="#b_resetErrorHandler">b_resetErrorHandler</a> is called in the end. Otherwise it will prevent library users from setting the general behaviour in their scripts.</p>
+<p>Usually you do not want to write an entirely new handler, but modify the <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> parameters with this setter or use <a href="#b_setBE">b_setBE</a> for that.</p>
+<p><span class="par">[handler]: Function to handle errors. See <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> for details.</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_resetErrorHandler" class="level4">
+<h4>b_resetErrorHandler</h4>
+<p><small><em>blib/b_resetErrorHandler</em></small></p>
+<p>Set the error handler to whatever it was before the last call to <a href="#b_setErrorHandler">b_setErrorHandler</a> or <a href="#b_setBE">b_setBE</a>.</p>
+<p><span class="ret"><strong>returns</strong>: nothing, always sets a zero exit code</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_getErrorHandler" class="level4">
+<h4>b_getErrorHandler</h4>
+<p><small><em>blib/b_getErrorHandler</em></small></p>
+<p>Get the currently for <a href="#B_E">B_E</a> configured error handler.</p>
+<p><span class="ret"><strong>returns</strong>: the error handler function</span></p>
+</section>
+<section id="b_silence" class="level4">
+<h4>b_silence [function] [param 1] .. [param p]</h4>
+<p><small><em>blib/b_silence</em></small></p>
+<p>Call the given function with its parameters in the current shell context whilst suppressing all of its output to both stdout and stderr. Anything written to <a href="#B_ERR">B_ERR</a> however is passed to <a href="#B_E">B_E</a> (which can still write to stderr).</p>
+<p>This function is useful when you want to keep an error message set with <a href="#B_ERR">B_ERR</a>, but discard everything else.<br />
+In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <span class="op">&amp;&gt;</span> /dev/null</code> may also drop the error message, if you're using an error handler (see <a href="#B_E">B_E</a>) that writes to stdout or stderr.</p>
+<p><span class="par">[function]: The function to execute.</span></p>
+<p><span class="par">[param p]: An arbitrary number of function parameters.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets the status code of the called function, but doesn't print anything. <a href="#B_E">B_E</a> is called on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_info" class="level4">
+<h4>b_info [message]</h4>
+<p><small><em>blib/b_info</em></small></p>
+<p>Print the given message to stdout as info message.</p>
+<p><span class="par">[message]: to print to stdout</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+</section>
+<section id="b_enforceUser" class="level4">
+<h4>b_enforceUser [user name]</h4>
+<p><small><em>blib/b_enforceUser</em></small></p>
+<p>enforce that the user is the given one and if not, exit the script and set a non-zero status code</p>
+<p><span class="par">[user name]: user name to check against</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_isFunction" class="level4">
+<h4>b_isFunction [potential function name]</h4>
+<p><small><em>blib/b_isFunction</em></small></p>
+<p>check whether the given function is defined</p>
+<p><span class="ret"><strong>returns</strong>: zero exit code if the function is defined</span></p>
+</section>
+<section id="b_getBlibModules" class="level4">
+<h4>b_getBlibModules</h4>
+<p><small><em>blib/b_getBlibModules</em></small></p>
+<p>get all available blib module names as a newline-separated list</p>
+<p><span class="ret"><strong>returns</strong>: all available blib module names as newline-separated list</span></p>
+</section>
+<section id="b_listContains" class="level4">
+<h4>b_listContains [list] [entry]</h4>
+<p><small><em>blib/b_listContains</em></small></p>
+<p>check whether the given list contains the given entry</p>
+<p><span class="par">[list]: newline-separated list</span></p>
+<p><span class="par">[entry]: string to be found on a single line within the list (equality check)</span></p>
+<p><span class="ret"><strong>returns</strong>: a zero exit code if the list contains the entry; a non-zero exit code otherwise</span></p>
+</section>
+<section id="b_checkDeps" class="level4">
+<h4>b_checkDeps [list]</h4>
+<p><small><em>blib/b_checkDeps</em></small></p>
+<p>check whether the given list of dependencies is met by the system running this function.</p>
+<p><span class="par">[list]: newline-separated list of binaries or commands that the system must be able to execute</span></p>
+<p><span class="ret"><strong>returns</strong>: list of dependencies not met; a non-zero exit code is set, if the list contains elements</span></p>
+</section>
+<section id="b_blib_getDeps" class="level4">
+<h4>b_blib_getDeps</h4>
+<p><small><em>blib/b_blib_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_import" class="level4">
+<h4>b_import [module] [double import]</h4>
+<p><small><em>blib/b_import</em></small></p>
+<p>Import the given module into the current context.</p>
+<p><span class="par">[module]: relative path of the module to import (relative to the blib/lib root directory)</span></p>
+<p><span class="par">[double import]: if set to 1, import the given module regardless of whether it was imported before (default: 0 = don't do duplicate imports)</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing, errors out if the import failed and sets a non-zero status code; if the import was successful or previously done, a zero exit code is set</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_generateStandalone" class="level4">
+<h4>b_generateStandalone [function] [param 1] .. [param p] - [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d]</h4>
+<p><small><em>blib/b_generateStandalone</em></small></p>
+<p>Create a standalone variant of blib in a single file running the given function when called (sourcing that file will only make the functions available) and print that file to stdout.</p>
+<p>The current execution state is not retained.</p>
+<p><span class="par">[function]: The function to call when the generated script is executed. All script parameters when calling [output file] are passed to this function. The function must be available in the current context.</span></p>
+<p><span class="par">[param p]: Static parameters to add to the function as single String. Dynamic parameters should be passed to the generated script.</span></p>
+<p><span class="par">[module dep i]: Names of the modules to include in the standalone file. They do not need to be imported.</span></p>
+<p><span class="par">[-]: Dash used as separator between the function dependencies and the modules. If none is provided, all parameters are assumed to be modules.</span></p>
+<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code and prints the output file to stdout on success. May error out otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_execFuncAs" class="level4">
+<h4>b_execFuncAs [user] [function] [param 1] .. [param p] - [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d]</h4>
+<p><small><em>blib/b_execFuncAs</em></small></p>
+<p>Attempt to execute the Bash function as the given user.</p>
+<p>Whether or not this works highly depends on the underlying OS and its (sudo &amp; su) configuration. In particular this function may cause further execution to wait for the user to type in the password of the requested user.</p>
+<p>If the given user is identical to the current user, <a href="#b_execFuncAs">b_execFuncAs</a> may decide to run the function in the current context. Otherwise it may run in a different process.</p>
+<p><span class="par">[user]: User to execute the function as (default: root).</span></p>
+<p><span class="par">[function]: The function to execute.</span></p>
+<p><span class="par">[param p]: An arbitrary number of function parameters.</span></p>
+<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
+<p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
+<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
+<p><span class="ret"><strong>returns</strong>: Whatever the executed function returns. A non-zero exit code may also indicate that the user switch didn't work. In particular <a href="#B_E">B_E</a> is <em>not</em> called if the executed function returns an error.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_isModule" class="level4">
+<h4>b_isModule [module name]</h4>
+<p><small><em>blib/b_isModule</em></small></p>
+<p>Test whether the given name represents a blib module name.</p>
+<p><span class="ret"><strong>returns</strong>: sets a zero exit code if the given name is a valid module name</span></p>
+</section>
+</section>
+</section>
+<section id="arr" class="level2">
+<h2>arr</h2>
+<p>Collection of array related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-1" class="level3">
+<h3>Dependencies</h3>
+<p>printf</p>
+</section>
+<section id="imports-1" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-1" class="level3">
+<h3>Functions</h3>
+<section id="b_arr_getDeps" class="level4">
+<h4>b_arr_getDeps</h4>
+<p><small><em>arr/b_arr_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_arr_join" class="level4">
+<h4>b_arr_join [delimiter] [array]</h4>
+<p><small><em>arr/b_arr_join</em></small></p>
+<p>Join the given array; elements are separated with the given delimiter. The array is not checked to exist.</p>
+<p><span class="par">[delimiter]: String to use as delimiter.</span></p>
+<p><span class="par">[array]: expanded array to join, e.g. &quot;${arr[@]}&quot;</span></p>
+<p><span class="ret"><strong>returns</strong>: Joined version of the array. The exit code is always zero.</span></p>
+</section>
+<section id="b_arr_contains" class="level4">
+<h4>b_arr_contains [element] [array]</h4>
+<p><small><em>arr/b_arr_contains</em></small></p>
+<p>Check whether an array contains an element.</p>
+<p><span class="par">[element]: element to check for its existence in the array</span></p>
+<p><span class="par">[array]: expanded array to check, e.g. &quot;${arr[@]}&quot;</span></p>
+<p><span class="ret"><strong>returns</strong>: an exit code of 0, if the element was found and 1 otherwise</span></p>
+</section>
+</section>
+</section>
+<section id="cdoc" class="level2">
+<h2>cdoc</h2>
+<p>Generate code documentation in many formats (e.g. html, pdf, manpage, ...) from code comments.</p>
+<p>Lines applicable for the documentation in your code are assumed to match static (configurable) regular expressions. These lines are then fed to <a href="https://pandoc.org/">pandoc</a> in order to generate a single html page (or pdf, manpage, ...) as documentation. If no conversion is required (input format = desired output format), pandoc is bypassed.</p>
+<p>It should be possible to use this way of generating code documentation with most programming languages (incl. bash). The defaults however are set for bash and the blib way of documenting its code, i.e. you'll have to use the getters and setters of this module if you want something different. For instance the default is to check for lines starting with <em>#+</em> (a special bash comment line) and add everything afterwards to the output documentation.</p>
+<p>Various callback functions can be used to add content to the output of b_cdoc_generate. See the documentation of that function for details.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-2" class="level3">
+<h3>Dependencies</h3>
+<p>mv<br />
+rm<br />
+mktemp</p>
+</section>
+<section id="imports-2" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-2" class="level3">
+<h3>Functions</h3>
+<section id="b_cdoc_getDeps" class="level4">
+<h4>b_cdoc_getDeps</h4>
+<p><small><em>cdoc/b_cdoc_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_cdoc_setExtractionRegex" class="level4">
+<h4>b_cdoc_setExtractionRegex [regex]</h4>
+<p><small><em>cdoc/b_cdoc_setExtractionRegex</em></small></p>
+<p>Set the regular expression used to check for matching lines in code files. The first match (${BASH_REMATCH[1]}) is added to the documentation output.</p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_cdoc_getExtractionRegex" class="level4">
+<h4>b_cdoc_getExtractionRegex</h4>
+<p><small><em>cdoc/b_cdoc_getExtractionRegex</em></small></p>
+<p>See the setter.</p>
+<p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
+</section>
+<section id="b_cdoc_setFileFilterCallback" class="level4">
+<h4>b_cdoc_setFileFilterCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setFileFilterCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate exactly once right after it computed the list of applicable source code files.</p>
+<p>The callback function should be declared as follows:</p>
+<pre><code>callback_function_name [file list]
+[file list]: newline-separated list of files (no directories!)
+             that b_cdoc_generate computed for document generation
+             (in that order)
+returns:     the newline-separated list to use by b_cdoc_generate for
+             document generation (default: the input); a non-zero exit
+             code will abort further processing</code></pre>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_cdoc_getFileFilterCallback" class="level4">
+<h4>b_cdoc_getFileFilterCallback</h4>
+<p><small><em>cdoc/b_cdoc_getFileFilterCallback</em></small></p>
+<p>See the setter.</p>
+<p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
+</section>
+<section id="b_cdoc_setDocumentBeginCallback" class="level4">
+<h4>b_cdoc_setDocumentBeginCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setDocumentBeginCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate exactly once right before it starts generating the output document.</p>
+<p>The callback function should be declared as follows:</p>
+<pre><code>callback_function_name [document output file] [document output format]
+[document output file]: path to the document output file
+          (may not exist and should not be written to)
+[document output format]: chosen output format
+returns:  whatever should be added at the beginning of the output document;
+          a non-zero exit code will abort further processing</code></pre>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_cdoc_getDocumentBeginCallback" class="level4">
+<h4>b_cdoc_getDocumentBeginCallback</h4>
+<p><small><em>cdoc/b_cdoc_getDocumentBeginCallback</em></small></p>
+<p>See the setter.</p>
+<p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
+</section>
+<section id="b_cdoc_setPostProcessingCallback" class="level4">
+<h4>b_cdoc_setPostProcessingCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setPostProcessingCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate each time a code file was fully processed.</p>
+<p>The callback function should be declared as follows:</p>
+<pre><code>callback_function_name [processed input] [input file] [document output format]
+[processed input]: Everything that was found to match the 
+                   extraction regex in the [input file] by b_cdoc_generate.
+[input file]:      The original input file.
+[document output format]: chosen output format
+returns:           whatever should be added to the output document for the 
+                   given input file (usually the processed input or some filtered
+                   version of it); a non-zero exit code will abort further processing</code></pre>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_cdoc_getPostProcessingCallback" class="level4">
+<h4>b_cdoc_getPostProcessingCallback</h4>
+<p><small><em>cdoc/b_cdoc_getPostProcessingCallback</em></small></p>
+<p>See the setter.</p>
+<p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
+</section>
+<section id="b_cdoc_setDocumentEndCallback" class="level4">
+<h4>b_cdoc_setDocumentEndCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setDocumentEndCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate exactly once right after it generated the output document.</p>
+<p>The callback function should be declared as follows:</p>
+<pre><code>callback_function_name [document output file] [document output format]
+[document output file]: path to the document output file
+                        (may not exist and should not be written to)
+[document output format]: chosen output format
+returns:                whatever should be added to the end of the output
+                        document; a non-zero exit code will abort further processing</code></pre>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_cdoc_getDocumentEndCallback" class="level4">
+<h4>b_cdoc_getDocumentEndCallback</h4>
+<p><small><em>cdoc/b_cdoc_getDocumentEndCallback</em></small></p>
+<p>See the setter.</p>
+<p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
+</section>
+<section id="b_cdoc_setSpaceCallback" class="level4">
+<h4>b_cdoc_setSpaceCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setSpaceCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate each time it hits &quot;space&quot; (non-matching lines) between two matching lines.</p>
+<p>The callback function should be declared as follows:</p>
+<pre><code>callback_function_name [matching line] [input file] [previous space count] [document output format]
+[matching line]: The first matching line before which no match was found.
+[input file]:    The original input file.
+[previous space count]: The number of times this function was previously 
+                 called for the currently processed file.
+[document output format]: chosen output format
+returns:         whatever should be added in front of the matching line;
+                 a non-zero exit code will abort further processing</code></pre>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_cdoc_getSpaceCallback" class="level4">
+<h4>b_cdoc_getSpaceCallback</h4>
+<p><small><em>cdoc/b_cdoc_getSpaceCallback</em></small></p>
+<p>See the setter.</p>
+<p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
+</section>
+<section id="b_cdoc_generate" class="level4">
+<h4>b_cdoc_generate [input files] [output file] [output format] [additional pandoc options]</h4>
+<p><small><em>cdoc/b_cdoc_generate</em></small></p>
+<p>Generate a documentation file from the given list of input files or directories.</p>
+<p>pseudo code description for the document generation:</p>
+<ol type="1">
+<li>call the file filter callback to obtain the final list of input source code files to use for document generation, respect the order (default: use all files passed as input)</li>
+<li>call the document begin callback function with the output file path to get user-specific output (default: do nothing)</li>
+<li>for all input files:
+<ol type="i">
+<li>for all lines of a file:
+<ol type="a">
+<li>store lines matching b_cdoc_getExtractionRegex in a variable <em>o</em></li>
+<li>between any two matching lines for b_cdoc_getExtractionRegex that had a non-matching line in between them: call the space callback function (default: add an empty line to the output)</li>
+</ol></li>
+<li>pass <em>o</em> and the file name to the post processing callback function (default: return the input) - users could add e.g. the file name as section header here</li>
+<li>add the output of the post processing function to the output document</li>
+</ol></li>
+<li>call the document end callback function with the output file path to get user-specific output (default: do nothing)</li>
+<li>do all necessary output conversions using <a href="https://pandoc.org/">pandoc</a></li>
+</ol>
+<p><span class="par">[input files]: Newline-separated list of files or directories to generate the documentation from. The given order is respected; directories are recursively searched for files. It is currently assumed that these files are encoded in UTF-8.</span></p>
+<p><span class="par">[output file]: Path to the documentation file to generate. Should not exist.</span></p>
+<p><span class="par">[output format]: The target format of the documentation to generate. See <a href="https://pandoc.org/">pandoc</a> for a list of available output formats. If none is specified, <a href="https://pandoc.org/">pandoc</a> is bypassed and the input format is chosen as output format. Passing &quot;pandoc&quot; will let <a href="https://pandoc.org/">pandoc</a> decide based on the extension of the output file.</span></p>
+<p><span class="par">[additional pandoc options]: All remainining parameters will be directly passed to <a href="https://pandoc.org/">pandoc</a>. If none are provided, -s is implicitly added as default.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a non-zero exit code and exits the script on errors. output from <a href="https://pandoc.org/">pandoc</a> and other calls may be printed. Otherwise nothing is returned.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_cdoc_generateBlibStyle" class="level4">
+<h4>b_cdoc_generateBlibStyle [input files] [output file base path] [output format] [delete existing]</h4>
+<p><small><em>cdoc/b_cdoc_generateBlibStyle</em></small></p>
+<p>A convenience wrapper for b_cdoc_generate which sets various reasonable parameters depending on the output format.</p>
+<p><span class="par">[input files]: see b_cdoc_generate</span></p>
+<p><span class="par">[output file base path]: path to a directory and base file name where to store the generated output documentation file; the final file name may differ as it is chosen by this function</span></p>
+<p><span class="par">[output format]: currently one of raw|html|pdf|man is supported (default: raw)</span></p>
+<p><span class="par">[delete existing]: whether or not to delete previously created output files (default: true/0); if set to false (1), the function will error out if a previously created file was found</span></p>
+<p><span class="ret"><strong>returns</strong>: full path to the created documentation file on success; otherwise the function may error out</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+<section id="callback-functions" class="level5">
+<h5>Callback Functions</h5>
+<section id="b_cdoc_cbPrintNewline" class="level6">
+<h6>b_cdoc_cbPrintNewline</h6>
+<p><small><em>cdoc/b_cdoc_cbPrintNewline</em></small></p>
+<p>Prints a newline character.</p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+</section>
+<section id="b_cdoc_cbPrintFirstParam" class="level6">
+<h6>b_cdoc_cbPrintFirstParam [param]</h6>
+<p><small><em>cdoc/b_cdoc_cbPrintFirstParam</em></small></p>
+<p>Prints the first parameter.</p>
+<p><span class="par">[param]: The parameter to print.</span></p>
+<p><span class="ret"><strong>returns</strong>: the first parameter</span></p>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section id="date" class="level2">
+<h2>date</h2>
+<p>Collection of date and time related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-3" class="level3">
+<h3>Dependencies</h3>
+<p>date</p>
+</section>
+<section id="imports-3" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-3" class="level3">
+<h3>Functions</h3>
+<section id="b_date_getDeps" class="level4">
+<h4>b_date_getDeps</h4>
+<p><small><em>date/b_date_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_date_addDays" class="level4">
+<h4>b_date_addDays [date] [days] [format] [utc flag]</h4>
+<p><small><em>date/b_date_addDays</em></small></p>
+<p>Add the given number of days to the given date.</p>
+<p><span class="par">[date]: date to add days to; the format must be understood by the Unix date utility</span></p>
+<p><span class="par">[days]: number of days to add</span></p>
+<p><span class="par">[format]: output format of the date, in Unix date notation (default: use the localized output)</span></p>
+<p><span class="par">[utc flag]: if set to 0, use UTC as time zone if not specified for the input <em>and</em> use it for the output (default: 1 = local time zone)</span></p>
+<p><span class="ret"><strong>returns</strong>: The input date with the given number of days added, in the requested format; returns a non-zero exit code on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_date_diffSeconds" class="level4">
+<h4>b_date_diffSeconds [date 1] [date 2]</h4>
+<p><small><em>date/b_date_diffSeconds</em></small></p>
+<p>Get the number of seconds between the two dates, i.e. [date 2] - [date 1].</p>
+<p><span class="par">[date 2], [date 1]: the two dates to subtract; the time one is assumed to be identical if not specified within the dates</span></p>
+<p><span class="ret"><strong>returns</strong>: The number of seconds between the given two dates [date 2] - [date 1]; returns a non-zero exit code on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
+<section id="flog" class="level2">
+<h2>flog</h2>
+<p>Flexible log writer for bash supporting arbitrary piped output (files, network streams, stdout, stderr, ...) in a user-defined output format.<br />
+Log files can be automatically reduced to their last X lines.</p>
+<p>In order to log to the system log, please use the logger command instead. This library is mostly meant for application logs handled in a more custom manner.</p>
+<p>Currently only a single writer per instance of this library/thread is kept in memory, but you can user multiple one after another or in multiple threads. Each writer should have a dedicated log file to write to.</p>
+<p>Exact format of log entries:</p>
+<pre><code> [header][message]
+ [header]: Can be arbitrarily defined in the 
+           respective callback function. If nothing
+           is defined, the below default header
+           is used:
+ [default header] = '[default date] '
+ [default date]: current date in the format as used
+           by date +&quot;%F %T %Z&quot; (the format can be changed)</code></pre>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.3</p>
+<section id="dependencies-4" class="level3">
+<h3>Dependencies</h3>
+<p>date<br />
+tail<br />
+cat<br />
+mktemp</p>
+</section>
+<section id="imports-4" class="level3">
+<h3>Imports</h3>
+<p>fs</p>
+</section>
+<section id="global-variables-1" class="level3">
+<h3>Global Variables</h3>
+<section id="B_FLOG_SEV" class="level4">
+<h4>B_FLOG_SEV</h4>
+<p><small><em>flog/B_FLOG_SEV</em></small></p>
+<p>Global map for human readable severities which may be used by users of this script.<br />
+It was inspired by the severities of RFC5424.<br />
+Currently supported values: emergency|alert|critical|crit|error|err|warning|warn|notice|informational|info|debug</p>
+</section>
+</section>
+<section id="functions-4" class="level3">
+<h3>Functions</h3>
+<section id="b_flog_printSeverity" class="level4">
+<h4>b_flog_printSeverity [severity]</h4>
+<p><small><em>flog/b_flog_printSeverity</em></small></p>
+<p><span class="par">[severity]: see <a href="#b_flog_init">b_flog_init</a></span><br />
+Print the given severity in a way for logging. This function is meant to be used as building block for header functions.</p>
+<p><span class="ret"><strong>returns</strong>: a printed version of the given severity for logging</span></p>
+</section>
+<section id="b_flog_close" class="level4">
+<h4>b_flog_close</h4>
+<p><small><em>flog/b_flog_close</em></small></p>
+<p>close the currently open log; is automatically called, but users may want to call it themselves to force the respective file descriptor to be closed before the program is ended</p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_flog_init" class="level4">
+<h4>b_flog_init [log file name] [header callback function] [log reduction lines]</h4>
+<p><small><em>flog/b_flog_init</em></small></p>
+<p>Initialize this log writer. This function <strong>must</strong> be called before any others.</p>
+<p><span class="par">[log file name]: name of the log file to write to; special files such as /dev/stdout, /dev/stderr (default), /dev/tcp, /dev/udp are supported if your bash version supports them; the file doesn't need to exist, but directories above it must exist</span></p>
+<p><span class="par">[header callback function]: optional name of the function to be called whenever a new log entry is generated; the function must be defined as follows:</span></p>
+<pre><code> [header callback function] [severity]
+ [severity]: see [b_flog_log](#b_flog_log)
+ returns: the full header meant to be used for the current moment in time
+          with the given severity (without knowing the message details)
+          and sets a non-zero exit code on errors; errors may cause the
+          message to be logged without header</code></pre>
+<p><span class="par">[log reduction lines]: if set to a positive integer, reduce the log file approximately to that number of lines during logging (default: 3000) - see b_flog_setLogReductionLinesApprox for details; this option has no effect on non-file outputs (stdout, network output, ...)</span></p>
+<p><span class="ret"><strong>returns</strong>: sets a non-zero exit code on errors and may exit the script</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_flog_log" class="level4">
+<h4>b_flog_log [message] [severity]</h4>
+<p><small><em>flog/b_flog_log</em></small></p>
+<p>Log the given message with the given optional severity.</p>
+<p><span class="par">[message]: message to log</span></p>
+<p><span class="par">[severity]: users may pass arbitrary numbers or even Strings here, but it is recommended to stick to the priorities defined in $BLIB_FLOG_SEV (default: ${B_FLOG_SEV[&quot;info&quot;]})</span></p>
+<p><span class="ret"><strong>returns</strong>: sets a non-zero exit code on errors and may exit the script</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_flogErrorHandler" class="level4">
+<h4>b_flogErrorHandler [error out] [print stderr] [print stack trace] [print log errors] [log stack trace] [severity]</h4>
+<p><small><em>flog/b_flogErrorHandler</em></small></p>
+<p>An alternative to <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> which will log program errors using flog.</p>
+<p><span class="par">[error out]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 0)</span></p>
+<p><span class="par">[print stderr]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 1 / log only)</span></p>
+<p><span class="par">[print stack trace]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 1 / log only)</span></p>
+<p><span class="par">[print log errors]: whether or not to print errors related to the logging itself to stderr (default: 0 / print)</span></p>
+<p><span class="par">[log stack trace]: whether or not to log the stack trace (default: 1 / do not log it)</span></p>
+<p><span class="par">[severity]: the severity to use for all errors, defaults to ${B_FLOG_SEV[&quot;critical&quot;]}</span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></span></p>
+</section>
+<section id="b_flog_getDeps" class="level4">
+<h4>b_flog_getDeps</h4>
+<p><small><em>flog/b_flog_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_flog_getDateFormat" class="level4">
+<h4>b_flog_getDateFormat</h4>
+<p><small><em>flog/b_flog_getDateFormat</em></small></p>
+<p>Get the date format used for the header by this log writer (see &quot;man date&quot; for explanations).</p>
+<p><span class="ret"><strong>returns</strong>: see above</span></p>
+</section>
+<section id="b_flog_setDateFormat" class="level4">
+<h4>b_flog_setDateFormat [format string]</h4>
+<p><small><em>flog/b_flog_setDateFormat</em></small></p>
+<p>Set the date format used for the header by this log writer (see &quot;man date&quot; for explanations).</p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_flog_getLogReductionLinesLowerBound" class="level4">
+<h4>b_flog_getLogReductionLinesLowerBound</h4>
+<p><small><em>flog/b_flog_getLogReductionLinesLowerBound</em></small></p>
+<p>Get the number of lines that the log file will at least have after a log file reduction.</p>
+<p><span class="ret"><strong>returns</strong>: see above</span></p>
+</section>
+<section id="b_flog_getLogReductionLinesUpperBound" class="level4">
+<h4>b_flog_getLogReductionLinesUpperBound</h4>
+<p><small><em>flog/b_flog_getLogReductionLinesUpperBound</em></small></p>
+<p>Get the maximum number of lines that the log file will have before it is reduced.</p>
+<p><span class="ret"><strong>returns</strong>: see above</span></p>
+</section>
+<section id="b_flog_setLogReductionLinesLowerBound" class="level4">
+<h4>b_flog_setLogReductionLinesLowerBound [bound]</h4>
+<p><small><em>flog/b_flog_setLogReductionLinesLowerBound</em></small></p>
+<p>Set the number of lines that the log file will at least have after a log file reduction.</p>
+<p><span class="par">[bound]: number of lines to use for that bound</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_flog_setLogReductionLinesUpperBound" class="level4">
+<h4>b_flog_setLogReductionLinesUpperBound</h4>
+<p><small><em>flog/b_flog_setLogReductionLinesUpperBound</em></small></p>
+<p>Set the maximum number of lines that the log file will have before it is reduced.</p>
+<p><span class="par">[bound]: number of lines to use for that bound</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_flog_setLogReductionLinesApprox" class="level4">
+<h4>b_flog_setLogReductionLinesApprox [line count]</h4>
+<p><small><em>flog/b_flog_setLogReductionLinesApprox</em></small></p>
+<p>Set the number of average number of lines that the log file should have; counts &lt;= 0 indicate no limit.</p>
+<p><span class="par">[line count]: reduce the log after reaching 1.2*[line count] lines to 0.8*[line count] lines</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_flog_getHeaderFunction" class="level4">
+<h4>b_flog_getHeaderFunction</h4>
+<p><small><em>flog/b_flog_getHeaderFunction</em></small></p>
+<p>Get the name of the header callback function that is used.</p>
+<p><span class="ret"><strong>returns</strong>: see above</span></p>
+</section>
+<section id="b_flog_setHeaderFunction" class="level4">
+<h4>b_flog_setHeaderFunction [header function]</h4>
+<p><small><em>flog/b_flog_setHeaderFunction</em></small></p>
+<p>Set the name of the header callback function to be used.</p>
+<p><span class="par">[header function]: name of the header function to use</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+<section id="header-functions" class="level5">
+<h5>Header Functions</h5>
+<section id="b_flog_defaultHeader" class="level6">
+<h6>b_flog_defaultHeader [severity]</h6>
+<p><small><em>flog/b_flog_defaultHeader</em></small></p>
+<p>Default header callback function used with <a href="#b_flog_init">b_flog_init</a>.</p>
+<p><span class="par">[severity]: the default header ignores the severity</span></p>
+<p><span class="ret"><strong>returns</strong>: the default header meant to be used for the current moment in time</span></p>
+</section>
+<section id="b_flog_headerDateSeverity" class="level6">
+<h6>b_flog_headerDateSeverity [severity]</h6>
+<p><small><em>flog/b_flog_headerDateSeverity</em></small></p>
+<p>An alternative to the default header callback function which appends the severity to the default header.</p>
+<p><span class="par">[severity]: see <a href="#b_flog_init">b_flog_init</a></span></p>
+<p><span class="ret"><strong>returns</strong>: the default header with the severity appended</span></p>
+</section>
+<section id="b_flog_headerDateScriptSeverity" class="level6">
+<h6>b_flog_headerDateScriptSeverity [severity]</h6>
+<p><small><em>flog/b_flog_headerDateScriptSeverity</em></small></p>
+<p>An alternative to the default header callback function which appends the calling script and the severity to the default header.</p>
+<p><span class="par">[severity]: see <a href="#b_flog_init">b_flog_init</a></span></p>
+<p><span class="ret"><strong>returns</strong>: the default header with the calling script and severity appended</span></p>
+</section>
+</section>
+</section>
+</section>
+</section>
+<section id="fs" class="level2">
+<h2>fs</h2>
+<p>Collection of file and file system related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.3</p>
+<section id="dependencies-5" class="level3">
+<h3>Dependencies</h3>
+<p>wc<br />
+date<br />
+findmnt<br />
+mktemp<br />
+mount</p>
+</section>
+<section id="imports-5" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-5" class="level3">
+<h3>Functions</h3>
+<section id="b_fs_getDeps" class="level4">
+<h4>b_fs_getDeps</h4>
+<p><small><em>fs/b_fs_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_fs_isEmptyDir" class="level4">
+<h4>b_fs_isEmptyDir [dir]</h4>
+<p><small><em>fs/b_fs_isEmptyDir</em></small></p>
+<p>Check whether the given directory is empty or non-existing. It is not checked whether the passed parameter is a file preventing a directory from being created.</p>
+<p><span class="par">[dir]: full path to the directory to check</span></p>
+<p><span class="ret"><strong>returns</strong>: a zero exit code if the directory does not exist or is empty</span></p>
+</section>
+<section id="b_fs_getLastModifiedInDays" class="level4">
+<h4>b_fs_getLastModifiedInDays [file]</h4>
+<p><small><em>fs/b_fs_getLastModifiedInDays</em></small></p>
+<p>Get the number of days since when a file was last modified.</p>
+<p><span class="par">[file]: Full path to the file to check.</span></p>
+<p><span class="ret"><strong>returns</strong>: The time in days since the last modification. Sets a non-zero exit code on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_fs_getLineCount" class="level4">
+<h4>b_fs_getLineCount [file]</h4>
+<p><small><em>fs/b_fs_getLineCount</em></small></p>
+<p>Get the number of lines of the given file.</p>
+<p><span class="par">[file]: full path to a file</span></p>
+<p><span class="ret"><strong>returns</strong>: the number of lines; a non-zero exit code is set on errors</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_fs_waitForFile" class="level4">
+<h4>b_fs_waitForFile [file] [maximum time]</h4>
+<p><small><em>fs/b_fs_waitForFile</em></small></p>
+<p>Sleep until the given file appears. The check interval is 1s.</p>
+<p><span class="par">[file]: full path to the file or directory to wait for</span></p>
+<p><span class="par">[maximum time]: maximum time in s to wait for the file to appear (default: forever)</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the file appeared and a non-zero exit code on a timeout.</span></p>
+</section>
+<section id="b_fs_getMountpoints" class="level4">
+<h4>b_fs_getMountpoints [device]</h4>
+<p><small><em>fs/b_fs_getMountpoints</em></small></p>
+<p>Get all mountpoints for the given device.</p>
+<p><span class="par">[device]: Full path to the device (incl. /dev/) for which to obtain the mountpoints.</span></p>
+<p><span class="ret"><strong>returns</strong>: A newline-separated list of mountpoints where the given device is mounted to. Sets a non-zero exit code if no such mountpoints were found.</span></p>
+</section>
+<section id="b_fs_mountIfNecessary" class="level4">
+<h4>b_fs_mountIfNecessary [device] [mount point]</h4>
+<p><small><em>fs/b_fs_mountIfNecessary</em></small></p>
+<p>Mount the given device if it isn't already mounted.</p>
+<p><span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span></p>
+<p><span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span></p>
+<p><span class="ret"><strong>returns</strong>: The chosen mount point or a newline-separated list of existing mount points on success; sets a non-zero exit code on failure.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_fs_createLoopDeviceIfNecessary" class="level4">
+<h4>b_fs_createLoopDeviceIfNecessary [file]</h4>
+<p><small><em>fs/b_fs_createLoopDeviceIfNecessary</em></small></p>
+<p>Create a loop device for the given file if no old one exists. May require root access rights.</p>
+<p><span class="par">[file]: File for which to create a loop device.</span></p>
+<p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
+<section id="http" class="level2">
+<h2>http</h2>
+<p>Collection of http related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-6" class="level3">
+<h3>Dependencies</h3>
+<p>curl</p>
+</section>
+<section id="imports-6" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-6" class="level3">
+<h3>Functions</h3>
+<section id="b_http_getDeps" class="level4">
+<h4>b_http_getDeps</h4>
+<p><small><em>http/b_http_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_http_rawUrlEncode" class="level4">
+<h4>b_http_rawUrlEncode [string]</h4>
+<p><small><em>http/b_http_rawUrlEncode</em></small></p>
+<p>Encode the given string according to RFC 3986.</p>
+<p><span class="par">[string]: to encode</span></p>
+<p><span class="ret"><strong>returns</strong>: Returns a string in which all non-alphanumeric characters except -_.~ have been replaced with a percent (%) sign followed by two hex digits. This is the encoding described in RFC 3986 for protecting literal characters from being interpreted as special URL delimiters, and for protecting URLs from being mangled by transmission media with character conversions (like some email systems). A non-zero exit code is set on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_http_rawUrlDecode" class="level4">
+<h4>b_http_rawUrlDecode [string]</h4>
+<p><small><em>http/b_http_rawUrlDecode</em></small></p>
+<p>Decode the given string encoded with b_str_rawUrlEncode or an equivalent function.</p>
+<p><span class="par">[string]: to decode</span></p>
+<p><span class="ret"><strong>returns</strong>: The literal string with all hex characters replaced; a non-zero exit code is set on errors.</span></p>
+</section>
+</section>
+</section>
+<section id="ini" class="level2">
+<h2>ini</h2>
+<p>Stateful ini reader for bash.</p>
+<p>Currently only a single file per instance of this library/thread is kept in memory, but you can read multiple files one after another or in multiple threads.</p>
+<p>Implementation Specifics:</p>
+<ul>
+<li>names/keys &amp; values are case sensitive</li>
+<li>comment lines may start with ; or #</li>
+<li>whitespace lines are ignored</li>
+<li>duplicate names may result in undefined behaviour (usually the second will override the first)</li>
+<li>all characters following the = are considered part of the value (incl. whitespace); whitespace before and after the value may be trimmed by the getters though (check their description)</li>
+<li>values are not interpreted (e.g. quotes, escape characters, ...)</li>
+<li>whitespace around keys and around section qualifiers is ignored</li>
+</ul>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.5</p>
+<section id="dependencies-7" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="imports-7" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-7" class="level3">
+<h3>Functions</h3>
+<section id="b_ini_getDeps" class="level4">
+<h4>b_ini_getDeps</h4>
+<p><small><em>ini/b_ini_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_ini_read" class="level4">
+<h4>b_ini_read [ini file]</h4>
+<p><small><em>ini/b_ini_read</em></small></p>
+<p>read the given ini file and keep it in thread-local memory so that subsequent calls to the b_ini_get functions will return the values from the ini file; subsequent calls to this function will update the internal state to represent the file last read in this thread</p>
+<p><span class="par">[ini file]: path to the ini file to read</span></p>
+<p><span class="ret"><strong>returns</strong>: an error message on errors and sets a non-zero exit code on errors</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_ini_get" class="level4">
+<h4>b_ini_get [name] [section]</h4>
+<p><small><em>ini/b_ini_get</em></small></p>
+<p>get the value for the ini entry with the given name as String in raw format</p>
+<p><span class="par">[name]: name/key of the ini entry to retrieve</span></p>
+<p><span class="par">[section]: section where to look for the entry with the given name (default: without section)</span></p>
+<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name incl. any whitespace; a non-zero exit code is set if such an entry wasn't found or another error occurred</span></p>
+</section>
+<section id="b_ini_getString" class="level4">
+<h4>b_ini_getString [name] [section]</h4>
+<p><small><em>ini/b_ini_getString</em></small></p>
+<p>get the value for the ini entry with the given name as String and remove all whitespace around the returned String</p>
+<p><span class="par">[name]: name/key of the ini entry to retrieve</span></p>
+<p><span class="par">[section]: section where to look for the entry with the given name (default: without section)</span></p>
+<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name excl. any whitespace around; a non-zero exit code is set if such an entry wasn't found or another error occurred</span></p>
+</section>
+<section id="b_ini_getInt" class="level4">
+<h4>b_ini_getInt [name] [section]</h4>
+<p><small><em>ini/b_ini_getInt</em></small></p>
+<p>get the value for the ini entry with the given name as integer</p>
+<p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
+<p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; additionally it is checked whether the return value is an integer (if not, a non-zero exit code is set and the return value is undefined)</span></p>
+</section>
+<section id="b_ini_getBool" class="level4">
+<h4>b_ini_getBool [name] [section]</h4>
+<p><small><em>ini/b_ini_getBool</em></small></p>
+<p>get the value for the ini entry with the given name as boolean</p>
+<p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
+<p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; 0 is returned via echo for true, 1 for false; the exit code indicates a potential error during parsing or a missing entry (and <em>not</em> true/false)</span></p>
+</section>
+</section>
+</section>
+<section id="mtx" class="level2">
+<h2>mtx</h2>
+<p>Collection of mutex related functions.</p>
+<p>Mutex: Only a single process may have it at any point in time.<br />
+Lock: A specific maximum number of processes may have it at any point in time.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.3</p>
+<section id="dependencies-8" class="level3">
+<h3>Dependencies</h3>
+<p>mkdir<br />
+touch<br />
+sleep<br />
+rm<br />
+rmdir<br />
+cat<br />
+mktemp</p>
+</section>
+<section id="imports-8" class="level3">
+<h3>Imports</h3>
+<p>proc</p>
+</section>
+<section id="functions-8" class="level3">
+<h3>Functions</h3>
+<section id="b_mtx_getDeps" class="level4">
+<h4>b_mtx_getDeps</h4>
+<p><small><em>mtx/b_mtx_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_mtx_setSleepTime" class="level4">
+<h4>b_mtx_setSleepTime [ms]</h4>
+<p><small><em>mtx/b_mtx_setSleepTime</em></small></p>
+<p>Sets the time to sleep for this module whenever active polling is done (default: 500).</p>
+<p><span class="par">[ms]: time in miliseconds between active polling requests for e.g. mutexes done by this module; must be an integer</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code.</span></p>
+</section>
+<section id="b_mtx_getSleepTime" class="level4">
+<h4>b_mtx_getSleepTime</h4>
+<p><small><em>mtx/b_mtx_getSleepTime</em></small></p>
+<p>Gets the time to sleep for this module whenever active polling is done.</p>
+<p><span class="ret"><strong>returns</strong>: The currently set time to sleep in ms.</span></p>
+</section>
+<section id="b_mtx_create" class="level4">
+<h4>b_mtx_create [base dir]</h4>
+<p><small><em>mtx/b_mtx_create</em></small></p>
+<p>Allocate a new mutex without claiming it (use b_mtx_try for that).</p>
+<p><span class="par">[base dir]: Path to an <em>existing</em> directory where to store the mutex (default: not specified). By default this module will pick a temporary location. If you need a mutex that persists across reboots, please set a directory that persists across reboots here. The path should point to a local, non-network file system destination. The module must be able to create remove files or directories there at will.</span></p>
+<p><span class="ret"><strong>returns</strong>: A string identifying the mutex (mutex ID). Sets a non-zero exit code on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_mtx_release" class="level4">
+<h4>b_mtx_release [mutex] [block ID]</h4>
+<p><small><em>mtx/b_mtx_release</em></small></p>
+<p>Release the given mutex so that it can be used by other block IDs/threads.</p>
+<p><span class="par">[mutex]: A mutex obtained via b_mtx_create.</span></p>
+<p><span class="par">[block ID]: The block ID for which to release the mutex (default: $$).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a non-zero exit code if the mutex could not be removed as another process is blocking it and a zero exit code on successful removal.</span></p>
+</section>
+<section id="b_mtx_forceRelease" class="level4">
+<h4>b_mtx_forceRelease [mutex]</h4>
+<p><small><em>mtx/b_mtx_forceRelease</em></small></p>
+<p>Release the given mutex so that it can be used by other blockIDs/threads. Warning: This function can remove mutexes from other threads and should generally <em>only</em> be used for the removal of mutexes which are known to be stale by the calling application.</p>
+<p><span class="par">[mutex]: A mutex obtained via b_mtx_create.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing and sets a zero exit code.</span></p>
+</section>
+<section id="b_mtx_try" class="level4">
+<h4>b_mtx_try [mutex] [block ID] [claim stale] [claim own]</h4>
+<p><small><em>mtx/b_mtx_try</em></small></p>
+<p>Attempt to obtain the given mutex. Return immediately even if it cannot be obtained.</p>
+<p><span class="par">[mutex]: A mutex obtained via b_mtx_create.</span></p>
+<p><span class="par">[block ID]: The ID to use by which to block (default: running (sub)shell process id $$). This should be the process ID of the process attempting to obtain the mutex or you should know what you're doing. If you're in a subshell that should have a mutex with other subshells, store their $BASHPID and call the function with that.</span></p>
+<p><span class="par">[claim stale]: If set to 0, claim the mutex even if it is still blocked by some other process, but that process isn't running anymore. If set to 1 (default), the function returns without obtaining the mutex. In general this should only be used in situations where a mutex has a high probability of being stale (e.g. application start).</span></p>
+<p><span class="par">[claim own]: If set to 0 (default), claim the mutex if it appears to be blocked by the provided block ID. If set to 1, consider it blocked even then.</span></p>
+<p><span class="ret"><strong>returns</strong>: The function incl. parameters to execute to remove the mutex if it was obtained and an error message stating the reason otherwise. The provided function <em>should</em> be called as part of an exit trap of the calling script or via eval. Sets an exit code of 0, if the mutex was obtained. An exit code of 1 is set, if the mutex was blocked and another non-zero exit code if some other error occurred (the mutex might be blocked even then). </span></p>
+<p>Example code:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span>
+ <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span>
+ <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span>
+ <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span>
+ <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span>
+ <span class="co">#assuming the mutex is only meant to be removed after full</span>
+ <span class="co">#execution of the script:</span>
+ <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT
+ <span class="co">#direct removal:</span>
+ <span class="co">#b_mtx_release &quot;$mutex&quot;</span></code></pre></div>
+</section>
+<section id="b_mtx_waitFor" class="level4">
+<h4>b_mtx_waitFor [mutex] [block ID] [claim stale] [maximum time]</h4>
+<p><small><em>mtx/b_mtx_waitFor</em></small></p>
+<p>Wait for the given mutex to become available. This will block script execution.</p>
+<p><span class="par">[mutex]: see <a href="#b_mtx_try">b_mtx_try</a></span></p>
+<p><span class="par">[block ID]: see <a href="#b_mtx_try">b_mtx_try</a></span></p>
+<p><span class="par">[claim stale]: see <a href="#b_mtx_try">b_mtx_try</a></span></p>
+<p><span class="par">[maximum time]: maximum time in ms to wait for the mutex to become available (default: 0 = indefinitely)</span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_mtx_try">b_mtx_try</a></span></p>
+</section>
+</section>
+</section>
+<section id="ososid" class="level2">
+<h2>os/osid</h2>
+<p>Functions for operating system identification.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-9" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="imports-9" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-9" class="level3">
+<h3>Functions</h3>
+<section id="b_osid_getDeps" class="level4">
+<h4>b_osid_getDeps</h4>
+<p><small><em>os/osid/b_osid_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_osid_init" class="level4">
+<h4>b_osid_init [force]</h4>
+<p><small><em>os/osid/b_osid_init</em></small></p>
+<p><span class="par">[force]: if set to 0, force an init even if it would otherwise not be necessary (default: 1 - only initialize if it didn't happen before)</span><br />
+Initialize the osid module. It should normally <em>not</em> be necessary to call this function directly, but it will be called by the osid module internally as needed.</p>
+<p><span class="ret"><strong>returns</strong>: May error out and set a non-zero exit code on failures.</span></p>
+</section>
+<section id="b_osid_isDebian" class="level4">
+<h4>b_osid_isDebian</h4>
+<p><small><em>os/osid/b_osid_isDebian</em></small></p>
+<p>Check whether the OS running this function is a Debian Linux.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isDebianLike" class="level4">
+<h4>b_osid_isDebianLike</h4>
+<p><small><em>os/osid/b_osid_isDebianLike</em></small></p>
+<p>Check whether the OS running this function is a Debian Linux or one of its derivatives (e.g. ubuntu).</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isOpenSuse" class="level4">
+<h4>b_osid_isOpenSuse</h4>
+<p><small><em>os/osid/b_osid_isOpenSuse</em></small></p>
+<p>Check whether the OS running this function is a OpenSUSE.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isFedora" class="level4">
+<h4>b_osid_isFedora</h4>
+<p><small><em>os/osid/b_osid_isFedora</em></small></p>
+<p>Check whether the OS running this function is a Fedora Linux.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isCentOS" class="level4">
+<h4>b_osid_isCentOS</h4>
+<p><small><em>os/osid/b_osid_isCentOS</em></small></p>
+<p>Check whether the OS running this function is a CentOS.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isRedHat" class="level4">
+<h4>b_osid_isRedHat</h4>
+<p><small><em>os/osid/b_osid_isRedHat</em></small></p>
+<p>Check whether the OS running this function is a RedHat Linux.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isUbuntu" class="level4">
+<h4>b_osid_isUbuntu</h4>
+<p><small><em>os/osid/b_osid_isUbuntu</em></small></p>
+<p>Check whether the OS running this function is an Ubuntu Linux.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isFedoraLike" class="level4">
+<h4>b_osid_isFedoraLike</h4>
+<p><small><em>os/osid/b_osid_isFedoraLike</em></small></p>
+<p>Check whether the OS running this function is a Fedora Linux or one of its derivatives (e.g. CentOS, Red Hat, Qubes OS).</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isQubesDom0" class="level4">
+<h4>b_osid_isQubesDom0</h4>
+<p><small><em>os/osid/b_osid_isQubesDom0</em></small></p>
+<p>Check whether the OS running this function is a Qubes OS in dom0.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+<section id="b_osid_isQubesVM" class="level4">
+<h4>b_osid_isQubesVM</h4>
+<p><small><em>os/osid/b_osid_isQubesVM</em></small></p>
+<p>Check whether the OS running this function is a Qubes OS in a VM.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
+</section>
+</section>
+</section>
+<section id="osqubes4dom0" class="level2">
+<h2>os/qubes4/dom0</h2>
+<p>Collection of functions supporting scripting in Qubes OS 4.x dom0.</p>
+<p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.3</p>
+<section id="imports-10" class="level3">
+<h3>Imports</h3>
+<p>fs<br />
+proc<br />
+types</p>
+</section>
+<section id="functions-10" class="level3">
+<h3>Functions</h3>
+<section id="b_dom0_getDeps" class="level4">
+<h4>b_dom0_getDeps</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_dom0_qvmRun" class="level4">
+<h4>b_dom0_qvmRun [parameter 1] ... [parameter n]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_qvmRun</em></small></p>
+<p>A wrapper for qvm-run which sets reasonable defaults for shell scripting and applies various fixes.</p>
+<p>Most calls to qvm-run should be made via this function rather than interacting with qvm-run directly as the Qubes OS qvm-run was designed with interactive shell usage in mind whereas this wrapper is intended for bash developers.</p>
+<p>Particular features:</p>
+<ul>
+<li>a certain set of reasonable default parameters is used: -p -q -n -u root</li>
+<li>-n was set as auto-starting VMs during Bash scripting can heavily influence the user experience (imagine the VM being shut down manually by the user whilst a bash script is running --&gt; constant restarts)</li>
+<li>stdin is redirected to /dev/null by default to avoid potential security implications (accidental reads from dom0 stdin passed to a VM); this can be overriden using --stdin</li>
+<li>stdout has the VM output and the exit code is the one of the VM</li>
+<li>distinguished exit conditions (executed command failed vs. qvm-run failed)</li>
+<li>workarounds for known Qubes bugs wrt qvm-run may be implemented here (e.g. qubes issues #3083, #4476, #4633 in the past)</li>
+</ul>
+<p>Please note that calling this function will make your script wait for the execution of the commands in the client VM.</p>
+<p>Wherever possible, this function should be combined with <a href="#b_silence">b_silence</a> as the VM output shouldn't be trusted. Otherwise please keep in mind that <strong>both</strong> stdout <em>and</em> stderr may have untrusted output which may even contain binary data. In order to validate against binary data you can e.g. use <a href="#b_types_parseString">b_types_parseString</a>.</p>
+<p><span class="par">[parameters]: Any parameters supported by qvm-run. If you pass -a, the default -n will be overriden. If you pass -u, the default root user is overriden. If you pass -v, -q will be overriden. If you pass --stdin, even stdin is passed to qvm-run. -p can be overriden by using /dev/null redirection. Only the short parameter versions are supported.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets the exit code of qvm-run and prints its output. May error out using <a href="#B_E">B_E</a> if qvm-run itself fails.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_getDispVMs" class="level4">
+<h4>b_dom0_getDispVMs</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_getDispVMs</em></small></p>
+<p>Get a list of all currently existing disposable VMs.</p>
+<p><span class="par">[returns]: The currently existing disposable VMs as newline-separated list.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_startDispVM" class="level4">
+<h4>b_dom0_startDispVM [template]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_startDispVM</em></small></p>
+<p>Start a dispVM from the given template in the background and return its name.<br />
+The disposable VM will remain started until it is shut down. If you only wish to execute a single command, please use <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a> with the --dispVM parameter.<br />
+It may take a while for this function to obtain the name of the dispVM.</p>
+<p><span class="par">[template]: The template to use for the dispVM. If no template is specified, use the default Qubes template.</span></p>
+<p><span class="ret"><strong>returns</strong>: Name of the dispVM that was started and sets a zero exit code on success. This function may error out.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_execIn" class="level4">
+<h4>b_dom0_execIn [vm] [file] [user]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_execIn</em></small></p>
+<p>Execute the file as bash code in the given VM and wait for it to finish.</p>
+<p>See <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a> for various notes and words of caution.</p>
+<p><span class="par">[vm]: Name of the VM where to execute the given string. The VM is assumed to be started.</span></p>
+<p><span class="par">[file]: Bash file to execute in the given VM.</span></p>
+<p><span class="par">[user]: user as which to execute the bash file (default: root)</span></p>
+<p><span class="ret"><strong>returns</strong>: Whatever the executed Bash code prints in the VM to stderr or stdout; the status code is set to the one of the executed Bash code on success (0). Non-zero exit codes and error messages may come from both this function as well as the code executed in the given VM.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_execStrIn" class="level4">
+<h4>b_dom0_execStrIn [vm] [string] [user]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_execStrIn</em></small></p>
+<p>Execute the String as bash code in the given VM and wait for it to finish.</p>
+<p>Convenience wrapper for <a href="#b_dom0_execIn">b_dom0_execIn</a>.</p>
+<p>See <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a> for various notes and words of caution.</p>
+<p><span class="par">[vm]: see <a href="#b_dom0_execIn">b_dom0_execIn</a></span></p>
+<p><span class="par">[string]: Bash String to execute in the given VM.</span></p>
+<p><span class="par">[user]: see <a href="#b_dom0_execIn">b_dom0_execIn</a></span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_dom0_execIn">b_dom0_execIn</a>; <a href="#B_E">B_E</a> is <em>not</em> called if the executed command returns an error</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_execFuncIn" class="level4">
+<h4>b_dom0_execFuncIn [vm] [user] [function] [param 1] .. [param p] - [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_execFuncIn</em></small></p>
+<p>Execute the Bash function in the given VM and wait for it to finish.</p>
+<p>Convenience wrapper for <a href="#b_dom0_execIn">b_dom0_execIn</a>.</p>
+<p>See <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a> for various notes and words of caution.</p>
+<p><span class="par">[vm]: see <a href="#b_dom0_execIn">b_dom0_execIn</a></span></p>
+<p><span class="par">[user]: see <a href="#b_dom0_execIn">b_dom0_execIn</a></span></p>
+<p><span class="par">[function]: Name of the function as it is declared in the current scope.</span></p>
+<p><span class="par">[param p]: An arbitrary number of function parameters.</span></p>
+<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
+<p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
+<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules must <em>not</em> be added.</span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_dom0_execIn">b_dom0_execIn</a>; <a href="#B_E">B_E</a> is <em>not</em> called if the executed command returns an error</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_waitForFileIn" class="level4">
+<h4>b_dom0_waitForFileIn [vm] [file] [maximum time]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_waitForFileIn</em></small></p>
+<p>Convenience wrapper for <a href="#b_fs_waitForFile">b_fs_waitForFile</a>.</p>
+<p><span class="par">[vm]: VM where to execute.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_isMountedIn" class="level4">
+<h4>b_dom0_isMountedIn [vm] [device]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_isMountedIn</em></small></p>
+<p>Check whether the device is mounted in the given VM.</p>
+<p><span class="par">[vm]: VM where to execute.</span></p>
+<p><span class="par">[device]: Full path to the device (incl. /dev/) to check.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the device is mounted in the VM; a non-zero exit code means that it's either not mounted or some other error occurred.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_mountIfNecessary" class="level4">
+<h4>b_dom0_mountIfNecessary [vm] [device] [mount point]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_mountIfNecessary</em></small></p>
+<p>Mount the given device in the target VM if it isn't already mounted there. Actually a wrapper for <a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a>.</p>
+<p><span class="par">[vm]: VM where to execute.</span></p>
+<p><span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span></p>
+<p><span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span></p>
+<p><span class="ret"><strong>returns</strong>: The chosen mount point or a newline-separated list of existing mount points on success; sets a non-zero exit code on failure. As these strings are returned from the VM, extra care must be taken when parsing them.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_createLoopDeviceIfNecessary" class="level4">
+<h4>b_dom0_createLoopDeviceIfNecessary [vm] [file]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_createLoopDeviceIfNecessary</em></small></p>
+<p>Create a loop device for the file in the given VM if no old one exists. Actually a wrapper for <a href="#b_fs_createLoopDeviceIfNecessary">b_fs_createLoopDeviceIfNecessary</a>.</p>
+<p>This usually requires root privileges.</p>
+<p><span class="par">[vm]: VM where to execute.</span></p>
+<p><span class="par">[file]: File for which to create a loop device.</span></p>
+<p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_copy" class="level4">
+<h4>b_dom0_copy [dom0 file] [target VM] [target VM dir] [overwrite]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_copy</em></small></p>
+<p>Grab a file or directory in dom0 and push it to the given file path in the target VM.</p>
+<p><span class="par">[dom0 file]: location of the dom0 file or directory to read from, assumed to exist</span></p>
+<p><span class="par">[target VM]: VM to write to, assumed to exist. Must be started.</span></p>
+<p><span class="par">[target VM dir]: full path to the parent directory in the target VM to copy the file or directory to; non-existing parent directories are created; the name is taken from the name of the file/directory in dom0</span></p>
+<p><span class="par">[overwrite]: Whether or not to overwrite an existing [destination file] (default: 0 = overwrite).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets an exit code of 0, if everything went fine, and a non-zero exit code otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_crossCopy" class="level4">
+<h4>b_dom0_crossCopy [source VM] [source file] [target VM] [target VM dir] [overwrite]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_crossCopy</em></small></p>
+<p>Cross copy a file or directory from one VM to another, initiated by dom0. No user prompt is displayed.</p>
+<p><span class="par">[source VM]: Where to copy the source file from. Must be started.</span></p>
+<p><span class="par">[source file]: The file or directory to copy.</span></p>
+<p><span class="par">[target VM]: Where to copy the file to. Must be started.</span></p>
+<p><span class="par">[target VM dir]: full path to the parent directory in the target VM to copy the file or directory to; non-existing parent directories are created; the name is taken from the name of the file/directory in dom0</span></p>
+<p><span class="par">[overwrite]: Whether or not to overwrite an existing [destination file] (default: 0 = overwrite).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets an exit code of 0, if everything went fine, and a non-zero exit code otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM was successfully started or was running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> will only be called for internal errors.</span></p>
+</section>
+<section id="b_dom0_ensureRunning" class="level4">
+<h4>b_dom0_ensureRunning [vm]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_ensureRunning</em></small></p>
+<p>Start the given VM if needed.</p>
+<p><span class="par">[vm]: The VM to start.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM was successfully started or was running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> will only be called for internal errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_isRunning" class="level4">
+<h4>b_dom0_isRunning [vm]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_isRunning</em></small></p>
+<p>Check whether the given VM is running <em>and</em> fully operational / not hanging / not booting.<br />
+In contrast e.g. qvm-check --running [vm] appears to return true for VMs which are currently booting; qvm-ls doesn't check whether the OS of a VM is hanging.<br />
+This should <em>not</em> be checked too often as it may be expensive.</p>
+<p><span class="par">[vm]: The VM to check.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM is running and a non-zero exit code otherwise. A non-zero exit code may e.g. also indicate that the VM doesn't exist. <a href="#B_E">B_E</a> will only be called for internal errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_exists" class="level4">
+<h4>b_dom0_exists [vm]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_exists</em></small></p>
+<p>Check whether the given VM exists.</p>
+<p><span class="par">[vm]: The VM to check.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM exists a non-zero exit code otherwise.</span></p>
+</section>
+<section id="b_dom0_openLuks" class="level4">
+<h4>b_dom0_openLuks [vm] [device] [luks name] [rw flag] [mount point] [optional: key file]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_openLuks</em></small></p>
+<p>In the given VM, open the given luks device and mount it to the mount point.</p>
+<p><span class="par">[vm]: The VM where to open the luks device.</span></p>
+<p><span class="par">[device]: Full path to the device (incl. /dev/) to check.</span></p>
+<p><span class="par">[luks name]: The name to assign to the decrypted version of the luks block device. The created decrypted device will be found at <em>/dev/mapper/[luks name]</em>.</span></p>
+<p><span class="par">[rw flag]: 0=open read-write (for luks), 1=open read-only (default: 0)</span></p>
+<p><span class="par">[mount point]: Where to mount the luks device to. Non-existing directories will be created. If no mount point is specified, it will not be mounted (default).</span></p>
+<p><span class="par">[key file]: Full vm path to the key to use for decryption. If none is specified, password-based decryption is assumed and stdin will be read to obtain the password.</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing (except for user interaction prompts if no key file is provided), but sets a non-zero exit code on errors</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_attachFile" class="level4">
+<h4>b_dom0_attachFile [dom0 file] [target VM] [rw flag]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_attachFile</em></small></p>
+<p>Attach the given file from dom0 (!) as block device to the target VM.</p>
+<p>The function may attempt to acquire root privileges (and thus display a password prompt).</p>
+<p><span class="par">[dom0 file]: Full path to the file <em>in dom0</em> to attach.</span></p>
+<p><span class="par">[target VM]: VM to attach the file to. Must be started.</span></p>
+<p><span class="par">[rw flag]: If set to 0, attaches the dom0 file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
+<p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_attachVMDisk" class="level4">
+<h4>b_dom0_attachVMDisk [source VM] [target VM] [dom0 working folder] [rw flag]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_attachVMDisk</em></small></p>
+<p>Attach the entire private disk image (private.img) of the source VM to the target VM.<br />
+<strong>Warning</strong>: This is contradictory to all Qubes principles and should only be done if you know exactly what you're doing. Qubes OS even has some countermeasures to prevent accidental use of this feature which are bypassed here.</p>
+<p><span class="par">[source VM]: Name of the VM whose private disk to attach to the target VM. <em>All data</em> of that VM will be shared with the target VM. Will be shut down as part of this function and must remain shut down as long as the disk is attached.</span></p>
+<p><span class="par">[target VM]: VM where to attach the disk as block device to. Must be started.</span></p>
+<p><span class="par">[dom0 working folder]: Path to a folder that this function may use at will to create or delete temporary data. Must be on the same drive as /var/lib/qubes (for example /tmp/ does <em>not</em> work) and should <strong>exclusively</strong> be used for calls to this function. Can safely be removed once your program finishes and the target VM is shut down.</span></p>
+<p><span class="par">[rw flag]: If set to 0, attaches the disk file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
+<p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_crossAttachFile" class="level4">
+<h4>b_dom0_crossAttachFile [source VM] [source file] [target VM] [rw flag]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_crossAttachFile</em></small></p>
+<p>Attach the given file from the source VM as block device to the target VM.</p>
+<p><span class="par">[source VM]: VM where the source file can be found.</span></p>
+<p><span class="par">[source file]: File to attach as block device.</span></p>
+<p><span class="par">[target VM]: VM to attach the file to. Must be started.</span></p>
+<p><span class="par">[rw flag]: If set to 0, attaches the dom0 file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
+<p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_detachDevice" class="level4">
+<h4>b_dom0_detachDevice [vm] [device]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_detachDevice</em></small></p>
+<p>Attempts to detach the given device from the VM. This may fail if the VM is using the device and thus it is usually a better idea to just shut the VM down.</p>
+<p><span class="par">[vm]: VM from which to detach the device.</span></p>
+<p><span class="par">[device]: Full path to the device in the VM. E.g. the return values of <a href="#b_dom0_crossAttachFile">b_dom0_crossAttachFile</a>, <a href="#b_dom0_attachFile">b_dom0_attachFile</a> or <a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a>.</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing, but sets a zero exit code on success</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
+<section id="proc" class="level2">
+<h2>proc</h2>
+<p>Collection of process and thread related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.1</p>
+<section id="dependencies-10" class="level3">
+<h3>Dependencies</h3>
+<p>tail<br />
+timeout</p>
+</section>
+<section id="imports-11" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-11" class="level3">
+<h3>Functions</h3>
+<section id="b_proc_getDeps" class="level4">
+<h4>b_proc_getDeps</h4>
+<p><small><em>proc/b_proc_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_proc_pidExists" class="level4">
+<h4>b_proc_pidExists [pid]</h4>
+<p><small><em>proc/b_proc_pidExists</em></small></p>
+<p>Check whether the given process ID exists on the system.</p>
+<p><span class="par">[pid]: process ID to check for existence (process exists)</span></p>
+<p><span class="ret"><strong>returns</strong>: A zero exit code, if it exists and a non-zero exit code if it doesn't; this function attempts to check the existence of the given process across <em>all</em> users, but it cannot guarantee correctness if the user running this script has very low privileges.</span></p>
+</section>
+<section id="b_proc_waitForPid" class="level4">
+<h4>b_proc_waitForPid [pid] [maximum time]</h4>
+<p><small><em>proc/b_proc_waitForPid</em></small></p>
+<p>Wait for the given process to exit. If it doesn't exist, exit immediately.</p>
+<p><span class="par">[pid]: process ID of the process to wait for</span></p>
+<p><span class="par">[maximum time]: maximum time in seconds to wait for the process to exit (default: 0 = indefinitely)</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code. Use <a href="#b_proc_pidExists">b_proc_pidExists</a> if you need to know whether the process finished.</span></p>
+</section>
+</section>
+</section>
+<section id="str" class="level2">
+<h2>str</h2>
+<p>Collection of string related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.1</p>
+<section id="dependencies-11" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="imports-12" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-12" class="level3">
+<h3>Functions</h3>
+<section id="b_str_getDeps" class="level4">
+<h4>b_str_getDeps</h4>
+<p><small><em>str/b_str_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_str_stripQuotes" class="level4">
+<h4>b_str_stripQuotes [string]</h4>
+<p><small><em>str/b_str_stripQuotes</em></small></p>
+<p>Remove any single or double quotes around the given string.</p>
+<p><span class="par">[string]: string which might be enclosed in single or double quotes (' or &quot;)</span></p>
+<p><span class="ret"><strong>returns</strong>: [string] without the enclosed single or double quotes, if there were any; if none were found the original string is returned; the exit code is always zero</span></p>
+</section>
+<section id="b_str_trim" class="level4">
+<h4>b_str_trim [string]</h4>
+<p><small><em>str/b_str_trim</em></small></p>
+<p>remove any whitespace from around a string</p>
+<p><span class="par">[string]: string to trim</span></p>
+<p><span class="ret"><strong>returns</strong>: [string] beginning and ending without whitespace; the exit code is always zero</span></p>
+</section>
+</section>
+</section>
+<section id="tcolors" class="level2">
+<h2>tcolors</h2>
+<p>Defines some tput related constants. In order to change terminal colors you can then use something such as</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span>
+<span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></code></pre></div>
+<p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.1</p>
+<section id="dependencies-12" class="level3">
+<h3>Dependencies</h3>
+<p>tput</p>
+</section>
+<section id="imports-13" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="global-variables-2" class="level3">
+<h3>Global Variables</h3>
+<section id="B_TCOLORS" class="level4">
+<h4>B_TCOLORS</h4>
+<p><small><em>tcolors/B_TCOLORS</em></small></p>
+<p>Global map for human readable colors to tput style color identifiers.<br />
+Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
+</section>
+</section>
+<section id="functions-13" class="level3">
+<h3>Functions</h3>
+<section id="b_tcolors_getDeps" class="level4">
+<h4>b_tcolors_getDeps</h4>
+<p><small><em>tcolors/b_tcolors_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+</section>
+</section>
+<section id="traps" class="level2">
+<h2>traps</h2>
+<p>Collection of trap related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-13" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="imports-14" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-14" class="level3">
+<h3>Functions</h3>
+<section id="b_traps_getDeps" class="level4">
+<h4>b_traps_getDeps</h4>
+<p><small><em>traps/b_traps_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_traps_getCodeFor" class="level4">
+<h4>b_traps_getCodeFor [signal]</h4>
+<p><small><em>traps/b_traps_getCodeFor</em></small></p>
+<p>Retrieve the current trap code / commands for the given signal.</p>
+<p><span class="ret"><strong>returns</strong>: The current code and sets a zero exit code on success.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_traps_add" class="level4">
+<h4>b_traps_add [code] [signal] [tag]</h4>
+<p><small><em>traps/b_traps_add</em></small></p>
+<p>Add the given commands to the given trap signal.</p>
+<p><span class="par">[code]: Whatever should be added to the trap.</span></p>
+<p><span class="par">[signal]: Name of the signal to add the commands to.</span></p>
+<p><span class="par">[tag]: An optional <em>unique</em> marker for these commands so that they can be removed with <a href="#b_traps_remove">b_traps_remove</a> later on.</span></p>
+<p><span class="ret"><strong>returns</strong>: Whatever the internal call to <em>trap</em> to set the new trap returns.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_traps_remove" class="level4">
+<h4>b_traps_remove [signal] [tag]</h4>
+<p><small><em>traps/b_traps_remove</em></small></p>
+<p>Remove the commands tagged with the given tag from the signal trap.</p>
+<p><span class="par">[signal]: Name of the signal to remove the commands from.</span></p>
+<p><span class="par">[tag]: The <em>unique</em> marker to identify the commands to be removed.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code on success. May error out if the tag isn't found or the internal trap call failed.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
+<section id="types" class="level2">
+<h2>types</h2>
+<p>Functions for data type checks and conversions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-14" class="level3">
+<h3>Dependencies</h3>
+<p>mktemp<br />
+mkfifo<br />
+rm<br />
+wc<br />
+strings<br />
+tee<br />
+head</p>
+</section>
+<section id="imports-15" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="global-variables-3" class="level3">
+<h3>Global Variables</h3>
+<section id="B_TYPES_ENCODINGS" class="level4">
+<h4>B_TYPES_ENCODINGS</h4>
+<p><small><em>types/B_TYPES_ENCODINGS</em></small></p>
+<p>Global map for human readable string encodings which can be used for <a href="#b_typesParseString">b_types_parseString</a>.<br />
+Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-bit-bigendian|32-bit-littleendian<br />
+See the strings manpage for further explanations.</p>
+</section>
+</section>
+<section id="functions-15" class="level3">
+<h3>Functions</h3>
+<section id="b_types_getDeps" class="level4">
+<h4>b_types_getDeps</h4>
+<p><small><em>types/b_types_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_types_parseString" class="level4">
+<h4>b_types_parseString [encoding]</h4>
+<p><small><em>types/b_types_parseString</em></small></p>
+<p>Checks whether whatever is lying in stdin is a string (and not binary) and if so, prints it to stdout.</p>
+<p><strong>Important</strong>:</p>
+<ul>
+<li>bash has major issues whenever binary data is involved. For example equality checks may return undefined results. So whenever you are unsure as to whether a variable is a string or not, better pass it thorugh this function.</li>
+<li>The input is taken from <em>stdin</em> rather than as parameter as binary parameters may also cause issues (special bytes etc.).</li>
+<li>Even builtins such as <code>echo</code> do not necessarily play well with binary data. So it is recommended to pipe binary data through this function before further processing.</li>
+</ul>
+<p>Examples:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="co">#check a file</span>
+ <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span>
+
+ <span class="co">#read parts of a file as string</span>
+ <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span>
+<span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></code></pre></div>
+<p><span class="par">[encoding]: The encoding of the string lying in stdin. Use <a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a> for this parameter. Defaults to ${B_TYPES_ENCODINGS[&quot;7-bit&quot;]}, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing.</span></p>
+<p><span class="ret"><strong>returns</strong>: The data as String, if the input data was found to be a String. If no String was found to be lying in stdin, the output is an undefined string and a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_types_isInteger" class="level4">
+<h4>b_types_isInteger [string]</h4>
+<p><small><em>types/b_types_isInteger</em></small></p>
+<p>Check whether the given String is an integer (positive or negative) or not.</p>
+<p><span class="par">[string]: The string to check. If it may be binary data, please make sure to pass it through <a href="#b_types_parseString">b_types_parseString</a> first.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code if and only if the given string represents an integer.</span></p>
+</section>
+</section>
+</section>
+<section id="reflist" class="level2">
+<h2>Reference List</h2>
+<p><a href="#b_arr_contains">b_arr_contains</a></p>
+<p><a href="#b_arr_getDeps">b_arr_getDeps</a></p>
+<p><a href="#b_arr_join">b_arr_join</a></p>
+<p><a href="#b_blib_getDeps">b_blib_getDeps</a></p>
+<p><a href="#B_CALLER_NAME">B_CALLER_NAME</a></p>
+<p><a href="#b_cdoc_cbPrintFirstParam">b_cdoc_cbPrintFirstParam</a></p>
+<p><a href="#b_cdoc_cbPrintNewline">b_cdoc_cbPrintNewline</a></p>
+<p><a href="#b_cdoc_generate">b_cdoc_generate</a></p>
+<p><a href="#b_cdoc_generateBlibStyle">b_cdoc_generateBlibStyle</a></p>
+<p><a href="#b_cdoc_getDeps">b_cdoc_getDeps</a></p>
+<p><a href="#b_cdoc_getDocumentBeginCallback">b_cdoc_getDocumentBeginCallback</a></p>
+<p><a href="#b_cdoc_getDocumentEndCallback">b_cdoc_getDocumentEndCallback</a></p>
+<p><a href="#b_cdoc_getExtractionRegex">b_cdoc_getExtractionRegex</a></p>
+<p><a href="#b_cdoc_getFileFilterCallback">b_cdoc_getFileFilterCallback</a></p>
+<p><a href="#b_cdoc_getPostProcessingCallback">b_cdoc_getPostProcessingCallback</a></p>
+<p><a href="#b_cdoc_getSpaceCallback">b_cdoc_getSpaceCallback</a></p>
+<p><a href="#b_cdoc_setDocumentBeginCallback">b_cdoc_setDocumentBeginCallback</a></p>
+<p><a href="#b_cdoc_setDocumentEndCallback">b_cdoc_setDocumentEndCallback</a></p>
+<p><a href="#b_cdoc_setExtractionRegex">b_cdoc_setExtractionRegex</a></p>
+<p><a href="#b_cdoc_setFileFilterCallback">b_cdoc_setFileFilterCallback</a></p>
+<p><a href="#b_cdoc_setPostProcessingCallback">b_cdoc_setPostProcessingCallback</a></p>
+<p><a href="#b_cdoc_setSpaceCallback">b_cdoc_setSpaceCallback</a></p>
+<p><a href="#b_checkDeps">b_checkDeps</a></p>
+<p><a href="#b_date_addDays">b_date_addDays</a></p>
+<p><a href="#b_date_diffSeconds">b_date_diffSeconds</a></p>
+<p><a href="#b_date_getDeps">b_date_getDeps</a></p>
+<p><a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></p>
+<p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
+<p><a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a></p>
+<p><a href="#b_dom0_copy">b_dom0_copy</a></p>
+<p><a href="#b_dom0_createLoopDeviceIfNecessary">b_dom0_createLoopDeviceIfNecessary</a></p>
+<p><a href="#b_dom0_crossAttachFile">b_dom0_crossAttachFile</a></p>
+<p><a href="#b_dom0_crossCopy">b_dom0_crossCopy</a></p>
+<p><a href="#b_dom0_detachDevice">b_dom0_detachDevice</a></p>
+<p><a href="#b_dom0_ensureRunning">b_dom0_ensureRunning</a></p>
+<p><a href="#b_dom0_execFuncIn">b_dom0_execFuncIn</a></p>
+<p><a href="#b_dom0_execIn">b_dom0_execIn</a></p>
+<p><a href="#b_dom0_execStrIn">b_dom0_execStrIn</a></p>
+<p><a href="#b_dom0_exists">b_dom0_exists</a></p>
+<p><a href="#b_dom0_getDeps">b_dom0_getDeps</a></p>
+<p><a href="#b_dom0_getDispVMs">b_dom0_getDispVMs</a></p>
+<p><a href="#b_dom0_isMountedIn">b_dom0_isMountedIn</a></p>
+<p><a href="#b_dom0_isRunning">b_dom0_isRunning</a></p>
+<p><a href="#b_dom0_mountIfNecessary">b_dom0_mountIfNecessary</a></p>
+<p><a href="#b_dom0_openLuks">b_dom0_openLuks</a></p>
+<p><a href="#b_dom0_qvmRun">b_dom0_qvmRun</a></p>
+<p><a href="#b_dom0_startDispVM">b_dom0_startDispVM</a></p>
+<p><a href="#b_dom0_waitForFileIn">b_dom0_waitForFileIn</a></p>
+<p><a href="#B_E">B_E</a></p>
+<p><a href="#b_enforceUser">b_enforceUser</a></p>
+<p><a href="#B_ERR">B_ERR</a></p>
+<p><a href="#b_execFuncAs">b_execFuncAs</a></p>
+<p><a href="#b_flog_close">b_flog_close</a></p>
+<p><a href="#b_flog_defaultHeader">b_flog_defaultHeader</a></p>
+<p><a href="#b_flogErrorHandler">b_flogErrorHandler</a></p>
+<p><a href="#b_flog_getDateFormat">b_flog_getDateFormat</a></p>
+<p><a href="#b_flog_getDeps">b_flog_getDeps</a></p>
+<p><a href="#b_flog_getHeaderFunction">b_flog_getHeaderFunction</a></p>
+<p><a href="#b_flog_getLogReductionLinesLowerBound">b_flog_getLogReductionLinesLowerBound</a></p>
+<p><a href="#b_flog_getLogReductionLinesUpperBound">b_flog_getLogReductionLinesUpperBound</a></p>
+<p><a href="#b_flog_headerDateScriptSeverity">b_flog_headerDateScriptSeverity</a></p>
+<p><a href="#b_flog_headerDateSeverity">b_flog_headerDateSeverity</a></p>
+<p><a href="#b_flog_init">b_flog_init</a></p>
+<p><a href="#b_flog_log">b_flog_log</a></p>
+<p><a href="#b_flog_printSeverity">b_flog_printSeverity</a></p>
+<p><a href="#b_flog_setDateFormat">b_flog_setDateFormat</a></p>
+<p><a href="#b_flog_setHeaderFunction">b_flog_setHeaderFunction</a></p>
+<p><a href="#b_flog_setLogReductionLinesApprox">b_flog_setLogReductionLinesApprox</a></p>
+<p><a href="#b_flog_setLogReductionLinesLowerBound">b_flog_setLogReductionLinesLowerBound</a></p>
+<p><a href="#b_flog_setLogReductionLinesUpperBound">b_flog_setLogReductionLinesUpperBound</a></p>
+<p><a href="#B_FLOG_SEV">B_FLOG_SEV</a></p>
+<p><a href="#b_fs_createLoopDeviceIfNecessary">b_fs_createLoopDeviceIfNecessary</a></p>
+<p><a href="#b_fs_getDeps">b_fs_getDeps</a></p>
+<p><a href="#b_fs_getLastModifiedInDays">b_fs_getLastModifiedInDays</a></p>
+<p><a href="#b_fs_getLineCount">b_fs_getLineCount</a></p>
+<p><a href="#b_fs_getMountpoints">b_fs_getMountpoints</a></p>
+<p><a href="#b_fs_isEmptyDir">b_fs_isEmptyDir</a></p>
+<p><a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a></p>
+<p><a href="#b_fs_waitForFile">b_fs_waitForFile</a></p>
+<p><a href="#b_generateStandalone">b_generateStandalone</a></p>
+<p><a href="#b_getBlibModules">b_getBlibModules</a></p>
+<p><a href="#b_getErrorHandler">b_getErrorHandler</a></p>
+<p><a href="#b_http_getDeps">b_http_getDeps</a></p>
+<p><a href="#b_http_rawUrlDecode">b_http_rawUrlDecode</a></p>
+<p><a href="#b_http_rawUrlEncode">b_http_rawUrlEncode</a></p>
+<p><a href="#b_import">b_import</a></p>
+<p><a href="#b_info">b_info</a></p>
+<p><a href="#b_ini_get">b_ini_get</a></p>
+<p><a href="#b_ini_getBool">b_ini_getBool</a></p>
+<p><a href="#b_ini_getDeps">b_ini_getDeps</a></p>
+<p><a href="#b_ini_getInt">b_ini_getInt</a></p>
+<p><a href="#b_ini_getString">b_ini_getString</a></p>
+<p><a href="#b_ini_read">b_ini_read</a></p>
+<p><a href="#b_isFunction">b_isFunction</a></p>
+<p><a href="#b_isModule">b_isModule</a></p>
+<p><a href="#b_listContains">b_listContains</a></p>
+<p><a href="#b_mtx_create">b_mtx_create</a></p>
+<p><a href="#b_mtx_forceRelease">b_mtx_forceRelease</a></p>
+<p><a href="#b_mtx_getDeps">b_mtx_getDeps</a></p>
+<p><a href="#b_mtx_getSleepTime">b_mtx_getSleepTime</a></p>
+<p><a href="#b_mtx_release">b_mtx_release</a></p>
+<p><a href="#b_mtx_setSleepTime">b_mtx_setSleepTime</a></p>
+<p><a href="#b_mtx_try">b_mtx_try</a></p>
+<p><a href="#b_mtx_waitFor">b_mtx_waitFor</a></p>
+<p><a href="#b_nop">b_nop</a></p>
+<p><a href="#b_osid_getDeps">b_osid_getDeps</a></p>
+<p><a href="#b_osid_init">b_osid_init</a></p>
+<p><a href="#b_osid_isCentOS">b_osid_isCentOS</a></p>
+<p><a href="#b_osid_isDebian">b_osid_isDebian</a></p>
+<p><a href="#b_osid_isDebianLike">b_osid_isDebianLike</a></p>
+<p><a href="#b_osid_isFedora">b_osid_isFedora</a></p>
+<p><a href="#b_osid_isFedoraLike">b_osid_isFedoraLike</a></p>
+<p><a href="#b_osid_isOpenSuse">b_osid_isOpenSuse</a></p>
+<p><a href="#b_osid_isQubesDom0">b_osid_isQubesDom0</a></p>
+<p><a href="#b_osid_isQubesVM">b_osid_isQubesVM</a></p>
+<p><a href="#b_osid_isRedHat">b_osid_isRedHat</a></p>
+<p><a href="#b_osid_isUbuntu">b_osid_isUbuntu</a></p>
+<p><a href="#b_printStackTrace">b_printStackTrace</a></p>
+<p><a href="#b_proc_getDeps">b_proc_getDeps</a></p>
+<p><a href="#b_proc_pidExists">b_proc_pidExists</a></p>
+<p><a href="#b_proc_waitForPid">b_proc_waitForPid</a></p>
+<p><a href="#B_RC">B_RC</a></p>
+<p><a href="#b_resetErrorHandler">b_resetErrorHandler</a></p>
+<p><a href="#B_SCRIPT">B_SCRIPT</a></p>
+<p><a href="#B_SCRIPT_DIR">B_SCRIPT_DIR</a></p>
+<p><a href="#B_SCRIPT_NAME">B_SCRIPT_NAME</a></p>
+<p><a href="#b_setBE">b_setBE</a></p>
+<p><a href="#b_setErrorHandler">b_setErrorHandler</a></p>
+<p><a href="#b_silence">b_silence</a></p>
+<p><a href="#b_str_getDeps">b_str_getDeps</a></p>
+<p><a href="#b_str_stripQuotes">b_str_stripQuotes</a></p>
+<p><a href="#b_str_trim">b_str_trim</a></p>
+<p><a href="#B_TCOLORS">B_TCOLORS</a></p>
+<p><a href="#b_tcolors_getDeps">b_tcolors_getDeps</a></p>
+<p><a href="#B_TEST_MODE">B_TEST_MODE</a></p>
+<p><a href="#b_traps_add">b_traps_add</a></p>
+<p><a href="#b_traps_getCodeFor">b_traps_getCodeFor</a></p>
+<p><a href="#b_traps_getDeps">b_traps_getDeps</a></p>
+<p><a href="#b_traps_remove">b_traps_remove</a></p>
+<p><a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a></p>
+<p><a href="#b_types_getDeps">b_types_getDeps</a></p>
+<p><a href="#b_types_isInteger">b_types_isInteger</a></p>
+<p><a href="#b_types_parseString">b_types_parseString</a></p>
+<p><a href="#b_version">b_version</a></p>
+</section>
+</body>
+</html>
