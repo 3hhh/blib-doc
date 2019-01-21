@@ -262,6 +262,11 @@ This variable may be used to bypass code during testing, if bats cannot test tha
 <p>Can be used to set the return code for <a href="#B_E">B_E</a> in the case of an error. It defaults to 1.</p>
 <p>This should be set to an integer value between 1 and 255. Any other value may cause undefined behaviour.</p>
 </section>
+<section id="B_LIB_DIR" class="level4">
+<h4>B_LIB_DIR</h4>
+<p><small><em>blib/B_LIB_DIR</em></small></p>
+<p>Path of the blib installation directory.</p>
+</section>
 <section id="B_SCRIPT" class="level4">
 <h4>B_SCRIPT</h4>
 <p><small><em>blib/B_SCRIPT</em></small></p>
@@ -1514,17 +1519,28 @@ This should <em>not</em> be checked too often as it may be expensive.</p>
 <p><span class="par">[vm]: The VM to check.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM exists a non-zero exit code otherwise.</span></p>
 </section>
-<section id="b_dom0_openLuks" class="level4">
-<h4>b_dom0_openLuks [vm] [device] [luks name] [rw flag] [mount point] [optional: key file]</h4>
-<p><small><em>os/qubes4/dom0/b_dom0_openLuks</em></small></p>
-<p>In the given VM, open the given luks device and mount it to the mount point.</p>
-<p><span class="par">[vm]: The VM where to open the luks device.</span></p>
-<p><span class="par">[device]: Full path to the device (incl. /dev/) to check.</span></p>
-<p><span class="par">[luks name]: The name to assign to the decrypted version of the luks block device. The created decrypted device will be found at <em>/dev/mapper/[luks name]</em>.</span></p>
-<p><span class="par">[rw flag]: 0=open read-write (for luks), 1=open read-only (default: 0)</span></p>
-<p><span class="par">[mount point]: Where to mount the luks device to. Non-existing directories will be created. If no mount point is specified, it will not be mounted (default).</span></p>
+<section id="b_dom0_openCrypt" class="level4">
+<h4>b_dom0_openCrypt [vm] [device] [mapper name] [rw flag] [mount point] [key file] [type]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_openCrypt</em></small></p>
+<p>In the given VM, open the given crypto device with dm-crypt and mount it to the mount point.</p>
+<p><span class="par">[vm]: The VM where to open the crypto device.</span></p>
+<p><span class="par">[device]: Full path to the device (incl. /dev/) to open.</span></p>
+<p><span class="par">[mapper name]: The name to assign to the decrypted version of the crypto block device. The created decrypted device will be found at <em>/dev/mapper/[mapper name]</em>.</span></p>
+<p><span class="par">[rw flag]: 0=open read-write, 1=open read-only (default: 0)</span></p>
+<p><span class="par">[mount point]: Where to mount the decrypted data to. Non-existing directories will be created. If no mount point is specified, it will not be mounted (default).</span></p>
 <p><span class="par">[key file]: Full vm path to the key to use for decryption. If none is specified, password-based decryption is assumed and stdin will be read to obtain the password.</span></p>
+<p><span class="par">[type]: Type of encryption container to open: plain|luks|loopaes|tcrypt (default: luks)</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing (except for user interaction prompts if no key file is provided), but sets a non-zero exit code on errors</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_closeCrypt" class="level4">
+<h4>b_dom0_closeCrypt [vm] [mapper name] [mount point]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_closeCrypt</em></small></p>
+<p>Close a crypto device opened with <a href="#b_dom0_openCrypt">b_dom0_openCrypt</a>.</p>
+<p><span class="par">[vm]: The VM where to close the crypto device.</span></p>
+<p><span class="par">[mapper name]: The name used when it was opened.</span></p>
+<p><span class="par">[mount point]: If the decrypted data is mounted inside the [vm], please specify the mount point here so that it can be unmounted before closing the device. Otherwise the function will attempt to close the device without unmounting (likely to fail).</span></p>
+<p><span class="ret"><strong>returns</strong>: nothing, but sets a non-zero exit code on errors</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_attachFile" class="level4">
@@ -1550,6 +1566,18 @@ This should <em>not</em> be checked too often as it may be expensive.</p>
 <p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_dom0_crossAttachDevice" class="level4">
+<h4>b_dom0_crossAttachDevice [source VM] [source device] [target VM] [rw flag]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_crossAttachDevice</em></small></p>
+<p>Attach the given block device from the source VM to the target VM.</p>
+<p>This is merely a convenience wrapper for <code>qvm-block attach</code>.</p>
+<p><span class="par">[source VM]: VM where the source file can be found.</span></p>
+<p><span class="par">[source device]: Device to attach to the [target VM].</span></p>
+<p><span class="par">[target VM]: VM to attach the device to. Must be started.</span></p>
+<p><span class="par">[rw flag]: If set to 0, attaches the [source deivce] in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
+<p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 <section id="b_dom0_crossAttachFile" class="level4">
 <h4>b_dom0_crossAttachFile [source VM] [source file] [target VM] [rw flag]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_crossAttachFile</em></small></p>
@@ -1557,7 +1585,7 @@ This should <em>not</em> be checked too often as it may be expensive.</p>
 <p><span class="par">[source VM]: VM where the source file can be found.</span></p>
 <p><span class="par">[source file]: File to attach as block device.</span></p>
 <p><span class="par">[target VM]: VM to attach the file to. Must be started.</span></p>
-<p><span class="par">[rw flag]: If set to 0, attaches the dom0 file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
+<p><span class="par">[rw flag]: If set to 0, attaches the [source file] in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
 <p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2070,8 +2098,10 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></p>
 <p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
 <p><a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a></p>
+<p><a href="#b_dom0_closeCrypt">b_dom0_closeCrypt</a></p>
 <p><a href="#b_dom0_copy">b_dom0_copy</a></p>
 <p><a href="#b_dom0_createLoopDeviceIfNecessary">b_dom0_createLoopDeviceIfNecessary</a></p>
+<p><a href="#b_dom0_crossAttachDevice">b_dom0_crossAttachDevice</a></p>
 <p><a href="#b_dom0_crossAttachFile">b_dom0_crossAttachFile</a></p>
 <p><a href="#b_dom0_crossCopy">b_dom0_crossCopy</a></p>
 <p><a href="#b_dom0_detachDevice">b_dom0_detachDevice</a></p>
@@ -2085,7 +2115,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_dom0_isMountedIn">b_dom0_isMountedIn</a></p>
 <p><a href="#b_dom0_isRunning">b_dom0_isRunning</a></p>
 <p><a href="#b_dom0_mountIfNecessary">b_dom0_mountIfNecessary</a></p>
-<p><a href="#b_dom0_openLuks">b_dom0_openLuks</a></p>
+<p><a href="#b_dom0_openCrypt">b_dom0_openCrypt</a></p>
 <p><a href="#b_dom0_qvmRun">b_dom0_qvmRun</a></p>
 <p><a href="#b_dom0_startDispVM">b_dom0_startDispVM</a></p>
 <p><a href="#b_dom0_waitForFileIn">b_dom0_waitForFileIn</a></p>
@@ -2136,6 +2166,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_ini_read">b_ini_read</a></p>
 <p><a href="#b_isFunction">b_isFunction</a></p>
 <p><a href="#b_isModule">b_isModule</a></p>
+<p><a href="#B_LIB_DIR">B_LIB_DIR</a></p>
 <p><a href="#b_listContains">b_listContains</a></p>
 <p><a href="#b_mtx_create">b_mtx_create</a></p>
 <p><a href="#b_mtx_forceRelease">b_mtx_forceRelease</a></p>
