@@ -102,46 +102,51 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#imports-7">Imports</a></li>
 <li><a href="#functions-7">Functions</a></li>
 </ul></li>
-<li><a href="#mtx">mtx</a><ul>
+<li><a href="#ipcv">ipcv</a><ul>
 <li><a href="#dependencies-8">Dependencies</a></li>
 <li><a href="#imports-8">Imports</a></li>
 <li><a href="#functions-8">Functions</a></li>
 </ul></li>
-<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#mtx">mtx</a><ul>
 <li><a href="#dependencies-9">Dependencies</a></li>
 <li><a href="#imports-9">Imports</a></li>
 <li><a href="#functions-9">Functions</a></li>
 </ul></li>
-<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#dependencies-10">Dependencies</a></li>
 <li><a href="#imports-10">Imports</a></li>
 <li><a href="#functions-10">Functions</a></li>
 </ul></li>
-<li><a href="#proc">proc</a><ul>
-<li><a href="#dependencies-10">Dependencies</a></li>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#imports-11">Imports</a></li>
 <li><a href="#functions-11">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#proc">proc</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
 <li><a href="#imports-12">Imports</a></li>
 <li><a href="#functions-12">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-12">Dependencies</a></li>
 <li><a href="#imports-13">Imports</a></li>
-<li><a href="#global-variables-2">Global Variables</a></li>
 <li><a href="#functions-13">Functions</a></li>
 </ul></li>
-<li><a href="#traps">traps</a><ul>
+<li><a href="#tcolors">tcolors</a><ul>
 <li><a href="#dependencies-13">Dependencies</a></li>
 <li><a href="#imports-14">Imports</a></li>
+<li><a href="#global-variables-2">Global Variables</a></li>
 <li><a href="#functions-14">Functions</a></li>
 </ul></li>
-<li><a href="#types">types</a><ul>
+<li><a href="#traps">traps</a><ul>
 <li><a href="#dependencies-14">Dependencies</a></li>
 <li><a href="#imports-15">Imports</a></li>
-<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-15">Functions</a></li>
+</ul></li>
+<li><a href="#types">types</a><ul>
+<li><a href="#dependencies-15">Dependencies</a></li>
+<li><a href="#imports-16">Imports</a></li>
+<li><a href="#global-variables-3">Global Variables</a></li>
+<li><a href="#functions-16">Functions</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
 </ul>
@@ -1125,6 +1130,81 @@ mount</p>
 </section>
 </section>
 </section>
+<section id="ipcv" class="level2">
+<h2>ipcv</h2>
+<p>Provides means for inter-process communication (ipc) via global bash variables (v).</p>
+<p>This implementation uses shared memory, i.e. it should be reasonably fast.</p>
+<p>Only a single process or thread is assumed to be writing (i.e. use <a href="#b_ipcv_save">b_ipcv_save</a>) a variable at a time and multiple processes may read it (using e.g. <a href="#b_ipcv_load">b_ipcv_load</a>). If you need to write a single variable from multiple processes, please consider using the <a href="#mtx">mtx</a> module or similar locking means in combination with this module.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.3</p>
+<section id="dependencies-8" class="level3">
+<h3>Dependencies</h3>
+<p>findmnt<br />
+mkdir<br />
+mktemp<br />
+mv<br />
+rm</p>
+</section>
+<section id="imports-8" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-8" class="level3">
+<h3>Functions</h3>
+<section id="b_ipcv_getDeps" class="level4">
+<h4>b_ipcv_getDeps</h4>
+<p><small><em>ipcv/b_ipcv_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_ipcv_save" class="level4">
+<h4>b_ipcv_save [namespace] [var name 1] .. [var name n]</h4>
+<p><small><em>ipcv/b_ipcv_save</em></small></p>
+<p>Save the current values of the given variables so that they are made available for other processes under the given namespace.</p>
+<p>Please note that each variable is saved atomically, but individually. I.e. if you need multiple values to be updated at the same time, please use a single variable (e.g. a map).</p>
+<p><span class="par">[namespace]: Name for a common group under which the given variables should be saved. The combination of [namespace] and [variable name] must be a unique identifier across all processes running on the system.</span></p>
+<p><span class="par">[var name i]: The name of the global variable to make accessible for other processes. An arbitrary number of variable names can be specified.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, but a non-zero exit code indicates failed variable save attempts. A failed save attempt also triggers <a href="#B_E">B_E</a>.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_ipcv_load" class="level4">
+<h4>b_ipcv_load [namespace] [var name 1] .. [var name n]</h4>
+<p><small><em>ipcv/b_ipcv_load</em></small></p>
+<p>Load the given variables from the given namespace into the current process context.</p>
+<p><span class="par">[namespace]: Name of the group under which the variable was saved with <a href="#b_ipcv_save">b_ipcv_save</a>.</span></p>
+<p><span class="par">[var name i]: Name of the variable to load. Multiple names can be specified.</span></p>
+<p><span class="ret"><strong>returns</strong>: A non-zero exit code indicates the number of variables that could not be loaded unless some unexpected error occurred and <a href="#B_E">B_E</a> is triggered. Please note that a failed load attempt/unavailable variable does generally not trigger <a href="#B_E">B_E</a>.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_ipcv_loadNamespace" class="level4">
+<h4>b_ipcv_loadNamespace [namespace]</h4>
+<p><small><em>ipcv/b_ipcv_loadNamespace</em></small></p>
+<p>Load all variables that can be loaded for the given namespace into the current process context.</p>
+<p><span class="par">[namespace]: Name of the group for which to load all available variables.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success. Failing to load any single available variable will always trigger <a href="#B_E">B_E</a>.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_ipcv_unset" class="level4">
+<h4>b_ipcv_unset [namespace] [var name 1] .. [var name n]</h4>
+<p><small><em>ipcv/b_ipcv_unset</em></small></p>
+<p>Unset/Remove the given variables from the global namespace.<br />
+Please note that the variables will remain set in your current process context, if they were set before. Use the standard bash <code>unset</code> for that.</p>
+<p><span class="par">[namespace]: Group where the given variables belong to.</span></p>
+<p><span class="par">[var name i]: Name of the variable to remove. Multiple may be specified.</span></p>
+<p><span class="ret"><strong>returns</strong>: The number of variables which could not be unset. <a href="#B_E">B_E</a> is not triggered for these.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_ipcv_unsetNamespace" class="level4">
+<h4>b_ipcv_unsetNamespace [namespace]</h4>
+<p><small><em>ipcv/b_ipcv_unsetNamespace</em></small></p>
+<p>Remove the given global namespace and all variables it contains.<br />
+Please note that the variables will remain set in your current process context, if they were set before. Use the standard bash <code>unset</code> for that.</p>
+<p><span class="par">[namespace]: To remove.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code only upon successful removal. Otherwise <a href="#B_E">B_E</a> is triggered.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
 <section id="mtx" class="level2">
 <h2>mtx</h2>
 <p>Collection of mutex related functions.</p>
@@ -1132,7 +1212,7 @@ mount</p>
 Lock: A specific maximum number of processes may have it at any point in time.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-8" class="level3">
+<section id="dependencies-9" class="level3">
 <h3>Dependencies</h3>
 <p>mkdir<br />
 touch<br />
@@ -1142,11 +1222,11 @@ rmdir<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-8" class="level3">
+<section id="imports-9" class="level3">
 <h3>Imports</h3>
 <p>proc</p>
 </section>
-<section id="functions-8" class="level3">
+<section id="functions-9" class="level3">
 <h3>Functions</h3>
 <section id="b_mtx_getDeps" class="level4">
 <h4>b_mtx_getDeps</h4>
@@ -1228,15 +1308,15 @@ mktemp</p>
 <p>Functions for operating system identification.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-9" class="level3">
+<section id="dependencies-10" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-9" class="level3">
+<section id="imports-10" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-9" class="level3">
+<section id="functions-10" class="level3">
 <h3>Functions</h3>
 <section id="b_osid_getDeps" class="level4">
 <h4>b_osid_getDeps</h4>
@@ -1319,13 +1399,13 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="imports-10" class="level3">
+<section id="imports-11" class="level3">
 <h3>Imports</h3>
 <p>fs<br />
 proc<br />
 types</p>
 </section>
-<section id="functions-10" class="level3">
+<section id="functions-11" class="level3">
 <h3>Functions</h3>
 <section id="b_dom0_getDeps" class="level4">
 <h4>b_dom0_getDeps</h4>
@@ -1446,18 +1526,19 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_copy" class="level4">
-<h4>b_dom0_copy [dom0 file] [target VM] [target VM dir] [overwrite]</h4>
+<h4>b_dom0_copy [dom0 file] [target VM] [target VM dir] [overwrite] [parent dir]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_copy</em></small></p>
 <p>Grab a file or directory in dom0 and push it to the given file path in the target VM.</p>
 <p><span class="par">[dom0 file]: location of the dom0 file or directory to read from, assumed to exist</span></p>
 <p><span class="par">[target VM]: VM to write to, assumed to exist. Must be started.</span></p>
 <p><span class="par">[target VM dir]: full path to the parent directory in the target VM to copy the file or directory to; non-existing parent directories are created; the name is taken from the name of the file/directory in dom0</span></p>
 <p><span class="par">[overwrite]: Whether or not to overwrite an existing [destination file] (default: 0 = overwrite).</span></p>
+<p><span class="par">[parent dir]: Set this to 0, if the [target VM dir] is the target <em>parent</em> directory (default) and to 1 if it includes the target file or folder <em>name</em> as last element.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets an exit code of 0, if everything went fine, and a non-zero exit code otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_crossCopy" class="level4">
-<h4>b_dom0_crossCopy [source VM] [source file] [target VM] [target VM dir] [overwrite]</h4>
+<h4>b_dom0_crossCopy [source VM] [source file] [target VM] [target VM dir] [overwrite] [parent dir]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_crossCopy</em></small></p>
 <p>Cross copy a file or directory from one VM to another, initiated by dom0. No user prompt is displayed.</p>
 <p><span class="par">[source VM]: Where to copy the source file from. Must be started.</span></p>
@@ -1465,6 +1546,7 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="par">[target VM]: Where to copy the file to. Must be started.</span></p>
 <p><span class="par">[target VM dir]: full path to the parent directory in the target VM to copy the file or directory to; non-existing parent directories are created; the name is taken from the name of the file/directory in dom0</span></p>
 <p><span class="par">[overwrite]: Whether or not to overwrite an existing [destination file] (default: 0 = overwrite).</span></p>
+<p><span class="par">[parent dir]: Set this to 0, if the [target VM dir] is the target <em>parent</em> directory (default) and to 1 if it includes the target file or folder <em>name</em> as last element.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets an exit code of 0, if everything went fine, and a non-zero exit code otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM was successfully started or was running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> will only be called for internal errors.</span></p>
@@ -1580,16 +1662,16 @@ This should <em>not</em> be checked too often as it may be expensive.</p>
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-10" class="level3">
+<section id="dependencies-11" class="level3">
 <h3>Dependencies</h3>
 <p>tail<br />
 timeout</p>
 </section>
-<section id="imports-11" class="level3">
+<section id="imports-12" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-11" class="level3">
+<section id="functions-12" class="level3">
 <h3>Functions</h3>
 <section id="b_proc_getDeps" class="level4">
 <h4>b_proc_getDeps</h4>
@@ -1619,15 +1701,15 @@ timeout</p>
 <p>Collection of string related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-11" class="level3">
+<section id="dependencies-12" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-12" class="level3">
+<section id="imports-13" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-12" class="level3">
+<section id="functions-13" class="level3">
 <h3>Functions</h3>
 <section id="b_str_getDeps" class="level4">
 <h4>b_str_getDeps</h4>
@@ -1659,11 +1741,11 @@ timeout</p>
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-12" class="level3">
+<section id="dependencies-13" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
-<section id="imports-13" class="level3">
+<section id="imports-14" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -1676,7 +1758,7 @@ timeout</p>
 Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 </section>
 </section>
-<section id="functions-13" class="level3">
+<section id="functions-14" class="level3">
 <h3>Functions</h3>
 <section id="b_tcolors_getDeps" class="level4">
 <h4>b_tcolors_getDeps</h4>
@@ -1691,15 +1773,15 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-13" class="level3">
+<section id="dependencies-14" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-14" class="level3">
+<section id="imports-15" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-14" class="level3">
+<section id="functions-15" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getDeps" class="level4">
 <h4>b_traps_getDeps</h4>
@@ -1715,13 +1797,25 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_traps_add" class="level4">
-<h4>b_traps_add [code] [signal] [tag]</h4>
+<h4>b_traps_add [code] [signal] [tag] [append flag]</h4>
 <p><small><em>traps/b_traps_add</em></small></p>
 <p>Add the given commands to the given trap signal.</p>
 <p><span class="par">[code]: Whatever should be added to the trap.</span></p>
 <p><span class="par">[signal]: Name of the signal to add the commands to.</span></p>
 <p><span class="par">[tag]: An optional <em>unique</em> marker for these commands so that they can be removed with <a href="#b_traps_remove">b_traps_remove</a> later on.</span></p>
+<p><span class="par">[append flag]: Whether to append the new commands to the end (0: default) or insert them in the beginning (1).</span></p>
 <p><span class="ret"><strong>returns</strong>: Whatever the internal call to <em>trap</em> to set the new trap returns.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_traps_prepend" class="level4">
+<h4>b_traps_prepend [code] [signal] [tag]</h4>
+<p><small><em>traps/b_traps_prepend</em></small></p>
+<p>Prepend the given commands to the ones currently existing for the given trap signal.</p>
+<p>Convenience wrapper to <a href="#b_traps_add">b_traps_add</a> with [append flag] set to 1.</p>
+<p><span class="par">[code]: see <a href="#b_traps_add">b_traps_add</a></span></p>
+<p><span class="par">[signal]: see <a href="#b_traps_add">b_traps_add</a></span></p>
+<p><span class="par">[tag]: see <a href="#b_traps_add">b_traps_add</a></span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_traps_add">b_traps_add</a></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_traps_remove" class="level4">
@@ -1740,7 +1834,7 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-14" class="level3">
+<section id="dependencies-15" class="level3">
 <h3>Dependencies</h3>
 <p>mktemp<br />
 mkfifo<br />
@@ -1750,7 +1844,7 @@ strings<br />
 tee<br />
 head</p>
 </section>
-<section id="imports-15" class="level3">
+<section id="imports-16" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -1764,7 +1858,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-15" class="level3">
+<section id="functions-16" class="level3">
 <h3>Functions</h3>
 <section id="b_types_getDeps" class="level4">
 <h4>b_types_getDeps</h4>
@@ -1899,6 +1993,12 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_ini_getInt">b_ini_getInt</a></p>
 <p><a href="#b_ini_getString">b_ini_getString</a></p>
 <p><a href="#b_ini_read">b_ini_read</a></p>
+<p><a href="#b_ipcv_getDeps">b_ipcv_getDeps</a></p>
+<p><a href="#b_ipcv_load">b_ipcv_load</a></p>
+<p><a href="#b_ipcv_loadNamespace">b_ipcv_loadNamespace</a></p>
+<p><a href="#b_ipcv_save">b_ipcv_save</a></p>
+<p><a href="#b_ipcv_unset">b_ipcv_unset</a></p>
+<p><a href="#b_ipcv_unsetNamespace">b_ipcv_unsetNamespace</a></p>
 <p><a href="#b_isFunction">b_isFunction</a></p>
 <p><a href="#b_isModule">b_isModule</a></p>
 <p><a href="#B_LIB_DIR">B_LIB_DIR</a></p>
@@ -1945,6 +2045,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_traps_add">b_traps_add</a></p>
 <p><a href="#b_traps_getCodeFor">b_traps_getCodeFor</a></p>
 <p><a href="#b_traps_getDeps">b_traps_getDeps</a></p>
+<p><a href="#b_traps_prepend">b_traps_prepend</a></p>
 <p><a href="#b_traps_remove">b_traps_remove</a></p>
 <p><a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a></p>
 <p><a href="#b_types_getDeps">b_types_getDeps</a></p>
