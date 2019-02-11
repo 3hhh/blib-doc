@@ -529,6 +529,15 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <p><span class="par">[array]: expanded array to check, e.g. &quot;${arr[@]}&quot;</span></p>
 <p><span class="ret"><strong>returns</strong>: an exit code of 0, if the element was found and 1 otherwise</span></p>
 </section>
+<section id="b_arr_mapsAreEqual" class="level4">
+<h4>b_arr_mapsAreEqual [map spec 1] [map spec 2]</h4>
+<p><small><em>arr/b_arr_mapsAreEqual</em></small></p>
+<p>Check whether the two given maps/associative arrays are equal.</p>
+<p><span class="par">[map spec 1]: First map specification to check. Since maps cannot be passed directly to functions in Bash 4.2, you'll have to use <code>&quot;$(declare -p &quot;yourmap&quot;)&quot;</code> instead.</span></p>
+<p><span class="par">[map spec 1]: Second map specification to check.</span></p>
+<p><span class="ret"><strong>returns</strong>: an exit code of 0, if the maps are equal and 1 otherwise; <a href="#B_E">B_E</a> is only triggered on programming errors</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 </section>
 </section>
 <section id="cdoc" class="level2">
@@ -1036,7 +1045,7 @@ mount</p>
 <section id="b_fs_createLoopDeviceIfNecessary" class="level4">
 <h4>b_fs_createLoopDeviceIfNecessary [file]</h4>
 <p><small><em>fs/b_fs_createLoopDeviceIfNecessary</em></small></p>
-<p>Create a loop device for the given file if no old one exists. May require root access rights.</p>
+<p>Create a loop device for the given file if no old one exists. Usually requires root access rights.</p>
 <p><span class="par">[file]: File for which to create a loop device.</span></p>
 <p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -1626,6 +1635,31 @@ This should <em>not</em> be checked too often as it may be expensive.</p>
 <p><span class="ret"><strong>returns</strong>: nothing, but sets a non-zero exit code on errors</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_dom0_parseQvmBlock" class="level4">
+<h4>b_dom0_parseQvmBlock [variable name] [input]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_parseQvmBlock</em></small></p>
+<p>Parse data from <code>qvm-block ls</code> to an associative array.<br />
+The indices of the associative array will be of the format <em>[counter]_[field]</em> (counters run from 0 (inclusive) to max (exclusive)).<br />
+The special index &quot;max&quot; is equal to the number of lines. It can be used for iterations over the map.<br />
+Currently supported [field] values: backend|device id|id|description|used by|read-only|frontend-dev</p>
+<p><span class="par">[variable name]: Name of the associative array to use as output.</span></p>
+<p><span class="par">[input]: Optional output from a previous <code>qvm-block ls</code> call; if none is specified, this function will execute the call and use its output.</span></p>
+<p><span class="ret"><strong>returns</strong>: A string specifying an associative array in bash syntax. You can eval that string to obtain all relevant data. On errors <a href="#B_E">B_E</a> is called.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_getQvmBlockInfo" class="level4">
+<h4>b_dom0_getQvmBlockInfo [input] [retrieve field] [filter field 1] [filter value 1] .. [filter field n] .. [filter value n]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_getQvmBlockInfo</em></small></p>
+<p>Convenience function to retrieve information from <code>qvm-block ls</code>.<br />
+Searches for the given filter values in the given fields and retrieves the first field value matching all filters.<br />
+More simple, but less flexible than <a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a>.</p>
+<p><span class="par">[input]: Optional output from a previous <code>qvm-block ls</code> call; if none is specified, this function will execute the call and use its output.</span></p>
+<p><span class="par">[retrieve field]: Name of the field to retrieve.</span></p>
+<p><span class="par">[filter field i]: Name of any field supported by <a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a>.</span></p>
+<p><span class="par">[filter value i]: The value to search for in [filter field i] (equality check).</span></p>
+<p><span class="ret"><strong>returns</strong>: The value of the requested field and sets a zero exit code on success. Sets a non-zero exit code if no matching value could be found. On errors <a href="#B_E">B_E</a> is called.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 <section id="b_dom0_attachFile" class="level4">
 <h4>b_dom0_attachFile [dom0 file] [target VM] [rw flag]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_attachFile</em></small></p>
@@ -2173,6 +2207,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_arr_contains">b_arr_contains</a></p>
 <p><a href="#b_arr_getDeps">b_arr_getDeps</a></p>
 <p><a href="#b_arr_join">b_arr_join</a></p>
+<p><a href="#b_arr_mapsAreEqual">b_arr_mapsAreEqual</a></p>
 <p><a href="#b_blib_getDeps">b_blib_getDeps</a></p>
 <p><a href="#B_CALLER_NAME">B_CALLER_NAME</a></p>
 <p><a href="#b_cdoc_cbPrintFirstParam">b_cdoc_cbPrintFirstParam</a></p>
@@ -2213,10 +2248,12 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_dom0_exists">b_dom0_exists</a></p>
 <p><a href="#b_dom0_getDeps">b_dom0_getDeps</a></p>
 <p><a href="#b_dom0_getDispVMs">b_dom0_getDispVMs</a></p>
+<p><a href="#b_dom0_getQvmBlockInfo">b_dom0_getQvmBlockInfo</a></p>
 <p><a href="#b_dom0_isMountedIn">b_dom0_isMountedIn</a></p>
 <p><a href="#b_dom0_isRunning">b_dom0_isRunning</a></p>
 <p><a href="#b_dom0_mountIfNecessary">b_dom0_mountIfNecessary</a></p>
 <p><a href="#b_dom0_openCrypt">b_dom0_openCrypt</a></p>
+<p><a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a></p>
 <p><a href="#b_dom0_qvmRun">b_dom0_qvmRun</a></p>
 <p><a href="#b_dom0_startDispVM">b_dom0_startDispVM</a></p>
 <p><a href="#b_dom0_waitForFileIn">b_dom0_waitForFileIn</a></p>
