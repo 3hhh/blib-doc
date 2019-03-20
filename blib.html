@@ -421,6 +421,7 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <p><span class="par">[module]: relative path of the module to import (relative to the blib/lib root directory)</span></p>
 <p><span class="par">[double import]: if set to 1, import the given module regardless of whether it was imported before (default: 0 = don't do duplicate imports)</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing, errors out if the import failed and sets a non-zero status code; if the import was successful or previously done, a zero exit code is set</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_generateStandalone" class="level4">
@@ -999,6 +1000,15 @@ mount</p>
 <p>Create a loop device for the given file if no old one exists. Usually requires root access rights.</p>
 <p><span class="par">[file]: File for which to create a loop device.</span></p>
 <p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_fs_parseSize" class="level4">
+<h4>b_fs_parseSize [string] [check flag]</h4>
+<p><small><em>fs/b_fs_parseSize</em></small></p>
+<p>Parse human-readable file system sizes that include units.</p>
+<p><span class="par">[string]: A string denoting a file system size of the format [number][unit]. Unit may be one of KB 1000, K 1024, MB 1000<em>1000, M 1024</em>1024, GB 1000<em>1000</em>1000, G 1024<em>1024</em>1024, and so on for T, P. If no unit is provided, the number is assumed to denote bytes.</span></p>
+<p><span class="par">[check flag]: Check whether the result makes sense (default: 0/true). This check will make integer overflows less likely.</span></p>
+<p><span class="ret"><strong>returns</strong>: The respective number of bytes meant with the given string. <a href="#B_E">B_E</a> is called on parsing errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -1604,8 +1614,8 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <h2>os/qubes4/dom0</h2>
 <p>Collection of functions supporting scripting in Qubes OS 4.x dom0.</p>
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.3</p>
+<p>Copyright (C) 2019 David Hobach LGPLv3<br />
+0.4</p>
 <section id="dependencies-13" class="level3">
 <h3>Dependencies</h3>
 <p>qvm-run<br />
@@ -1625,7 +1635,9 @@ cat<br />
 timeout<br />
 dd<br />
 tee<br />
-xxd</p>
+xxd<br />
+python3<br />
+kill</p>
 </section>
 <section id="imports-3" class="level3">
 <h3>Imports</h3>
@@ -1907,6 +1919,23 @@ This is merely a convenience wrapper for <code>qvm-block attach</code>.</p>
 <p><span class="ret"><strong>returns</strong>: nothing, but sets a zero exit code on success</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_dom0_enterEventLoop" class="level4">
+<h4>b_dom0_enterEventLoop [callback function]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_enterEventLoop</em></small></p>
+<p>Enter a blocking loop to react to Qubes OS events.</p>
+<p><span class="par">[callback function]: Name of the function to call for <em>every</em> Qubes OS event. Since the number of events may be high, the function should do appropriate filtering at high performance.</span><br />
+The callback function should be declared as follows:</p>
+<pre><code>callback_function_name [subject] [event name] [event info]
+[subject]: The subject name Qubes OS provides. Usually the VM for which the
+    event was reported. 'None' appears to mean 'dom0'.
+[event name]: Name of the event for which the callback function was called.
+[event info]: May contain additional information about the event (e.g.
+              arguments).
+returns:  Nothing. A non-zero exit code will abort further processing.</code></pre>
+<p>If you want to obtain an overview of Qubes OS events, please use the <code>qwatch</code> utility manually.</p>
+<p><span class="ret"><strong>returns</strong>: Nothing, but uses the exit code of the last callback function execution as its own. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 </section>
 </section>
 <section id="proc" class="level2">
@@ -2168,6 +2197,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_dom0_crossCopy">b_dom0_crossCopy</a></p>
 <p><a href="#b_dom0_detachDevice">b_dom0_detachDevice</a></p>
 <p><a href="#b_dom0_ensureRunning">b_dom0_ensureRunning</a></p>
+<p><a href="#b_dom0_enterEventLoop">b_dom0_enterEventLoop</a></p>
 <p><a href="#b_dom0_execFuncIn">b_dom0_execFuncIn</a></p>
 <p><a href="#b_dom0_execIn">b_dom0_execIn</a></p>
 <p><a href="#b_dom0_execStrIn">b_dom0_execStrIn</a></p>
@@ -2213,6 +2243,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_fs_getMountpoints">b_fs_getMountpoints</a></p>
 <p><a href="#b_fs_isEmptyDir">b_fs_isEmptyDir</a></p>
 <p><a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a></p>
+<p><a href="#b_fs_parseSize">b_fs_parseSize</a></p>
 <p><a href="#b_fs_waitForFile">b_fs_waitForFile</a></p>
 <p><a href="#b_generateStandalone">b_generateStandalone</a></p>
 <p><a href="#b_getBlibModules">b_getBlibModules</a></p>
