@@ -73,77 +73,83 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#dependencies-2">Dependencies</a></li>
 <li><a href="#functions-2">Functions</a></li>
 </ul></li>
-<li><a href="#date">date</a><ul>
+<li><a href="#daemon">daemon</a><ul>
 <li><a href="#dependencies-3">Dependencies</a></li>
-<li><a href="#functions-3">Functions</a></li>
-</ul></li>
-<li><a href="#flog">flog</a><ul>
-<li><a href="#dependencies-4">Dependencies</a></li>
 <li><a href="#imports">Imports</a></li>
 <li><a href="#global-variables-1">Global Variables</a></li>
+<li><a href="#functions-3">Functions</a></li>
+</ul></li>
+<li><a href="#date">date</a><ul>
+<li><a href="#dependencies-4">Dependencies</a></li>
 <li><a href="#functions-4">Functions</a></li>
 </ul></li>
-<li><a href="#fs">fs</a><ul>
+<li><a href="#flog">flog</a><ul>
 <li><a href="#dependencies-5">Dependencies</a></li>
+<li><a href="#imports-1">Imports</a></li>
+<li><a href="#global-variables-2">Global Variables</a></li>
 <li><a href="#functions-5">Functions</a></li>
 </ul></li>
-<li><a href="#http">http</a><ul>
+<li><a href="#fs">fs</a><ul>
 <li><a href="#dependencies-6">Dependencies</a></li>
-<li><a href="#global-variables-2">Global Variables</a></li>
 <li><a href="#functions-6">Functions</a></li>
 </ul></li>
-<li><a href="#ini">ini</a><ul>
+<li><a href="#http">http</a><ul>
 <li><a href="#dependencies-7">Dependencies</a></li>
+<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-7">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
+<li><a href="#ini">ini</a><ul>
 <li><a href="#dependencies-8">Dependencies</a></li>
-<li><a href="#imports-1">Imports</a></li>
 <li><a href="#functions-8">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
+<li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
 <li><a href="#dependencies-9">Dependencies</a></li>
+<li><a href="#imports-2">Imports</a></li>
 <li><a href="#functions-9">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
+<li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
 <li><a href="#dependencies-10">Dependencies</a></li>
-<li><a href="#imports-2">Imports</a></li>
 <li><a href="#functions-10">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
+<li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
+<li><a href="#imports-3">Imports</a></li>
 <li><a href="#functions-11">Functions</a></li>
 </ul></li>
-<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
 <li><a href="#dependencies-12">Dependencies</a></li>
 <li><a href="#functions-12">Functions</a></li>
 </ul></li>
-<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#ososid">os/osid</a><ul>
 <li><a href="#dependencies-13">Dependencies</a></li>
-<li><a href="#imports-3">Imports</a></li>
 <li><a href="#functions-13">Functions</a></li>
 </ul></li>
-<li><a href="#proc">proc</a><ul>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-14">Dependencies</a></li>
+<li><a href="#imports-4">Imports</a></li>
 <li><a href="#functions-14">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#proc">proc</a><ul>
 <li><a href="#dependencies-15">Dependencies</a></li>
 <li><a href="#functions-15">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-16">Dependencies</a></li>
-<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-16">Functions</a></li>
 </ul></li>
-<li><a href="#traps">traps</a><ul>
+<li><a href="#tcolors">tcolors</a><ul>
 <li><a href="#dependencies-17">Dependencies</a></li>
+<li><a href="#global-variables-4">Global Variables</a></li>
 <li><a href="#functions-17">Functions</a></li>
 </ul></li>
-<li><a href="#types">types</a><ul>
+<li><a href="#traps">traps</a><ul>
 <li><a href="#dependencies-18">Dependencies</a></li>
-<li><a href="#global-variables-4">Global Variables</a></li>
 <li><a href="#functions-18">Functions</a></li>
+</ul></li>
+<li><a href="#types">types</a><ul>
+<li><a href="#dependencies-19">Dependencies</a></li>
+<li><a href="#global-variables-5">Global Variables</a></li>
+<li><a href="#functions-19">Functions</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
 </ul>
@@ -701,16 +707,118 @@ returns:         whatever should be added in front of the matching line;
 </section>
 </section>
 </section>
+<section id="daemon" class="level2">
+<h2>daemon</h2>
+<p>Module providing access to a single background process providing some service (daemon). Exiting the foreground control process will <em>not</em> terminate the background process. Attempting to start multiple background daemons will be prevented in a thread-safe way.</p>
+<p>Each background process is assumed to implement a <code>daemon_main</code> function and must be identified by a unique String.</p>
+<p>If you need to exchange data with the background service, please have a look at the <a href="#multithreadingipcv">multithreading/ipcv</a> or <a href="#multithreadingipcm">multithreading/ipcm</a> modules.</p>
+<p>Copyright (C) 2019 David Hobach LGPLv3<br />
+0.3</p>
+<section id="dependencies-3" class="level3">
+<h3>Dependencies</h3>
+<p>kill<br />
+umask<br />
+mkdir</p>
+</section>
+<section id="imports" class="level3">
+<h3>Imports</h3>
+<p><a href="#multithreadingmtx">multithreading/mtx</a></p>
+<p><a href="#proc">proc</a></p>
+</section>
+<section id="global-variables-1" class="level3">
+<h3>Global Variables</h3>
+<section id="B_DAEMON_ID" class="level4">
+<h4>B_DAEMON_ID</h4>
+<p><small><em>daemon/B_DAEMON_ID</em></small></p>
+<p>Contains the ID of the daemon, if and only if the current process is the daemon process.</p>
+</section>
+</section>
+<section id="functions-3" class="level3">
+<h3>Functions</h3>
+<section id="b_daemon_getDeps" class="level4">
+<h4>b_daemon_getDeps</h4>
+<p><small><em>daemon/b_daemon_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_daemon_init" class="level4">
+<h4>b_daemon_init [quiet flag] [main name] [stdout file] [stderr file] [umask setting]</h4>
+<p><small><em>daemon/b_daemon_init</em></small></p>
+<p>Init the module paramters. It is necessary to call this method <em>before</em> using any other of this module unless you want to use the default paramters.</p>
+<p><span class="par">[quiet flag]: If set to 0 (default), don't print anything to stdout during the execution of start|stop|restart|status. Otherwise use <a href="#b_info">b_info</a> to print informational messages.</span></p>
+<p><span class="par">[main name]: Name of the main loop function to execute in the background process. Returning from that function will exit the background process. Default: <code>daemon_main</code></span></p>
+<p><span class="par">[stdout file]: Where the background process should write its stdout stream to (default: /dev/null).</span></p>
+<p><span class="par">[stderr file]: Where the background process should write its stderr stream to (default: /dev/null).</span></p>
+<p><span class="par">[umask settings]: The umask settings to apply to the daemon (default: 0).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_daemon_start" class="level4">
+<h4>b_daemon_start [id] [arg 1] ... [arg n]</h4>
+<p><small><em>daemon/b_daemon_start</em></small></p>
+<p>Start the background process.<br />
+If you need to start it as a different user, simply run this function as a different user with e.g. (b_execFuncAs)[#b_execFuncAs]. Please keep in mind that control processes must have the permission to send signals to the daemon PID though.</p>
+<p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="par">[arg i]: An arbitrary number of arguments which can be passed to the main loop.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success. Otherwise sets a non-zero exit code. In particular <a href="#B_E">B_E</a> is called, if the daemon is already running.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_daemon_stop" class="level4">
+<h4>b_daemon_stop [id] [kill timeout]</h4>
+<p><small><em>daemon/b_daemon_stop</em></small></p>
+<p>Stop the background process.</p>
+<p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="par">[kill timeout]: Time in seconds after which the background process will be killed, if it remains unresponsive (default: 2).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon terminated by itself. An exit code of 2 indicates that the daemon had to be killed. An exit code of 3 means that it wasn't running. <a href="#B_E">B_E</a> is called on unexpected errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_daemon_restart" class="level4">
+<h4>b_daemon_restart [id] [kill timeout] [arg 1] ... [arg n]</h4>
+<p><small><em>daemon/b_daemon_restart</em></small></p>
+<p>Restart the background process.</p>
+<p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="par">[kill timeout]: See <a href="#b_daemon_stop">b_daemon_stop</a>.</span></p>
+<p><span class="par">[arg i]: An arbitrary number of arguments which can be passed to the main loop.</span></p>
+<p><span class="ret"><strong>returns</strong>: See <a href="#b_daemon_start">b_daemon_start</a>.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_daemon_statusPid" class="level4">
+<h4>b_daemon_statusPid [id]</h4>
+<p><small><em>daemon/b_daemon_statusPid</em></small></p>
+<p>Check the status of the background process.<br />
+Doesn't print informational messages to stdout.</p>
+<p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="ret"><strong>returns</strong>: The PID and sets a zero exit code, if the daemon is running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_daemon_status" class="level4">
+<h4>b_daemon_status [id]</h4>
+<p><small><em>daemon/b_daemon_status</em></small></p>
+<p>Check the status of the background process and print informational messages to stdout (if configured).</p>
+<p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon is running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_daemon_getPid" class="level4">
+<h4>b_daemon_getPid [id]</h4>
+<p><small><em>daemon/b_daemon_getPid</em></small></p>
+<p>Get the process ID of the background process.</p>
+<p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="ret"><strong>returns</strong>: The process ID and sets a zero exit code, if it could be obtained. Please note that the process may be dead anyway (use <a href="#b_daemon_statusPid">b_daemon_statusPid</a> for that). Otherwise a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
 <section id="date" class="level2">
 <h2>date</h2>
 <p>Collection of date and time related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-3" class="level3">
+<section id="dependencies-4" class="level3">
 <h3>Dependencies</h3>
 <p>date</p>
 </section>
-<section id="functions-3" class="level3">
+<section id="functions-4" class="level3">
 <h3>Functions</h3>
 <section id="b_date_getDeps" class="level4">
 <h4>b_date_getDeps</h4>
@@ -756,18 +864,18 @@ Log files can be automatically reduced to their last X lines.</p>
            by date +&quot;%F %T %Z&quot; (the format can be changed)</code></pre>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-4" class="level3">
+<section id="dependencies-5" class="level3">
 <h3>Dependencies</h3>
 <p>date<br />
 tail<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports" class="level3">
+<section id="imports-1" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 </section>
-<section id="global-variables-1" class="level3">
+<section id="global-variables-2" class="level3">
 <h3>Global Variables</h3>
 <section id="B_FLOG_SEV" class="level4">
 <h4>B_FLOG_SEV</h4>
@@ -777,7 +885,7 @@ It was inspired by the severities of RFC5424.<br />
 Currently supported values: emergency|alert|critical|crit|error|err|warning|warn|notice|informational|info|debug</p>
 </section>
 </section>
-<section id="functions-4" class="level3">
+<section id="functions-5" class="level3">
 <h3>Functions</h3>
 <section id="b_flog_printSeverity" class="level4">
 <h4>b_flog_printSeverity [severity]</h4>
@@ -931,7 +1039,7 @@ Print the given severity in a way for logging. This function is meant to be used
 <p>Collection of file and file system related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-5" class="level3">
+<section id="dependencies-6" class="level3">
 <h3>Dependencies</h3>
 <p>wc<br />
 date<br />
@@ -939,7 +1047,7 @@ findmnt<br />
 mktemp<br />
 mount</p>
 </section>
-<section id="functions-5" class="level3">
+<section id="functions-6" class="level3">
 <h3>Functions</h3>
 <section id="b_fs_getDeps" class="level4">
 <h4>b_fs_getDeps</h4>
@@ -1018,11 +1126,11 @@ mount</p>
 <p>Collection of http related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-6" class="level3">
+<section id="dependencies-7" class="level3">
 <h3>Dependencies</h3>
 <p>curl</p>
 </section>
-<section id="global-variables-2" class="level3">
+<section id="global-variables-3" class="level3">
 <h3>Global Variables</h3>
 <section id="B_HTTP_CHECKURLS" class="level4">
 <h4>B_HTTP_CHECKURLS</h4>
@@ -1032,7 +1140,7 @@ It is recommended to pick a relatively large number of URLs with SSL support to 
 Defaults to the European/US Alexa Top 10 (which hopefully blends in to the masses).</p>
 </section>
 </section>
-<section id="functions-6" class="level3">
+<section id="functions-7" class="level3">
 <h3>Functions</h3>
 <section id="b_http_getDeps" class="level4">
 <h4>b_http_getDeps</h4>
@@ -1082,11 +1190,11 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 </ul>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-7" class="level3">
+<section id="dependencies-8" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-7" class="level3">
+<section id="functions-8" class="level3">
 <h3>Functions</h3>
 <section id="b_ini_getDeps" class="level4">
 <h4>b_ini_getDeps</h4>
@@ -1174,16 +1282,16 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 </table>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-8" class="level3">
+<section id="dependencies-9" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-1" class="level3">
+<section id="imports-2" class="level3">
 <h3>Imports</h3>
 <p><a href="#multithreadingipcv">multithreading/ipcv</a></p>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
 </section>
-<section id="functions-8" class="level3">
+<section id="functions-9" class="level3">
 <h3>Functions</h3>
 <section id="b_ipcm_getDeps" class="level4">
 <h4>b_ipcm_getDeps</h4>
@@ -1275,7 +1383,7 @@ It is recommended to call this function when all processes finished their work.<
 </table>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-9" class="level3">
+<section id="dependencies-10" class="level3">
 <h3>Dependencies</h3>
 <p>findmnt<br />
 mkdir<br />
@@ -1283,7 +1391,7 @@ mktemp<br />
 mv<br />
 rm</p>
 </section>
-<section id="functions-9" class="level3">
+<section id="functions-10" class="level3">
 <h3>Functions</h3>
 <section id="b_ipcv_getDeps" class="level4">
 <h4>b_ipcv_getDeps</h4>
@@ -1347,7 +1455,7 @@ Please note that the variables will remain set in your current process context, 
 Lock: A specific maximum number of processes may have it at any point in time.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-10" class="level3">
+<section id="dependencies-11" class="level3">
 <h3>Dependencies</h3>
 <p>mkdir<br />
 touch<br />
@@ -1357,11 +1465,11 @@ rmdir<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-2" class="level3">
+<section id="imports-3" class="level3">
 <h3>Imports</h3>
 <p><a href="#proc">proc</a></p>
 </section>
-<section id="functions-10" class="level3">
+<section id="functions-11" class="level3">
 <h3>Functions</h3>
 <section id="b_mtx_getDeps" class="level4">
 <h4>b_mtx_getDeps</h4>
@@ -1394,7 +1502,7 @@ mktemp</p>
 <h4>b_mtx_release [mutex] [block ID]</h4>
 <p><small><em>multithreading/mtx/b_mtx_release</em></small></p>
 <p>Release the given mutex so that it can be used by other block IDs/threads.</p>
-<p><span class="par">[mutex]: A mutex obtained via b_mtx_create.</span></p>
+<p><span class="par">[mutex]: A mutex obtained via <a href="#b_mtx_create">b_mtx_create</a>.</span></p>
 <p><span class="par">[block ID]: The block ID for which to release the mutex (default: $$).</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a non-zero exit code if the mutex could not be removed as another process is blocking it and a zero exit code on successful removal.</span></p>
 </section>
@@ -1402,14 +1510,24 @@ mktemp</p>
 <h4>b_mtx_forceRelease [mutex]</h4>
 <p><small><em>multithreading/mtx/b_mtx_forceRelease</em></small></p>
 <p>Release the given mutex so that it can be used by other blockIDs/threads. Warning: This function can remove mutexes from other threads and should generally <em>only</em> be used for the removal of mutexes which are known to be stale by the calling application.</p>
-<p><span class="par">[mutex]: A mutex obtained via b_mtx_create.</span></p>
+<p><span class="par">[mutex]: A mutex obtained via <a href="#b_mtx_create">b_mtx_create</a>.</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing and sets a zero exit code.</span></p>
+</section>
+<section id="b_mtx_pass" class="level4">
+<h4>b_mtx_pass [mutex] [block ID]</h4>
+<p><small><em>multithreading/mtx/b_mtx_pass</em></small></p>
+<p>Pass a blocked mutex to another block ID (i.e. change the block ID of the given mutex).<br />
+You should only do this if you currently own the mutex and the new process is ready to take over.</p>
+<p><span class="par">[mutex]: A mutex obtained via <a href="#b_mtx_create">b_mtx_create</a>.</span></p>
+<p><span class="par">[block ID]: The block ID to set for the given mutex.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and a non-zero exit code otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_mtx_try" class="level4">
 <h4>b_mtx_try [mutex] [block ID] [claim stale] [claim own]</h4>
 <p><small><em>multithreading/mtx/b_mtx_try</em></small></p>
 <p>Attempt to obtain the given mutex. Return immediately even if it cannot be obtained.</p>
-<p><span class="par">[mutex]: A mutex obtained via b_mtx_create. You may also use a static and otherwise unused directory path as mutex and share it across all relevant processes.</span></p>
+<p><span class="par">[mutex]: A mutex obtained via <a href="#b_mtx_create">b_mtx_create</a>. You may also use a static and otherwise unused directory path as mutex and share it across all relevant processes.</span></p>
 <p><span class="par">[block ID]: The ID to use by which to block (default: running (sub)shell process id $$). This should be the process ID of the process attempting to obtain the mutex or you should know what you're doing. If you're in a subshell that should deploy a mutex against other subshells, store their $BASHPID and call the function with that.</span></p>
 <p><span class="par">[claim stale]: If set to 0, claim the mutex even if it is still blocked by some other process, but that process isn't running anymore. If set to 1 (default), the function returns without obtaining the mutex. In general this should only be used in situations where a mutex has a high probability of being stale (e.g. application start).</span></p>
 <p><span class="par">[claim own]: If set to 0 (default), claim the mutex if it appears to be blocked by the provided block ID. If set to 1, consider it blocked even then.</span></p>
@@ -1476,7 +1594,7 @@ mktemp</p>
 </table>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-11" class="level3">
+<section id="dependencies-12" class="level3">
 <h3>Dependencies</h3>
 <p>shuf<br />
 mv<br />
@@ -1484,7 +1602,7 @@ ln<br />
 stat<br />
 rm</p>
 </section>
-<section id="functions-11" class="level3">
+<section id="functions-12" class="level3">
 <h3>Functions</h3>
 <section id="b_multiw_getDeps" class="level4">
 <h4>b_multiw_getDeps</h4>
@@ -1529,11 +1647,11 @@ This function should only be called when all processes finished reading and writ
 <p>Functions for operating system identification.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-12" class="level3">
+<section id="dependencies-13" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-12" class="level3">
+<section id="functions-13" class="level3">
 <h3>Functions</h3>
 <section id="b_osid_getDeps" class="level4">
 <h4>b_osid_getDeps</h4>
@@ -1616,7 +1734,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.4</p>
-<section id="dependencies-13" class="level3">
+<section id="dependencies-14" class="level3">
 <h3>Dependencies</h3>
 <p>qvm-run<br />
 qvm-block<br />
@@ -1639,13 +1757,13 @@ xxd<br />
 python3<br />
 kill</p>
 </section>
-<section id="imports-3" class="level3">
+<section id="imports-4" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 <p><a href="#proc">proc</a></p>
 <p><a href="#types">types</a></p>
 </section>
-<section id="functions-13" class="level3">
+<section id="functions-14" class="level3">
 <h3>Functions</h3>
 <section id="b_dom0_getDeps" class="level4">
 <h4>b_dom0_getDeps</h4>
@@ -1943,12 +2061,12 @@ returns:  Nothing. A non-zero exit code will abort further processing.</code></p
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-14" class="level3">
+<section id="dependencies-15" class="level3">
 <h3>Dependencies</h3>
 <p>tail<br />
 timeout</p>
 </section>
-<section id="functions-14" class="level3">
+<section id="functions-15" class="level3">
 <h3>Functions</h3>
 <section id="b_proc_getDeps" class="level4">
 <h4>b_proc_getDeps</h4>
@@ -1978,11 +2096,11 @@ timeout</p>
 <p>Collection of string related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-15" class="level3">
+<section id="dependencies-16" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-15" class="level3">
+<section id="functions-16" class="level3">
 <h3>Functions</h3>
 <section id="b_str_getDeps" class="level4">
 <h4>b_str_getDeps</h4>
@@ -2014,11 +2132,11 @@ timeout</p>
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-16" class="level3">
+<section id="dependencies-17" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
-<section id="global-variables-3" class="level3">
+<section id="global-variables-4" class="level3">
 <h3>Global Variables</h3>
 <section id="B_TCOLORS" class="level4">
 <h4>B_TCOLORS</h4>
@@ -2027,7 +2145,7 @@ timeout</p>
 Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 </section>
 </section>
-<section id="functions-16" class="level3">
+<section id="functions-17" class="level3">
 <h3>Functions</h3>
 <section id="b_tcolors_getDeps" class="level4">
 <h4>b_tcolors_getDeps</h4>
@@ -2042,11 +2160,11 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-17" class="level3">
+<section id="dependencies-18" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-17" class="level3">
+<section id="functions-18" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getDeps" class="level4">
 <h4>b_traps_getDeps</h4>
@@ -2099,7 +2217,7 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-18" class="level3">
+<section id="dependencies-19" class="level3">
 <h3>Dependencies</h3>
 <p>mktemp<br />
 mkfifo<br />
@@ -2109,7 +2227,7 @@ strings<br />
 tee<br />
 head</p>
 </section>
-<section id="global-variables-4" class="level3">
+<section id="global-variables-5" class="level3">
 <h3>Global Variables</h3>
 <section id="B_TYPES_ENCODINGS" class="level4">
 <h4>B_TYPES_ENCODINGS</h4>
@@ -2119,7 +2237,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-18" class="level3">
+<section id="functions-19" class="level3">
 <h3>Functions</h3>
 <section id="b_types_getDeps" class="level4">
 <h4>b_types_getDeps</h4>
@@ -2183,6 +2301,15 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_cdoc_setPostProcessingCallback">b_cdoc_setPostProcessingCallback</a></p>
 <p><a href="#b_cdoc_setSpaceCallback">b_cdoc_setSpaceCallback</a></p>
 <p><a href="#b_checkDeps">b_checkDeps</a></p>
+<p><a href="#b_daemon_getDeps">b_daemon_getDeps</a></p>
+<p><a href="#b_daemon_getPid">b_daemon_getPid</a></p>
+<p><a href="#B_DAEMON_ID">B_DAEMON_ID</a></p>
+<p><a href="#b_daemon_init">b_daemon_init</a></p>
+<p><a href="#b_daemon_restart">b_daemon_restart</a></p>
+<p><a href="#b_daemon_start">b_daemon_start</a></p>
+<p><a href="#b_daemon_status">b_daemon_status</a></p>
+<p><a href="#b_daemon_statusPid">b_daemon_statusPid</a></p>
+<p><a href="#b_daemon_stop">b_daemon_stop</a></p>
 <p><a href="#b_date_addDays">b_date_addDays</a></p>
 <p><a href="#b_date_diffSeconds">b_date_diffSeconds</a></p>
 <p><a href="#b_date_getDeps">b_date_getDeps</a></p>
@@ -2281,6 +2408,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_mtx_forceRelease">b_mtx_forceRelease</a></p>
 <p><a href="#b_mtx_getDeps">b_mtx_getDeps</a></p>
 <p><a href="#b_mtx_getSleepTime">b_mtx_getSleepTime</a></p>
+<p><a href="#b_mtx_pass">b_mtx_pass</a></p>
 <p><a href="#b_mtx_release">b_mtx_release</a></p>
 <p><a href="#b_mtx_setSleepTime">b_mtx_setSleepTime</a></p>
 <p><a href="#b_mtx_try">b_mtx_try</a></p>
