@@ -497,7 +497,8 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <section id="B_ARGS_OPTS" class="level4">
 <h4>B_ARGS_OPTS</h4>
 <p><small><em>args/B_ARGS_OPTS</em></small></p>
-<p>Map of options. <code>[option]_[index]</code> is used as key with <code>[index]</code> starting at zero. The values are the option parameters (if any). Multiple option parameters are separated by spaces.<br />
+<p>Map of options. <code>[option]_[index]</code> is used as key with <code>[index]</code> starting at zero. The values are the option parameters (if any). Multiple option parameters are separated by tabs.<br />
+The latter separator can be changed via <a href="#b_args_setOptionParamSeparator">b_args_setOptionParamSeparator</a> before calling <a href="#b_args_parse">b_args_parse</a>.<br />
 The index will only increase if options are repeated.</p>
 </section>
 </section>
@@ -508,6 +509,19 @@ The index will only increase if options are repeated.</p>
 <p><small><em>args/b_args_getDeps</em></small></p>
 <p>Get the dependencies of this module.</p>
 <p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_args_setOptionParamSeparator" class="level4">
+<h4>b_args_setOptionParamSeparator [separator]</h4>
+<p><small><em>args/b_args_setOptionParamSeparator</em></small></p>
+<p>Set the separator for multiple option parameters.</p>
+<p><span class="par">[separator]: String to use as separator for multiple option parameters.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+</section>
+<section id="b_args_getOptionParamSeparator" class="level4">
+<h4>b_args_getOptionParamSeparator</h4>
+<p><small><em>args/b_args_getOptionParamSeparator</em></small></p>
+<p>Get the separator for multiple option parameters.</p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
 </section>
 <section id="b_args_init" class="level4">
 <h4>b_args_init [allow flag] [option 1] [option param count 1] ... [option n] [option param count n]</h4>
@@ -1828,7 +1842,8 @@ dd<br />
 tee<br />
 xxd<br />
 python3<br />
-kill</p>
+kill<br />
+losetup</p>
 </section>
 <section id="imports-4" class="level3">
 <h3>Imports</h3>
@@ -1949,8 +1964,8 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <section id="b_dom0_createLoopDeviceIfNecessary" class="level4">
 <h4>b_dom0_createLoopDeviceIfNecessary [vm] [file]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_createLoopDeviceIfNecessary</em></small></p>
-<p>Create a loop device for the file in the given VM if no old one exists. Actually a wrapper for <a href="#b_fs_createLoopDeviceIfNecessary">b_fs_createLoopDeviceIfNecessary</a>.</p>
-<p>This usually requires root privileges.</p>
+<p>Create a loop device for the file in the given VM if no old one exists. Actually a wrapper for <a href="#b_fs_createLoopDeviceIfNecessary">b_fs_createLoopDeviceIfNecessary</a>.<br />
+This usually requires root privileges.</p>
 <p><span class="par">[vm]: VM where to execute.</span></p>
 <p><span class="par">[file]: File for which to create a loop device.</span></p>
 <p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
@@ -2362,9 +2377,11 @@ See the strings manpage for further explanations.</p>
 <p><a href="#B_ARGS">B_ARGS</a></p>
 <p><a href="#b_args_assertOptions">b_args_assertOptions</a></p>
 <p><a href="#b_args_getDeps">b_args_getDeps</a></p>
+<p><a href="#b_args_getOptionParamSeparator">b_args_getOptionParamSeparator</a></p>
 <p><a href="#b_args_init">b_args_init</a></p>
 <p><a href="#B_ARGS_OPTS">B_ARGS_OPTS</a></p>
 <p><a href="#b_args_parse">b_args_parse</a></p>
+<p><a href="#b_args_setOptionParamSeparator">b_args_setOptionParamSeparator</a></p>
 <p><a href="#b_arr_contains">b_arr_contains</a></p>
 <p><a href="#b_arr_getDeps">b_arr_getDeps</a></p>
 <p><a href="#b_arr_join">b_arr_join</a></p>
