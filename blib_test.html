@@ -579,7 +579,8 @@ Regular arguments are parsed to the array <a href="#B_ARGS">B_ARGS</a>, options 
 <p><small><em>args/b_args_assertOptions</em></small></p>
 <p>Assert that <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a> contains only the given allowed options (or less).</p>
 <p><span class="par">[option i]: Option to check against.</span></p>
-<p><span class="par">[returns]: Sets a zero exit code, if <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a> contains only allowed options and a non-zero exit code otherwise. Prints a list of invalid options.</span></p>
+<p><span class="par">[returns]: Sets a zero exit code, if <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a> contains only allowed options and errors out with <a href="#B_E">B_E</a> otherwise. Prints a list of invalid options in the error case.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
 </section>
@@ -881,19 +882,21 @@ If you need to start it as a different user, simply run this function as a diffe
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_daemon_stop" class="level4">
-<h4>b_daemon_stop [id] [kill timeout]</h4>
+<h4>b_daemon_stop [id] [termination signal] [kill timeout]</h4>
 <p><small><em>daemon/b_daemon_stop</em></small></p>
 <p>Stop the background process.</p>
 <p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
-<p><span class="par">[kill timeout]: Time in seconds after which the background process will be killed, if it remains unresponsive (default: 2).</span></p>
+<p><span class="par">[termination signal]: A number specifying the signal to send to the daemon (default: 15 / SIGTERM). See <code>kill -l</code> for an overview.</span></p>
+<p><span class="par">[kill timeout]: Time in seconds after which the background process will be killed, if it remains unresponsive to the termination signal (default: 0 = wait indefinitely).</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon terminated by itself. An exit code of 2 indicates that the daemon had to be killed. An exit code of 3 means that it wasn't running. <a href="#B_E">B_E</a> is called on unexpected errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_daemon_restart" class="level4">
-<h4>b_daemon_restart [id] [kill timeout] [arg 1] ... [arg n]</h4>
+<h4>b_daemon_restart [id] [termination signal] [kill timeout] [arg 1] ... [arg n]</h4>
 <p><small><em>daemon/b_daemon_restart</em></small></p>
 <p>Restart the background process.</p>
 <p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
+<p><span class="par">[termination signal]: See <a href="#b_daemon_stop">b_daemon_stop</a>.</span></p>
 <p><span class="par">[kill timeout]: See <a href="#b_daemon_stop">b_daemon_stop</a>.</span></p>
 <p><span class="par">[arg i]: An arbitrary number of arguments which can be passed to the main loop.</span></p>
 <p><span class="ret"><strong>returns</strong>: See <a href="#b_daemon_start">b_daemon_start</a>.</span></p>
@@ -1334,7 +1337,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p>get the value for the ini entry with the given name as String in raw format</p>
 <p><span class="par">[name]: name/key of the ini entry to retrieve</span></p>
 <p><span class="par">[section]: section where to look for the entry with the given name (default: without section)</span></p>
-<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name incl. any whitespace; a non-zero exit code is set if such an entry wasn't found or another error occurred</span></p>
+<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name incl. any whitespace; a non-zero exit code is set if such an entry wasn't found</span></p>
 </section>
 <section id="b_ini_getString" class="level4">
 <h4>b_ini_getString [name] [section]</h4>
@@ -1342,7 +1345,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p>get the value for the ini entry with the given name as String and remove all whitespace around the returned String</p>
 <p><span class="par">[name]: name/key of the ini entry to retrieve</span></p>
 <p><span class="par">[section]: section where to look for the entry with the given name (default: without section)</span></p>
-<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name excl. any whitespace around; a non-zero exit code is set if such an entry wasn't found or another error occurred</span></p>
+<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name excl. any whitespace around; a non-zero exit code is set if such an entry wasn't found</span></p>
 </section>
 <section id="b_ini_getInt" class="level4">
 <h4>b_ini_getInt [name] [section]</h4>
@@ -1350,7 +1353,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p>get the value for the ini entry with the given name as integer</p>
 <p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
 <p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
-<p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; additionally it is checked whether the return value is an integer (if not, a non-zero exit code is set and the return value is undefined)</span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; additionally it is checked whether the return value is an integer (if not, a non-zero exit code of 2 is set and the return value is undefined)</span></p>
 </section>
 <section id="b_ini_getBool" class="level4">
 <h4>b_ini_getBool [name] [section]</h4>
@@ -1358,7 +1361,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p>get the value for the ini entry with the given name as boolean</p>
 <p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
 <p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
-<p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; 0 is returned via echo for true, 1 for false; the exit code indicates a potential error during parsing or a missing entry (and <em>not</em> true/false)</span></p>
+<p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; 0 is returned via echo for true, 1 for false; the exit code indicates a potential error during parsing (2) or a missing entry (1) and <em>not</em> true/false</span></p>
 </section>
 </section>
 </section>
