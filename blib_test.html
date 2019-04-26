@@ -1214,11 +1214,12 @@ mount</p>
 <p><span class="ret"><strong>returns</strong>: A newline-separated list of mountpoints where the given device is mounted to. Sets a non-zero exit code if no such mountpoints were found.</span></p>
 </section>
 <section id="b_fs_mountIfNecessary" class="level4">
-<h4>b_fs_mountIfNecessary [device] [mount point]</h4>
+<h4>b_fs_mountIfNecessary [device] [mount point] [enforce]</h4>
 <p><small><em>fs/b_fs_mountIfNecessary</em></small></p>
 <p>Mount the given device if it isn't already mounted.</p>
 <p><span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span></p>
 <p><span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span></p>
+<p><span class="par">[enforce]: If set to 0, enforce the given mount point to be used in addition to potentially existing ones (default: 1).</span></p>
 <p><span class="ret"><strong>returns</strong>: The chosen mount point or a newline-separated list of existing mount points on success; sets a non-zero exit code on failure.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -1362,6 +1363,17 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
 <p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
 <p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; 0 is returned via echo for true, 1 for false; the exit code indicates a potential error during parsing (2) or a missing entry (1) and <em>not</em> true/false</span></p>
+</section>
+<section id="b_ini_assertNames" class="level4">
+<h4>b_ini_assertNames [section 1] [name 1] ... [name n] -- [section 2] [name 1] ... [name m]</h4>
+<p><small><em>ini/b_ini_assertNames</em></small></p>
+<p>Assert that the given sections contains <em>at most</em> the given names and no additional ones.<br />
+This is a useful function to detect user mistakes and should be called right after <a href="#b_ini_read">b_ini_read</a>.<br />
+Multiple sections can be separated with &quot;--&quot;.</p>
+<p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
+<p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if and only if the last read ini file doesn't contain any additional names. Otherwise <a href="#B_E">B_E</a> is triggered. <a href="#B_ERR">B_ERR</a> will list the invalid names.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
 </section>
@@ -1985,12 +1997,13 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_mountIfNecessary" class="level4">
-<h4>b_dom0_mountIfNecessary [vm] [device] [mount point]</h4>
+<h4>b_dom0_mountIfNecessary [vm] [device] [mount point] [enforce]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_mountIfNecessary</em></small></p>
 <p>Mount the given device in the target VM if it isn't already mounted there. Actually a wrapper for <a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a>.</p>
 <p><span class="par">[vm]: VM where to execute.</span></p>
 <p><span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span></p>
 <p><span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span></p>
+<p><span class="par">[enforce]: If set to 0, enforce the given mount point to be used in addition to potentially existing ones (default: 1).</span></p>
 <p><span class="ret"><strong>returns</strong>: The chosen mount point or a newline-separated list of existing mount points on success; sets a non-zero exit code on failure. As these strings are returned from the VM, extra care must be taken when parsing them.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2830,6 +2843,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_http_rawUrlEncode">b_http_rawUrlEncode</a></p>
 <p><a href="#b_import">b_import</a></p>
 <p><a href="#b_info">b_info</a></p>
+<p><a href="#b_ini_assertNames">b_ini_assertNames</a></p>
 <p><a href="#b_ini_get">b_ini_get</a></p>
 <p><a href="#b_ini_getBool">b_ini_getBool</a></p>
 <p><a href="#b_ini_getDeps">b_ini_getDeps</a></p>
