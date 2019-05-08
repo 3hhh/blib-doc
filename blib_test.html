@@ -384,9 +384,10 @@ As any error handler it must</p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
 <section id="b_resetErrorHandler" class="level4">
-<h4>b_resetErrorHandler</h4>
+<h4>b_resetErrorHandler [reset B_ERR]</h4>
 <p><small><em>blib/b_resetErrorHandler</em></small></p>
 <p>Set the error handler to whatever it was before the last call to <a href="#b_setErrorHandler">b_setErrorHandler</a> or <a href="#b_setBE">b_setBE</a>.</p>
+<p><span class="par">[reset B_ERR]: Whether or not to also reset <a href="#B_ERR">B_ERR</a> (default: true/0).</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing, always sets a zero exit code</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
@@ -606,8 +607,15 @@ Regular arguments are parsed to the array <a href="#B_ARGS">B_ARGS</a>, options 
 <p><small><em>arr/b_arr_join</em></small></p>
 <p>Join the given array; elements are separated with the given delimiter. The array is not checked to exist.</p>
 <p><span class="par">[delimiter]: String to use as delimiter.</span></p>
-<p><span class="par">[array]: expanded array to join, e.g. &quot;${arr[@]}&quot;</span></p>
+<p><span class="par">[array]: Expanded array to join, e.g. &quot;${arr[@]}&quot;.</span></p>
 <p><span class="ret"><strong>returns</strong>: Joined version of the array. The exit code is always zero.</span></p>
+</section>
+<section id="b_arr_toList" class="level4">
+<h4>b_arr_toList [array]</h4>
+<p><small><em>arr/b_arr_toList</em></small></p>
+<p>Create a newline-separated list from the given array.</p>
+<p><span class="par">[array]: Expanded array to join, e.g. &quot;${arr[@]}&quot;.</span></p>
+<p><span class="ret"><strong>returns</strong>: List version of the array. The exit code is always zero.</span></p>
 </section>
 <section id="b_arr_contains" class="level4">
 <h4>b_arr_contains [element] [array]</h4>
@@ -2176,12 +2184,13 @@ This is merely a convenience wrapper for <code>qvm-block attach</code>.</p>
 <p>Enter a blocking loop to react to Qubes OS events.</p>
 <p><span class="par">[callback function]: Name of the function to call for <em>every</em> Qubes OS event. Since the number of events may be high, the function should do appropriate filtering at high performance.</span><br />
 The callback function should be declared as follows:</p>
-<pre><code>callback_function_name [subject] [event name] [event info]
+<pre><code>callback_function_name [subject] [event name] [event info] [timestamp]
 [subject]: The subject name Qubes OS provides. Usually the VM for which the
     event was reported. 'None' appears to mean 'dom0'.
 [event name]: Name of the event for which the callback function was called.
 [event info]: May contain additional information about the event (e.g.
               arguments).
+[timestamp]: When the event was received in ms since EPOCH.
 returns:  Nothing. A non-zero exit code will abort further processing.</code></pre>
 <p>If you want to obtain an overview of Qubes OS events, please use the <code>qwatch</code> utility manually.</p>
 <p><span class="ret"><strong>returns</strong>: Nothing, but uses the exit code of the last callback function execution as its own. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
@@ -2741,6 +2750,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_arr_getDeps">b_arr_getDeps</a></p>
 <p><a href="#b_arr_join">b_arr_join</a></p>
 <p><a href="#b_arr_mapsAreEqual">b_arr_mapsAreEqual</a></p>
+<p><a href="#b_arr_toList">b_arr_toList</a></p>
 <p><a href="#b_blib_getDeps">b_blib_getDeps</a></p>
 <p><a href="#B_CALLER_NAME">B_CALLER_NAME</a></p>
 <p><a href="#b_cdoc_cbPrintFirstParam">b_cdoc_cbPrintFirstParam</a></p>
