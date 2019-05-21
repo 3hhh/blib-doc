@@ -1847,7 +1847,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <p>Collection of functions supporting scripting in Qubes OS 4.x dom0.</p>
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
-0.4</p>
+0.5</p>
 <section id="dependencies-15" class="level3">
 <h3>Dependencies</h3>
 <p>qvm-run<br />
@@ -1870,7 +1870,9 @@ tee<br />
 xxd<br />
 python3<br />
 kill<br />
-losetup</p>
+losetup<br />
+setsid<br />
+sort</p>
 </section>
 <section id="imports-4" class="level3">
 <h3>Imports</h3>
@@ -1886,6 +1888,22 @@ losetup</p>
 <p>Get the dependencies of this module.</p>
 <p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
 </section>
+<section id="b_dom0_setVMDeps" class="level4">
+<h4>b_dom0_setVMDeps [list] [keep defaults]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_setVMDeps</em></small></p>
+<p>Set the dependencies for all VMs used with this module to the given list of binaries.<br />
+These dependencies are checked before <em>any</em> execution of commands in <em>any</em> VM; in particular whenever <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a>, <a href="#b_dom0_execIn">b_dom0_execIn</a>, <a href="#b_dom0_execStrIn">b_dom0_execStrIn</a> or <a href="#b_dom0_execFuncIn">b_dom0_execFuncIn</a> are called.</p>
+<p><span class="par">[list]: Newline-separated list of binaries or commands that VMs must be able to execute.</span></p>
+<p><span class="par">[keep defaults]: If set to 0 (default), merge the default list of dependencies with the supplied one. Otherwise only keep the supplied list of dependencies.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_dom0_getVMDeps" class="level4">
+<h4>b_dom0_getVMDeps</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_getVMDeps</em></small></p>
+<p>Getter for <a href="#b_dom0_setVMDeps">b_dom0_setVMDeps</a>.</p>
+<p><span class="ret"><strong>returns</strong>: The current list of dependencies for VMs.</span></p>
+</section>
 <section id="b_dom0_qvmRun" class="level4">
 <h4>b_dom0_qvmRun [parameter 1] ... [parameter n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_qvmRun</em></small></p>
@@ -1899,6 +1917,7 @@ losetup</p>
 <li>stdout has the VM output and the exit code is the one of the VM</li>
 <li>distinguished exit conditions (executed command failed vs. qvm-run failed)</li>
 <li>workarounds for known Qubes bugs wrt qvm-run may be implemented here (e.g. qubes issues #3083, #4476, #4633 in the past)</li>
+<li>VM dependencies set with <a href="#b_dom0_setVMDeps">b_dom0_setVMDeps</a> are checked</li>
 </ul>
 <p>Please note that calling this function will make your script wait for the execution of the commands in the client VM.</p>
 <p>Wherever possible, this function should be combined with <a href="#b_silence">b_silence</a> as the VM output shouldn't be trusted. Otherwise please keep in mind that <strong>both</strong> stdout <em>and</em> stderr may have untrusted output which may even contain binary data. In order to validate against binary data you can e.g. use <a href="#b_types_parseString">b_types_parseString</a>.</p>
@@ -2203,7 +2222,7 @@ returns:  Nothing. A non-zero exit code will abort further processing.</code></p
 <h2>proc</h2>
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.1</p>
+0.2</p>
 <section id="dependencies-16" class="level3">
 <h3>Dependencies</h3>
 <p>tail<br />
@@ -2224,12 +2243,19 @@ timeout</p>
 <p><span class="par">[pid]: process ID to check for existence (process exists)</span></p>
 <p><span class="ret"><strong>returns</strong>: A zero exit code, if it exists and a non-zero exit code if it doesn't; this function attempts to check the existence of the given process across <em>all</em> users, but it cannot guarantee correctness if the user running this script has very low privileges.</span></p>
 </section>
+<section id="b_proc_childExists" class="level4">
+<h4>b_proc_childExists [pid]</h4>
+<p><small><em>proc/b_proc_childExists</em></small></p>
+<p>Check whether the given process ID exists <em>and</em> is a <em>direct</em> child of the calling bash process.</p>
+<p><span class="par">[pid]: process ID to check</span></p>
+<p><span class="ret"><strong>returns</strong>: A zero exit code, if the caller is a parent of the given pid.</span></p>
+</section>
 <section id="b_proc_waitForPid" class="level4">
 <h4>b_proc_waitForPid [pid] [maximum time]</h4>
 <p><small><em>proc/b_proc_waitForPid</em></small></p>
 <p>Wait for the given process to exit. If it doesn't exist, exit immediately.</p>
-<p><span class="par">[pid]: process ID of the process to wait for</span></p>
-<p><span class="par">[maximum time]: maximum time in seconds to wait for the process to exit (default: 0 = indefinitely)</span></p>
+<p><span class="par">[pid]: Process ID of the process to wait for. Doesn't need to be a child.</span></p>
+<p><span class="par">[maximum time]: Maximum time in seconds to wait for the process to exit (default: 0 = indefinitely).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code. Use <a href="#b_proc_pidExists">b_proc_pidExists</a> if you need to know whether the process finished.</span></p>
 </section>
 </section>
@@ -2485,6 +2511,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_dom0_getDeps">b_dom0_getDeps</a></p>
 <p><a href="#b_dom0_getDispVMs">b_dom0_getDispVMs</a></p>
 <p><a href="#b_dom0_getQvmBlockInfo">b_dom0_getQvmBlockInfo</a></p>
+<p><a href="#b_dom0_getVMDeps">b_dom0_getVMDeps</a></p>
 <p><a href="#b_dom0_isHalted">b_dom0_isHalted</a></p>
 <p><a href="#b_dom0_isMountedIn">b_dom0_isMountedIn</a></p>
 <p><a href="#b_dom0_isRunning">b_dom0_isRunning</a></p>
@@ -2492,6 +2519,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_dom0_openCrypt">b_dom0_openCrypt</a></p>
 <p><a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a></p>
 <p><a href="#b_dom0_qvmRun">b_dom0_qvmRun</a></p>
+<p><a href="#b_dom0_setVMDeps">b_dom0_setVMDeps</a></p>
 <p><a href="#b_dom0_startDispVM">b_dom0_startDispVM</a></p>
 <p><a href="#b_dom0_testMultiple">b_dom0_testMultiple</a></p>
 <p><a href="#b_dom0_waitForFileIn">b_dom0_waitForFileIn</a></p>
@@ -2588,6 +2616,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_osid_isRedHat">b_osid_isRedHat</a></p>
 <p><a href="#b_osid_isUbuntu">b_osid_isUbuntu</a></p>
 <p><a href="#b_printStackTrace">b_printStackTrace</a></p>
+<p><a href="#b_proc_childExists">b_proc_childExists</a></p>
 <p><a href="#b_proc_getDeps">b_proc_getDeps</a></p>
 <p><a href="#b_proc_pidExists">b_proc_pidExists</a></p>
 <p><a href="#b_proc_waitForPid">b_proc_waitForPid</a></p>
