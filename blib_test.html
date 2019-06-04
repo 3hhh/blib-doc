@@ -505,15 +505,17 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <section id="args" class="level2">
 <h2>args</h2>
 <p>Stateful argument parser for bash.</p>
-<p>Regular arguments are parsed to <a href="#B_ARGS">B_ARGS</a>, options to <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a>.</p>
+<p>Regular arguments are parsed to <a href="#B_ARGS">B_ARGS</a>, options to <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a>. Options may have parameters, can be repeated and combined.</p>
 <p>The module can also check the correctness of options. All remaining correctness checks (e.g. for regular or option parameters) are left to the user of this module.</p>
 <p>Conventions:</p>
 <ul>
-<li>options always start with <code>-</code> and may occur everywhere</li>
-<li>everything after <code>--</code> is not considered an option</li>
+<li>Options always start with <code>-</code> and may occur everywhere.</li>
+<li>Single character options may be combined, e.g. <code>-ajh</code> will be considered the same as <code>-a -j -h</code>. Long options such as <code>--option</code> cannot be combined.<br />
+<em>Recommendation</em>: Use long options for those options which require parameters and single letter options for everything else.</li>
+<li>Everything after a space-separated double dash (<code>--</code>) is not considered an option, but a regular argument.</li>
 </ul>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
-0.5</p>
+0.7</p>
 <section id="dependencies-1" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
@@ -1247,7 +1249,7 @@ mount</p>
 <h4>b_fs_parseSize [string] [check flag]</h4>
 <p><small><em>fs/b_fs_parseSize</em></small></p>
 <p>Parse human-readable file system sizes that include units.</p>
-<p><span class="par">[string]: A string denoting a file system size of the format [number][unit]. Unit may be one of KB 1000, K 1024, MB 1000<em>1000, M 1024</em>1024, GB 1000<em>1000</em>1000, G 1024<em>1024</em>1024, and so on for T, P. If no unit is provided, the number is assumed to denote bytes.</span></p>
+<p><span class="par">[string]: A string denoting a file system size of the format [number][unit]. Unit may be one of KB 1000, K 1024, MB 1000<em>1000, M 1024</em>1024, GB 1000<em>1000</em>1000, G 1024<em>1024</em>1024, and so on for T, P. If no unit is provided, the number is assumed to denote bytes. The number must be an integer.</span></p>
 <p><span class="par">[check flag]: Check whether the result makes sense (default: 0/true). This check will make integer overflows less likely.</span></p>
 <p><span class="ret"><strong>returns</strong>: The respective number of bytes meant with the given string. <a href="#B_E">B_E</a> is called on parsing errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -1884,7 +1886,6 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 qvm-block<br />
 qvm-ls<br />
 qvm-copy-to-vm<br />
-qvm-prefs<br />
 qvm-shutdown<br />
 qvm-check<br />
 qubes-prefs<br />
@@ -1902,7 +1903,8 @@ python3<br />
 kill<br />
 losetup<br />
 setsid<br />
-sort</p>
+sort<br />
+tar</p>
 </section>
 <section id="imports-4" class="level3">
 <h3>Imports</h3>
