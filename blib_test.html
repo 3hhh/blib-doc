@@ -879,8 +879,8 @@ mktemp</p>
 <p>Init the module paramters. It is necessary to call this method <em>before</em> using any other of this module unless you want to use the default paramters.</p>
 <p><span class="par">[quiet flag]: If set to 0 (default), don't print anything to stdout during the execution of start|stop|restart|status. Otherwise use <a href="#b_info">b_info</a> to print informational messages.</span></p>
 <p><span class="par">[main name]: Name of the main loop function to execute in the background process. Returning from that function will exit the background process. Default: <code>daemon_main</code></span></p>
-<p><span class="par">[stdout file]: Where the background process should write its stdout stream to (default: /dev/null).</span></p>
-<p><span class="par">[stderr file]: Where the background process should write its stderr stream to (default: /dev/null).</span></p>
+<p><span class="par">[stdout file]: Where the background process should write its stdout stream to (default: /dev/null). Lines are appended.</span></p>
+<p><span class="par">[stderr file]: Where the background process should write its stderr stream to (default: /dev/null). Lines are appended.</span></p>
 <p><span class="par">[umask settings]: The umask settings to apply to the daemon (default: 0).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
@@ -1885,7 +1885,6 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <p>qvm-run<br />
 qvm-block<br />
 qvm-ls<br />
-qvm-copy-to-vm<br />
 qvm-shutdown<br />
 qvm-check<br />
 qubes-prefs<br />
@@ -2097,7 +2096,15 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><small><em>os/qubes4/dom0/b_dom0_isHalted</em></small></p>
 <p>Check whether the given VMs are halted.</p>
 <p><span class="par">[vm i]: The VM to check.</span></p>
-<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not running (or don't exist?).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not halted (or don't exist?).</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_ensureHalted" class="level4">
+<h4>b_dom0_ensureHalted [vm 1] ... [vm n]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_ensureHalted</em></small></p>
+<p>Shut down the given VMs if needed.</p>
+<p><span class="par">[vm i]: The VM to halt.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that could not be halted (maybe they don't exist?).</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_exists" class="level4">
@@ -2212,9 +2219,10 @@ This is merely a convenience wrapper for <code>qvm-block attach</code>.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_enterEventLoop" class="level4">
-<h4>b_dom0_enterEventLoop [callback function]</h4>
+<h4>b_dom0_enterEventLoop [callback function] [heartbeat interval]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_enterEventLoop</em></small></p>
-<p>Enter a blocking loop to react to Qubes OS events.</p>
+<p>Enter a blocking loop to react to Qubes OS events. <a href="#b_dom0_disconnectEventLoop">b_dom0_disconnectEventLoop</a> can be used to disconnect from the event loop asynchronously, e.g. from exit traps.<br />
+If you want to obtain an overview of Qubes OS events, please use the <code>qwatch</code> utility manually.</p>
 <p><span class="par">[callback function]: Name of the function to call for <em>every</em> Qubes OS event. Since the number of events may be high, the function should do appropriate filtering at high performance.</span><br />
 The callback function should be declared as follows:</p>
 <pre><code>callback_function_name [subject] [event name] [event info] [timestamp]
@@ -2225,8 +2233,7 @@ The callback function should be declared as follows:</p>
               arguments).
 [timestamp]: When the event was received in ms since EPOCH.
 returns:  Nothing. A non-zero exit code will abort further processing.</code></pre>
-<p>If you want to obtain an overview of Qubes OS events, please use the <code>qwatch</code> utility manually.</p>
-<p><span class="par">[b_dom0_disconnectEventLoop](#b_dom0_disconnectEventLoop) can be used to disconnect from the event loop asynchronously, e.g. from exit traps.</span></p>
+<p><span class="par">[heartbeat interval]: Interval in ms at which to send heartbeat events (default: no heartbeat events).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing, but uses the exit code of the last callback function execution as its own. Sets an exit code of 0, if the event loop was terminated by <a href="#b_dom0_disconnectEventLoop">b_dom0_disonnectEventLoop</a>. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -2843,6 +2850,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_dom0_crossCopy">b_dom0_crossCopy</a></p>
 <p><a href="#b_dom0_detachDevice">b_dom0_detachDevice</a></p>
 <p><a href="#b_dom0_disconnectEventLoop">b_dom0_disconnectEventLoop</a></p>
+<p><a href="#b_dom0_ensureHalted">b_dom0_ensureHalted</a></p>
 <p><a href="#b_dom0_ensureRunning">b_dom0_ensureRunning</a></p>
 <p><a href="#b_dom0_enterEventLoop">b_dom0_enterEventLoop</a></p>
 <p><a href="#b_dom0_execFuncIn">b_dom0_execFuncIn</a></p>
