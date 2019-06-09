@@ -88,73 +88,77 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#dependencies-5">Dependencies</a></li>
 <li><a href="#functions-5">Functions</a></li>
 </ul></li>
-<li><a href="#flog">flog</a><ul>
+<li><a href="#delay">delay</a><ul>
 <li><a href="#dependencies-6">Dependencies</a></li>
-<li><a href="#imports-1">Imports</a></li>
-<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-6">Functions</a></li>
 </ul></li>
-<li><a href="#fs">fs</a><ul>
+<li><a href="#flog">flog</a><ul>
 <li><a href="#dependencies-7">Dependencies</a></li>
+<li><a href="#imports-1">Imports</a></li>
+<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-7">Functions</a></li>
 </ul></li>
-<li><a href="#http">http</a><ul>
+<li><a href="#fs">fs</a><ul>
 <li><a href="#dependencies-8">Dependencies</a></li>
-<li><a href="#global-variables-4">Global Variables</a></li>
 <li><a href="#functions-8">Functions</a></li>
 </ul></li>
-<li><a href="#ini">ini</a><ul>
+<li><a href="#http">http</a><ul>
 <li><a href="#dependencies-9">Dependencies</a></li>
+<li><a href="#global-variables-4">Global Variables</a></li>
 <li><a href="#functions-9">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
+<li><a href="#ini">ini</a><ul>
 <li><a href="#dependencies-10">Dependencies</a></li>
-<li><a href="#imports-2">Imports</a></li>
 <li><a href="#functions-10">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
+<li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
+<li><a href="#imports-2">Imports</a></li>
 <li><a href="#functions-11">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
+<li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
 <li><a href="#dependencies-12">Dependencies</a></li>
-<li><a href="#imports-3">Imports</a></li>
 <li><a href="#functions-12">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
+<li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
 <li><a href="#dependencies-13">Dependencies</a></li>
+<li><a href="#imports-3">Imports</a></li>
 <li><a href="#functions-13">Functions</a></li>
 </ul></li>
-<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
 <li><a href="#dependencies-14">Dependencies</a></li>
 <li><a href="#functions-14">Functions</a></li>
 </ul></li>
-<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#ososid">os/osid</a><ul>
 <li><a href="#dependencies-15">Dependencies</a></li>
-<li><a href="#imports-4">Imports</a></li>
 <li><a href="#functions-15">Functions</a></li>
 </ul></li>
-<li><a href="#proc">proc</a><ul>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-16">Dependencies</a></li>
+<li><a href="#imports-4">Imports</a></li>
 <li><a href="#functions-16">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#proc">proc</a><ul>
 <li><a href="#dependencies-17">Dependencies</a></li>
 <li><a href="#functions-17">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-18">Dependencies</a></li>
-<li><a href="#global-variables-5">Global Variables</a></li>
 <li><a href="#functions-18">Functions</a></li>
 </ul></li>
-<li><a href="#traps">traps</a><ul>
+<li><a href="#tcolors">tcolors</a><ul>
 <li><a href="#dependencies-19">Dependencies</a></li>
+<li><a href="#global-variables-5">Global Variables</a></li>
 <li><a href="#functions-19">Functions</a></li>
 </ul></li>
-<li><a href="#types">types</a><ul>
+<li><a href="#traps">traps</a><ul>
 <li><a href="#dependencies-20">Dependencies</a></li>
-<li><a href="#global-variables-6">Global Variables</a></li>
 <li><a href="#functions-20">Functions</a></li>
+</ul></li>
+<li><a href="#types">types</a><ul>
+<li><a href="#dependencies-21">Dependencies</a></li>
+<li><a href="#global-variables-6">Global Variables</a></li>
+<li><a href="#functions-21">Functions</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
 </ul>
@@ -951,6 +955,49 @@ Doesn't print informational messages to stdout.</p>
 </section>
 </section>
 </section>
+<section id="delay" class="level2">
+<h2>delay</h2>
+<p>Simplistic module to delay commands to a future time.<br />
+Requires polling.</p>
+<p>All timestamps in this module must be integers and a larger timestamp must denote a time <em>after</em> a smaller timestamp.</p>
+<p>Copyright (C) 2019 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-6" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+<section id="B_DELAY_EXECUTED" class="level4">
+<h4>B_DELAY_EXECUTED</h4>
+<p><small><em>delay/B_DELAY_EXECUTED</em></small></p>
+<p>The number of commands executed during the last invocation of <a href="#b_delay_execute">b_delay_execute</a>.</p>
+</section>
+</section>
+<section id="functions-6" class="level3">
+<h3>Functions</h3>
+<section id="b_delay_getDeps" class="level4">
+<h4>b_delay_getDeps</h4>
+<p><small><em>delay/b_delay_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_delay_to" class="level4">
+<h4>b_delay_to [timestamp] [command]</h4>
+<p><small><em>delay/b_delay_to</em></small></p>
+<p>Delay the given command to be executed at the given time.</p>
+<p><span class="par">[timestamp]: An integer timestamp (e.g. $SECONDS, Unix timestamp in s/ms/ns, ...).</span></p>
+<p><span class="par">[command]: The command to execute at the given time.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_delay_execute" class="level4">
+<h4>b_delay_execute [timestamp]</h4>
+<p><small><em>delay/b_delay_execute</em></small></p>
+<p>Execute all commands which are due at the given time.</p>
+<p><span class="par">[timestamp]: Integer timestamp representing the current point in time.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. The exit code is equal to the number of commands with a non-zero exit code. <a href="#B_DELAY_EXECUTED">B_DELAY_EXECUTED</a> is updated with the number of commands executed.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+</section>
+</section>
 <section id="flog" class="level2">
 <h2>flog</h2>
 <p>Flexible log writer for bash supporting arbitrary piped output (files, network streams, stdout, stderr, ...) in a user-defined output format.<br />
@@ -968,7 +1015,7 @@ Log files can be automatically reduced to their last X lines.</p>
            by date +&quot;%F %T %Z&quot; (the format can be changed)</code></pre>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-6" class="level3">
+<section id="dependencies-7" class="level3">
 <h3>Dependencies</h3>
 <p>date<br />
 tail<br />
@@ -989,7 +1036,7 @@ It was inspired by the severities of RFC5424.<br />
 Currently supported values: emergency|alert|critical|crit|error|err|warning|warn|notice|informational|info|debug</p>
 </section>
 </section>
-<section id="functions-6" class="level3">
+<section id="functions-7" class="level3">
 <h3>Functions</h3>
 <section id="b_flog_printSeverity" class="level4">
 <h4>b_flog_printSeverity [severity]</h4>
@@ -1143,7 +1190,7 @@ Print the given severity in a way for logging. This function is meant to be used
 <p>Collection of file and file system related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-7" class="level3">
+<section id="dependencies-8" class="level3">
 <h3>Dependencies</h3>
 <p>wc<br />
 date<br />
@@ -1151,7 +1198,7 @@ findmnt<br />
 mktemp<br />
 mount</p>
 </section>
-<section id="functions-7" class="level3">
+<section id="functions-8" class="level3">
 <h3>Functions</h3>
 <section id="b_fs_getDeps" class="level4">
 <h4>b_fs_getDeps</h4>
@@ -1231,7 +1278,7 @@ mount</p>
 <p>Collection of http related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-8" class="level3">
+<section id="dependencies-9" class="level3">
 <h3>Dependencies</h3>
 <p>curl</p>
 </section>
@@ -1245,7 +1292,7 @@ It is recommended to pick a relatively large number of URLs with SSL support to 
 Defaults to the European/US Alexa Top 10 (which hopefully blends in to the masses).</p>
 </section>
 </section>
-<section id="functions-8" class="level3">
+<section id="functions-9" class="level3">
 <h3>Functions</h3>
 <section id="b_http_getDeps" class="level4">
 <h4>b_http_getDeps</h4>
@@ -1295,11 +1342,11 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 </ul>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-9" class="level3">
+<section id="dependencies-10" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-9" class="level3">
+<section id="functions-10" class="level3">
 <h3>Functions</h3>
 <section id="b_ini_getDeps" class="level4">
 <h4>b_ini_getDeps</h4>
@@ -1398,7 +1445,7 @@ Multiple sections can be separated with &quot;--&quot;.</p>
 </table>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-10" class="level3">
+<section id="dependencies-11" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
@@ -1407,7 +1454,7 @@ Multiple sections can be separated with &quot;--&quot;.</p>
 <p><a href="#multithreadingipcv">multithreading/ipcv</a></p>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
 </section>
-<section id="functions-10" class="level3">
+<section id="functions-11" class="level3">
 <h3>Functions</h3>
 <section id="b_ipcm_getDeps" class="level4">
 <h4>b_ipcm_getDeps</h4>
@@ -1499,7 +1546,7 @@ It is recommended to call this function when all processes finished their work.<
 </table>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-11" class="level3">
+<section id="dependencies-12" class="level3">
 <h3>Dependencies</h3>
 <p>findmnt<br />
 mkdir<br />
@@ -1507,7 +1554,7 @@ mktemp<br />
 mv<br />
 rm</p>
 </section>
-<section id="functions-11" class="level3">
+<section id="functions-12" class="level3">
 <h3>Functions</h3>
 <section id="b_ipcv_getDeps" class="level4">
 <h4>b_ipcv_getDeps</h4>
@@ -1571,7 +1618,7 @@ Please note that the variables will remain set in your current process context, 
 Lock: A specific maximum number of processes may have it at any point in time.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-12" class="level3">
+<section id="dependencies-13" class="level3">
 <h3>Dependencies</h3>
 <p>mkdir<br />
 touch<br />
@@ -1585,7 +1632,7 @@ mktemp</p>
 <h3>Imports</h3>
 <p><a href="#proc">proc</a></p>
 </section>
-<section id="functions-12" class="level3">
+<section id="functions-13" class="level3">
 <h3>Functions</h3>
 <section id="b_mtx_getDeps" class="level4">
 <h4>b_mtx_getDeps</h4>
@@ -1710,7 +1757,7 @@ You should only do this if you currently own the mutex and the new process is re
 </table>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-13" class="level3">
+<section id="dependencies-14" class="level3">
 <h3>Dependencies</h3>
 <p>shuf<br />
 mv<br />
@@ -1718,7 +1765,7 @@ ln<br />
 stat<br />
 rm</p>
 </section>
-<section id="functions-13" class="level3">
+<section id="functions-14" class="level3">
 <h3>Functions</h3>
 <section id="b_multiw_getDeps" class="level4">
 <h4>b_multiw_getDeps</h4>
@@ -1763,11 +1810,11 @@ This function should only be called when all processes finished reading and writ
 <p>Functions for operating system identification.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-14" class="level3">
+<section id="dependencies-15" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-14" class="level3">
+<section id="functions-15" class="level3">
 <h3>Functions</h3>
 <section id="b_osid_getDeps" class="level4">
 <h4>b_osid_getDeps</h4>
@@ -1850,7 +1897,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-15" class="level3">
+<section id="dependencies-16" class="level3">
 <h3>Dependencies</h3>
 <p>qvm-run<br />
 qvm-block<br />
@@ -1881,7 +1928,7 @@ tar</p>
 <p><a href="#proc">proc</a></p>
 <p><a href="#types">types</a></p>
 </section>
-<section id="functions-15" class="level3">
+<section id="functions-16" class="level3">
 <h3>Functions</h3>
 <section id="b_dom0_getDeps" class="level4">
 <h4>b_dom0_getDeps</h4>
@@ -2232,12 +2279,12 @@ returns:  Nothing. A non-zero exit code will abort further processing.</code></p
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-16" class="level3">
+<section id="dependencies-17" class="level3">
 <h3>Dependencies</h3>
 <p>tail<br />
 timeout</p>
 </section>
-<section id="functions-16" class="level3">
+<section id="functions-17" class="level3">
 <h3>Functions</h3>
 <section id="b_proc_getDeps" class="level4">
 <h4>b_proc_getDeps</h4>
@@ -2274,11 +2321,11 @@ timeout</p>
 <p>Collection of string related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-17" class="level3">
+<section id="dependencies-18" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-17" class="level3">
+<section id="functions-18" class="level3">
 <h3>Functions</h3>
 <section id="b_str_getDeps" class="level4">
 <h4>b_str_getDeps</h4>
@@ -2310,7 +2357,7 @@ timeout</p>
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-18" class="level3">
+<section id="dependencies-19" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
@@ -2323,7 +2370,7 @@ timeout</p>
 Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 </section>
 </section>
-<section id="functions-18" class="level3">
+<section id="functions-19" class="level3">
 <h3>Functions</h3>
 <section id="b_tcolors_getDeps" class="level4">
 <h4>b_tcolors_getDeps</h4>
@@ -2338,11 +2385,11 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-19" class="level3">
+<section id="dependencies-20" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-19" class="level3">
+<section id="functions-20" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getDeps" class="level4">
 <h4>b_traps_getDeps</h4>
@@ -2395,7 +2442,7 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-20" class="level3">
+<section id="dependencies-21" class="level3">
 <h3>Dependencies</h3>
 <p>mktemp<br />
 mkfifo<br />
@@ -2415,7 +2462,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-20" class="level3">
+<section id="functions-21" class="level3">
 <h3>Functions</h3>
 <section id="b_types_getDeps" class="level4">
 <h4>b_types_getDeps</h4>
@@ -2501,6 +2548,10 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_date_diffSeconds">b_date_diffSeconds</a></p>
 <p><a href="#b_date_getDeps">b_date_getDeps</a></p>
 <p><a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></p>
+<p><a href="#b_delay_execute">b_delay_execute</a></p>
+<p><a href="#B_DELAY_EXECUTED">B_DELAY_EXECUTED</a></p>
+<p><a href="#b_delay_getDeps">b_delay_getDeps</a></p>
+<p><a href="#b_delay_to">b_delay_to</a></p>
 <p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
 <p><a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a></p>
 <p><a href="#b_dom0_closeCrypt">b_dom0_closeCrypt</a></p>
