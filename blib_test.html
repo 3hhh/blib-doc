@@ -992,7 +992,7 @@ Doesn't print informational messages to stdout.</p>
 Requires polling.</p>
 <p>All timestamps in this module must be integers and a larger timestamp must denote a time <em>after</em> a smaller timestamp.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
-0.2</p>
+0.3</p>
 <section id="dependencies-6" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
@@ -1026,6 +1026,13 @@ Requires polling.</p>
 <p><span class="par">[timestamp]: Integer timestamp representing the current point in time.</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing. The exit code is equal to the number of commands with a non-zero exit code. <a href="#B_DELAY_EXECUTED">B_DELAY_EXECUTED</a> is updated with the number of commands executed.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+<section id="b_delay_getCommandAt" class="level4">
+<h4>b_delay_getCommandAt [timestamp]</h4>
+<p><small><em>delay/b_delay_getCommandAt</em></small></p>
+<p>Get the set of commands to be executed at the given point in time.</p>
+<p><span class="par">[timestamp]: Integer timestamp denoting the time for which to retrieve the commands.</span></p>
+<p><span class="ret"><strong>returns</strong>: The commands to execute at that time.</span></p>
 </section>
 </section>
 </section>
@@ -2163,7 +2170,7 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM exists a non-zero exit code otherwise.</span></p>
 </section>
 <section id="b_dom0_openCrypt" class="level4">
-<h4>b_dom0_openCrypt [vm] [device] [mapper name] [rw flag] [mount point] [key file] [type]</h4>
+<h4>b_dom0_openCrypt [vm] [device] [mapper name] [rw flag] [mount point] [key file] [additional options]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_openCrypt</em></small></p>
 <p>In the given VM, open the given crypto device with dm-crypt and mount it to the mount point.</p>
 <p><span class="par">[vm]: The VM where to open the crypto device.</span></p>
@@ -2172,7 +2179,7 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><span class="par">[rw flag]: 0=open read-write, 1=open read-only (default: 0)</span></p>
 <p><span class="par">[mount point]: Where to mount the decrypted data to. Non-existing directories will be created. If no mount point is specified, it will not be mounted (default).</span></p>
 <p><span class="par">[key file]: Full vm path to the key to use for decryption. If none is specified, password-based decryption is assumed and stdin will be read to obtain the password.</span></p>
-<p><span class="par">[type]: Type of encryption container to open: plain|luks|loopaes|tcrypt (default: luks)</span></p>
+<p><span class="par">[additional options]: Single string with additional cryptsetup parameters to pass on (default: none). They are passed <em>as-is</em>, i.e. you'll have to take care of proper escaping etc. yourself.</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing (except for user interaction prompts if no key file is provided), but sets a non-zero exit code on errors</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2896,6 +2903,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></p>
 <p><a href="#b_delay_execute">b_delay_execute</a></p>
 <p><a href="#B_DELAY_EXECUTED">B_DELAY_EXECUTED</a></p>
+<p><a href="#b_delay_getCommandAt">b_delay_getCommandAt</a></p>
 <p><a href="#b_delay_getDeps">b_delay_getDeps</a></p>
 <p><a href="#b_delay_to">b_delay_to</a></p>
 <p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
