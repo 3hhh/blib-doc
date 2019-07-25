@@ -67,6 +67,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#args">args</a><ul>
 <li><a href="#dependencies-1">Dependencies</a></li>
+<li><a href="#imports">Imports</a></li>
 <li><a href="#global-variables-1">Global Variables</a></li>
 <li><a href="#functions-1">Functions</a></li>
 </ul></li>
@@ -80,7 +81,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#daemon">daemon</a><ul>
 <li><a href="#dependencies-4">Dependencies</a></li>
-<li><a href="#imports">Imports</a></li>
+<li><a href="#imports-1">Imports</a></li>
 <li><a href="#global-variables-2">Global Variables</a></li>
 <li><a href="#functions-4">Functions</a></li>
 </ul></li>
@@ -94,7 +95,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#flog">flog</a><ul>
 <li><a href="#dependencies-7">Dependencies</a></li>
-<li><a href="#imports-1">Imports</a></li>
+<li><a href="#imports-2">Imports</a></li>
 <li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-7">Functions</a></li>
 </ul></li>
@@ -113,7 +114,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
-<li><a href="#imports-2">Imports</a></li>
+<li><a href="#imports-3">Imports</a></li>
 <li><a href="#functions-11">Functions</a></li>
 </ul></li>
 <li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
@@ -122,7 +123,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
 <li><a href="#dependencies-13">Dependencies</a></li>
-<li><a href="#imports-3">Imports</a></li>
+<li><a href="#imports-4">Imports</a></li>
 <li><a href="#functions-13">Functions</a></li>
 </ul></li>
 <li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
@@ -135,7 +136,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-16">Dependencies</a></li>
-<li><a href="#imports-4">Imports</a></li>
+<li><a href="#imports-5">Imports</a></li>
 <li><a href="#functions-16">Functions</a></li>
 </ul></li>
 <li><a href="#proc">proc</a><ul>
@@ -510,7 +511,7 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <section id="args" class="level2">
 <h2>args</h2>
 <p>Stateful argument parser for bash.</p>
-<p>Regular arguments are parsed to <a href="#B_ARGS">B_ARGS</a>, options to <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a>. Options may have parameters, can be repeated and combined.</p>
+<p>Regular arguments and options are parsed via <a href="#b_args_parse">b_args_parse</a>. Afterwards they can be retrieved via <a href="#b_args_get">b_args_get</a> and <a href="#b_args_getOption">b_args_getOption</a>. Options may have parameters, can be repeated and combined.</p>
 <p>The module can also check the correctness of options. All remaining correctness checks (e.g. for regular or option parameters) are left to the user of this module.</p>
 <p>Conventions:</p>
 <ul>
@@ -520,24 +521,30 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <li>Everything after a space-separated double dash (<code>--</code>) is not considered an option, but a regular argument.</li>
 </ul>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
-0.7</p>
+0.8</p>
 <section id="dependencies-1" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
+</section>
+<section id="imports" class="level3">
+<h3>Imports</h3>
+<p><a href="#types">types</a></p>
 </section>
 <section id="global-variables-1" class="level3">
 <h3>Global Variables</h3>
 <section id="B_ARGS" class="level4">
 <h4>B_ARGS</h4>
 <p><small><em>args/B_ARGS</em></small></p>
-<p>Array of regular/non-option arguments in the order of their appearance.</p>
+<p>Array of regular/non-option arguments in the order of their appearance.<br />
+Instead of using it directly, it is recommended to use <a href="#b_args_get">b_args_get</a> instead. The array may be removed in future versions.</p>
 </section>
 <section id="B_ARGS_OPTS" class="level4">
 <h4>B_ARGS_OPTS</h4>
 <p><small><em>args/B_ARGS_OPTS</em></small></p>
 <p>Map of options. <code>[option]_[index]</code> is used as key with <code>[index]</code> starting at zero. The values are the option parameters (if any). Multiple option parameters are separated by tabs.<br />
 The latter separator can be changed via <a href="#b_args_setOptionParamSeparator">b_args_setOptionParamSeparator</a> before calling <a href="#b_args_parse">b_args_parse</a>.<br />
-The index will only increase if options are repeated.</p>
+The index will only increase if options are repeated.<br />
+Instead of using it directly, it is recommended to use <a href="#b_args_getOption">b_args_getOption</a> instead. The array may be removed in future versions.</p>
 </section>
 </section>
 <section id="functions-1" class="level3">
@@ -576,7 +583,7 @@ The index will only increase if options are repeated.</p>
 <h4>b_args_parse [arguments]</h4>
 <p><small><em>args/b_args_parse</em></small></p>
 <p>Parse the given arguments.<br />
-Regular arguments are parsed to the array <a href="#B_ARGS">B_ARGS</a>, options to the map <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a>.</p>
+Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any non-default parsing behaviour.</p>
 <p><span class="par">[arguments]: The arguments meant to be parsed, usually &quot;$@&quot;.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and calls <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
@@ -585,10 +592,52 @@ Regular arguments are parsed to the array <a href="#B_ARGS">B_ARGS</a>, options 
 <section id="b_args_assertOptions" class="level4">
 <h4>b_args_assertOptions [option 1] ... [option n]</h4>
 <p><small><em>args/b_args_assertOptions</em></small></p>
-<p>Assert that <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a> contains only the given allowed options (or less).</p>
+<p>Assert that the parsed options contain only the given allowed options (or less).</p>
 <p><span class="par">[option i]: Option to check against.</span></p>
-<p><span class="par">[returns]: Sets a zero exit code, if <a href="#B_ARGS_OPTS">B_ARGS_OPTS</a> contains only allowed options and errors out with <a href="#B_E">B_E</a> otherwise. Prints a list of invalid options in the error case.</span></p>
+<p><span class="par">[returns]: Sets a zero exit code, if the current parsed state contains only allowed options and errors out with <a href="#B_E">B_E</a> otherwise. Prints a list of invalid options in the error case.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_args_get" class="level4">
+<h4>b_args_get [index] [fallback]</h4>
+<p><small><em>args/b_args_get</em></small></p>
+<p>Get the argument at the given index.</p>
+<p><span class="par">[index]: Index of the argument to retrieve, starting at 0.</span></p>
+<p><span class="par">[fallback]: Value to return, if the given index was provided as empty argument or is missing. Default: empty String</span></p>
+<p><span class="ret"><strong>returns</strong>: The argument at the given index. An <em>empty</em> (existing!) argument will cause the fallback to be returned with a zero exit code. If no argument was found at that index, a nonzero exit code is set and the fallback is returned.</span></p>
+</section>
+<section id="b_args_getInt" class="level4">
+<h4>b_args_getInt [index] [fallback]</h4>
+<p><small><em>args/b_args_getInt</em></small></p>
+<p>Convenience wrapper for <a href="#b_args_get">b_args_get</a> that also checks the type of the argument to be an integer.</p>
+<p><span class="ret"><strong>returns</strong>: See <a href="#b_args_get">b_args_get</a>. Also sets a nonzero exit code, if the argument is not an integer.</span></p>
+</section>
+<section id="b_args_getCount" class="level4">
+<h4>b_args_getCount</h4>
+<p><small><em>args/b_args_getCount</em></small></p>
+<p>Get the number of arguments.</p>
+<p><span class="ret"><strong>returns</strong>: Number of arguments.</span></p>
+</section>
+<section id="b_args_getOption" class="level4">
+<h4>b_args_getOption [option] [fallback] [repeat index] [parameter index]</h4>
+<p><small><em>args/b_args_getOption</em></small></p>
+<p>Check whether the given option is set and retrieve its parameter, if it was.</p>
+<p><span class="par">[option]: String defining the option, e.g. <code>--option</code> or <code>-a</code>.</span></p>
+<p><span class="par">[fallback]: Value to return if the option did not have any parameter or was not set. Default: empty String</span></p>
+<p><span class="par">[repeat index]: Index of the option to retrieve, if the option was repeated multiple times (default: 0 = first option).</span></p>
+<p><span class="par">[parameter index]: Index of the option parameter to retrieve, starting at 0 (default: return all option parameters, separated by <a href="#b_args_getOptionParamSeparator">b_args_getOptionParamSeparator</a>).</span></p>
+<p><span class="ret"><strong>returns</strong>: The option parameter, if the option was set. The fallback is returned and a zero exit code is set, if the option was set, but an <em>empty</em> (existing!) parameter was provided. A nonzero exit code indicates that the option was not set (the fallback is still returned).</span></p>
+</section>
+<section id="b_args_getOptionInt" class="level4">
+<h4>b_args_getOptionInt [option] [fallback] [repeat index] [parameter index]</h4>
+<p><small><em>args/b_args_getOptionInt</em></small></p>
+<p>Convenience wrapper for <a href="#b_args_getOption">b_args_getOption</a> that also checks the type of the option to be an integer.</p>
+<p><span class="ret"><strong>returns</strong>: See <a href="#b_args_getOption">b_args_getOption</a>. Also sets a nonzero exit code, if the option is not an integer.</span></p>
+</section>
+<section id="b_args_getOptionCount" class="level4">
+<h4>b_args_getOptionCount</h4>
+<p><small><em>args/b_args_getOptionCount</em></small></p>
+<p>Get the number of options that were set.</p>
+<p><span class="ret"><strong>returns</strong>: Number of options (incl. repeated options).</span></p>
 </section>
 </section>
 </section>
@@ -857,7 +906,7 @@ mkdir<br />
 rm<br />
 mktemp</p>
 </section>
-<section id="imports" class="level3">
+<section id="imports-1" class="level3">
 <h3>Imports</h3>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
 <p><a href="#proc">proc</a></p>
@@ -1060,7 +1109,7 @@ tail<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-1" class="level3">
+<section id="imports-2" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 </section>
@@ -1487,7 +1536,7 @@ Multiple sections can be separated with &quot;--&quot;.</p>
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-2" class="level3">
+<section id="imports-3" class="level3">
 <h3>Imports</h3>
 <p><a href="#multithreadingipcv">multithreading/ipcv</a></p>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
@@ -1666,7 +1715,7 @@ rmdir<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-3" class="level3">
+<section id="imports-4" class="level3">
 <h3>Imports</h3>
 <p><a href="#proc">proc</a></p>
 </section>
@@ -1960,7 +2009,7 @@ setsid<br />
 sort<br />
 tar</p>
 </section>
-<section id="imports-4" class="level3">
+<section id="imports-5" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 <p><a href="#proc">proc</a></p>
@@ -2548,7 +2597,7 @@ See the strings manpage for further explanations.</p>
 <h2>tests/args.bats</h2>
 <p>Bats tests for the args module.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
-0.3</p>
+0.4</p>
 </section>
 <section id="testsarr.bats" class="level2">
 <h2>tests/arr.bats</h2>
@@ -2857,7 +2906,13 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <h2>Reference List</h2>
 <p><a href="#B_ARGS">B_ARGS</a></p>
 <p><a href="#b_args_assertOptions">b_args_assertOptions</a></p>
+<p><a href="#b_args_get">b_args_get</a></p>
+<p><a href="#b_args_getCount">b_args_getCount</a></p>
 <p><a href="#b_args_getDeps">b_args_getDeps</a></p>
+<p><a href="#b_args_getInt">b_args_getInt</a></p>
+<p><a href="#b_args_getOption">b_args_getOption</a></p>
+<p><a href="#b_args_getOptionCount">b_args_getOptionCount</a></p>
+<p><a href="#b_args_getOptionInt">b_args_getOptionInt</a></p>
 <p><a href="#b_args_getOptionParamSeparator">b_args_getOptionParamSeparator</a></p>
 <p><a href="#b_args_init">b_args_init</a></p>
 <p><a href="#B_ARGS_OPTS">B_ARGS_OPTS</a></p>
