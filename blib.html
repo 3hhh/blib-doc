@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="author" content="David Hobach">
-  <title>blib Code Reference v1.1</title>
+  <title>blib Code Reference v1.2</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 div.sourceCode { overflow-x: auto; }
@@ -51,7 +51,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 <body>
 <header>
-<h1 class="title">blib Code Reference v1.1</h1>
+<h1 class="title">blib Code Reference v1.2</h1>
 <h2 class="author">David Hobach</h2>
 </header>
 <nav id="TOC">
@@ -213,6 +213,8 @@ along with this program. If not, see <a href="https://www.gnu.org/licenses/" cla
 <h3>Library Usage</h3>
 <p>with the default bash options:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">source</span> blib
+ <span class="ex">b_checkVersion</span> 1 0 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.0 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span>
+
  <span class="ex">b_import</span> [module]</code></pre></div>
 </section>
 <section id="dependencies" class="level3">
@@ -310,6 +312,19 @@ print the current stack trace in a human readable way</p>
 <p>Get the version of this blib instance.</p>
 <p><span class="par">[part]: Optional parameter defining the part of the version to retrieve (0: all as String (default), 1: major as Integer, 2: minor as Integer).</span></p>
 <p><span class="ret"><strong>returns</strong>: blib version as string; always sets a zero exit code</span></p>
+</section>
+<section id="b_checkVersion" class="level4">
+<h4>b_checkVersion [minimum allowed major] [minimum allowed minor] [maximum allowed major] [maximum allowed minor]</h4>
+<p><small><em>blib/b_checkVersion</em></small></p>
+<p>Check whether the currently running blib instance meets the given blib version requirements.<br />
+To e.g. make sure you're on blib version 1.1 or higher, use</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">source</span> blib
+ <span class="ex">b_checkVersion</span> 1 2 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.2 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span></code></pre></div>
+<p><span class="par">[minimum allowed major]: The lowest acceptable major version number (default: 0).</span></p>
+<p><span class="par">[minimum allowed minor]: The lowest acceptable minor version number (default: 0).</span></p>
+<p><span class="par">[maximum allowed major]: The highest acceptable major version number (default: infinite).</span></p>
+<p><span class="par">[maximum allowed minor]: The highest acceptable minor version number (default: infinite).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if an only if the currently running blib instance meets the version requirements.</span></p>
 </section>
 <section id="b_defaultErrorHandler" class="level4">
 <h4>b_defaultErrorHandler [error out] [print stderr] [print stack trace]</h4>
@@ -442,30 +457,40 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_generateStandalone" class="level4">
-<h4>b_generateStandalone [function] [param 1] .. [param p] - [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d]</h4>
+<h4>b_generateStandalone [function] [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d] - [function param 1] .. [function param p]</h4>
 <p><small><em>blib/b_generateStandalone</em></small></p>
 <p>Create a standalone variant of blib in a single file running the given function when called (sourcing that file will only make the functions available) and print that file to stdout.</p>
 <p>The current execution state is not retained.</p>
 <p><span class="par">[function]: The function to call when the generated script is executed. All script parameters when calling [output file] are passed to this function. The function must be available in the current context.</span></p>
-<p><span class="par">[param p]: Static parameters to add to the function as single String. Dynamic parameters should be passed to the generated script.</span></p>
 <p><span class="par">[module dep i]: Names of the modules to include in the standalone file. They do not need to be imported.</span></p>
-<p><span class="par">[-]: Dash used as separator between the function dependencies and the modules. If none is provided, all parameters are assumed to be modules.</span></p>
+<p><span class="par">[-]: Dash used as separator between the various types of arguments. If none is provided, all parameters are assumed to be modules.</span></p>
 <p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
+<p><span class="par">[function param p]: Static parameters to add to the function as single String. Dynamic parameters should be passed to the generated script.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code and prints the output file to stdout on success. May error out otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_execFuncInCurrentContext" class="level4">
+<h4>b_execFuncInCurrentContext [function] [module dep 1] .. [module dep n] - [function param 1] .. [function param p]</h4>
+<p><small><em>blib/b_execFuncInCurrentContext</em></small></p>
+<p>Execute the given function in the current context.</p>
+<p><span class="par">[function]: The function to execute.</span></p>
+<p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
+<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
+<p><span class="par">[function param p]: An arbitrary number of function parameters.</span></p>
+<p><span class="ret"><strong>returns</strong>: Whatever the executed function returns.</span></p>
+</section>
 <section id="b_execFuncAs" class="level4">
-<h4>b_execFuncAs [user] [function] [param 1] .. [param p] - [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d]</h4>
+<h4>b_execFuncAs [user] [function] [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d] - [function param 1] .. [function param p]</h4>
 <p><small><em>blib/b_execFuncAs</em></small></p>
 <p>Attempt to execute the Bash function as the given user.</p>
 <p>Whether or not this works highly depends on the underlying OS and its (sudo &amp; su) configuration. In particular this function may cause further execution to wait for the user to type in the password of the requested user.</p>
 <p>If the given user is identical to the current user, <a href="#b_execFuncAs">b_execFuncAs</a> may decide to run the function in the current context. Otherwise it may run in a different process.</p>
 <p><span class="par">[user]: User to execute the function as (default: root).</span></p>
 <p><span class="par">[function]: The function to execute.</span></p>
-<p><span class="par">[param p]: An arbitrary number of function parameters.</span></p>
-<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
 <p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
+<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
 <p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
+<p><span class="par">[function param p]: An arbitrary number of function parameters.</span></p>
 <p><span class="ret"><strong>returns</strong>: Whatever the executed function returns. A non-zero exit code may also indicate that the user switch didn't work. In particular <a href="#B_E">B_E</a> is <em>not</em> called if the executed function returns an error.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -1318,6 +1343,14 @@ mount</p>
 <p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_fs_removeUnusedLoopDevice" class="level4">
+<h4>b_fs_removeUnusedLoopDevice [device|file]</h4>
+<p><small><em>fs/b_fs_removeUnusedLoopDevice</em></small></p>
+<p>Remove a loop device, if and only if it is unused by the operating system. Otherwise mark it for removal once it becomes unused. Usually requires root access rights.</p>
+<p><span class="par">[device|file]: Full path (incl. /dev/) to the loop device or to the backing file.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the loop device was not used and could thus be successfully removed <em>or</em> does not exist. A nonzero exit code indicates that the device is still being used. <a href="#B_E">B_E</a> is called on other errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 <section id="b_fs_parseSize" class="level4">
 <h4>b_fs_parseSize [string] [check flag]</h4>
 <p><small><em>fs/b_fs_parseSize</em></small></p>
@@ -2070,7 +2103,7 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_execFuncIn" class="level4">
-<h4>b_dom0_execFuncIn [vm] [user] [function] [param 1] .. [param p] - [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d]</h4>
+<h4>b_dom0_execFuncIn [vm] [user] [function] [module dep 1] .. [module dep n] - [function dep 1] .. [function dep d] - [function param 1] .. [function param p]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_execFuncIn</em></small></p>
 <p>Execute the Bash function in the given VM and wait for it to finish.</p>
 <p>Convenience wrapper for <a href="#b_dom0_execIn">b_dom0_execIn</a>.</p>
@@ -2078,10 +2111,10 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="par">[vm]: see <a href="#b_dom0_execIn">b_dom0_execIn</a></span></p>
 <p><span class="par">[user]: see <a href="#b_dom0_execIn">b_dom0_execIn</a></span></p>
 <p><span class="par">[function]: Name of the function as it is declared in the current scope.</span></p>
-<p><span class="par">[param p]: An arbitrary number of function parameters.</span></p>
-<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
 <p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
+<p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
 <p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules must <em>not</em> be added.</span></p>
+<p><span class="par">[function param p]: An arbitrary number of function parameters.</span></p>
 <p><span class="ret"><strong>returns</strong>: see <a href="#b_dom0_execIn">b_dom0_execIn</a>; <a href="#B_E">B_E</a> is <em>not</em> called if the executed command returns an error</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2120,6 +2153,18 @@ This usually requires root privileges.</p>
 <p><span class="par">[vm]: VM where to execute.</span></p>
 <p><span class="par">[file]: File for which to create a loop device.</span></p>
 <p><span class="ret"><strong>returns</strong>: Created loop device or previously used one (incl. /dev/). Sets a non-zero exit code, if no device could be created.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_removeUnusedLoopDevice" class="level4">
+<h4>b_dom0_removeUnusedLoopDevice [vm] [device|file] [type] [map]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_removeUnusedLoopDevice</em></small></p>
+<p>Remove a loop device from the given VM, if it is <em>neither</em> used by Qubes OS <em>nor</em> by the given VM.<br />
+<em>Important</em>: Calling this function may cause the device to be removed as soon as it becomes unused by the VM (and the VM <em>only</em>!). So if you called this function, you should <em>not</em> use the device any further from dom0 with e.g. <code>qvm-block</code> afterwards - even if it wasn't removed.</p>
+<p><span class="par">[vm]: VM where to remove the loop device.</span></p>
+<p><span class="par">[device|file]: Full path (incl. /dev/) to the loop device or to the backing file inside the VM.</span></p>
+<p><span class="par">[type]: Whether the given path represents a loop device (0) or the backing file (1). If not specified, a device will be assumed, if and only if the path starts with <code>/dev/</code>.</span></p>
+<p><span class="par">[map]: Optional output from a previous call to <a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a>. If none is specified, this function will internally call <a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a>.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the loop device was not used and could thus be successfully removed <em>or</em> does not exist. A nonzero exit code indicates that the device is still being used. <a href="#B_E">B_E</a> is called on other errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_copy" class="level4">
@@ -2597,6 +2642,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_cdoc_setPostProcessingCallback">b_cdoc_setPostProcessingCallback</a></p>
 <p><a href="#b_cdoc_setSpaceCallback">b_cdoc_setSpaceCallback</a></p>
 <p><a href="#b_checkDeps">b_checkDeps</a></p>
+<p><a href="#b_checkVersion">b_checkVersion</a></p>
 <p><a href="#b_daemon_getDeps">b_daemon_getDeps</a></p>
 <p><a href="#b_daemon_getPid">b_daemon_getPid</a></p>
 <p><a href="#B_DAEMON_ID">B_DAEMON_ID</a></p>
@@ -2643,6 +2689,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_dom0_openCrypt">b_dom0_openCrypt</a></p>
 <p><a href="#b_dom0_parseQvmBlock">b_dom0_parseQvmBlock</a></p>
 <p><a href="#b_dom0_qvmRun">b_dom0_qvmRun</a></p>
+<p><a href="#b_dom0_removeUnusedLoopDevice">b_dom0_removeUnusedLoopDevice</a></p>
 <p><a href="#b_dom0_setVMDeps">b_dom0_setVMDeps</a></p>
 <p><a href="#b_dom0_startDispVM">b_dom0_startDispVM</a></p>
 <p><a href="#b_dom0_testMultiple">b_dom0_testMultiple</a></p>
@@ -2651,6 +2698,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_enforceUser">b_enforceUser</a></p>
 <p><a href="#B_ERR">B_ERR</a></p>
 <p><a href="#b_execFuncAs">b_execFuncAs</a></p>
+<p><a href="#b_execFuncInCurrentContext">b_execFuncInCurrentContext</a></p>
 <p><a href="#b_flog_close">b_flog_close</a></p>
 <p><a href="#b_flog_defaultHeader">b_flog_defaultHeader</a></p>
 <p><a href="#b_flogErrorHandler">b_flogErrorHandler</a></p>
@@ -2678,6 +2726,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_fs_isEmptyDir">b_fs_isEmptyDir</a></p>
 <p><a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a></p>
 <p><a href="#b_fs_parseSize">b_fs_parseSize</a></p>
+<p><a href="#b_fs_removeUnusedLoopDevice">b_fs_removeUnusedLoopDevice</a></p>
 <p><a href="#b_fs_waitForFile">b_fs_waitForFile</a></p>
 <p><a href="#b_generateStandalone">b_generateStandalone</a></p>
 <p><a href="#b_getBlibModules">b_getBlibModules</a></p>
