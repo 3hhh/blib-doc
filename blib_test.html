@@ -358,7 +358,7 @@ To e.g. make sure you're on blib version 1.1 or higher, use</p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if an only if the currently running blib instance meets the version requirements.</span></p>
 </section>
 <section id="b_defaultErrorHandler" class="level4">
-<h4>b_defaultErrorHandler [error out] [print stderr] [print stack trace]</h4>
+<h4>b_defaultErrorHandler [error out] [send err] [send stack trace]</h4>
 <p><small><em>blib/b_defaultErrorHandler</em></small></p>
 <p>The blib default error handler.<br />
 As any error handler it must</p>
@@ -367,6 +367,7 @@ As any error handler it must</p>
 <li>not take any non-numeric arguments</li>
 <li>not error out itself</li>
 <li>implement the below <em>[error out]</em> as its first parameter (to make <a href="#b_setBE">b_setBE</a> work)</li>
+<li>ideally use <a href="#b_error">b_error</a> to send error messages to the user</li>
 <li>return one of the following exit codes:
 <ol type="a">
 <li>0: <strong>if and only if</strong> the error was fixed entirely and the caller may ignore the error (i.e. probably never)</li>
@@ -375,8 +376,8 @@ As any error handler it must</p>
 </ol></li>
 </ol>
 <p><span class="par">[error out]: Whether or not to call exit after the error message handling, if the error couldn't be handled (default: 0 = always error out / call exit). If set to 1, <a href="#B_E">B_E</a> will allow e.g. functions to return to their callers.</span></p>
-<p><span class="par">[print stderr]: Whether or not to print the error message to stderr (default: 0 = print).</span></p>
-<p><span class="par">[print stack trace]: Whether or not to print a stack trace to stderr (default: 0 = print).</span></p>
+<p><span class="par">[send err]: Whether or not to send the error message to the user (default: 0 = send).</span></p>
+<p><span class="par">[send stack trace]: Whether or not to send a stack trace to the user (default: 0 = send).</span></p>
 <p><span class="ret"><strong>returns</strong>: see the description above</span></p>
 </section>
 <section id="b_setBE" class="level4">
@@ -429,12 +430,51 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <p><span class="ret"><strong>returns</strong>: Sets the status code of the called function, but doesn't print anything. <a href="#B_E">B_E</a> is called on errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_defaultMessageHandler" class="level4">
+<h4>b_defaultMessageHandler [message type] [message] [first part] [last part]</h4>
+<p><small><em>blib/b_defaultMessageHandler</em></small></p>
+<p>Handles the given message by printing information to stdout and errors to stderr.<br />
+This is the default message handler used by blib. It can be changed by <a href="#b_setMessageHandler">b_setMessageHandler</a>.<br />
+Message handler implementations must support at least the parameters of this function, but may add additional parameters.</p>
+<p><span class="par">[message type]: 0=informational message, 1=error message.</span></p>
+<p><span class="par">[message]: String representing the message.</span></p>
+<p><span class="par">[first part]: If set to 0, assume that the given message is the first part of an overall chain of messages (default: 0).</span></p>
+<p><span class="par">[last part]: If set to 0, assume that the given message is the final part of an overall chain of messages (default: 0).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. Never causes errors.</span></p>
+</section>
 <section id="b_info" class="level4">
-<h4>b_info [message]</h4>
+<h4>b_info [message] [first part] [last part] [message handler param 1] ... [message handler param n]</h4>
 <p><small><em>blib/b_info</em></small></p>
-<p>Print the given message to stdout as info message.</p>
-<p><span class="par">[message]: to print to stdout</span></p>
-<p><span class="ret"><strong>returns</strong>: nothing</span></p>
+<p>Send an informational message to the user. The message is dispatched via the currently configured message handler (default: <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>).</p>
+<p><span class="par">[message]: to send</span></p>
+<p><span class="par">[first part]: If set to 0, assume that the given message is the first part of an overall chain of messages (default: 0).</span></p>
+<p><span class="par">[last part]: If set to 0, assume that the given message is the final part of an overall chain of messages (default: 0).</span></p>
+<p><span class="par">[message handler param i]: Arbitrary parameters to pass to the currently configured message handler (cf. <a href="#b_setMessageHandler">b_setMessageHandler</a>).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code.</span></p>
+</section>
+<section id="b_error" class="level4">
+<h4>b_error [message] [first part] [last part] [message handler param 1] ... [message handler param n]</h4>
+<p><small><em>blib/b_error</em></small></p>
+<p>Send an error message to the user <em>without</em> erroring out. The message is dispatched via the currently configured message handler (default: <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>).<br />
+99.9% of all users will want to use the combination of <a href="#B_ERR">B_ERR</a> and <a href="#B_E">B_E</a> for proper error handling instead.</p>
+<p><span class="par">[message]: to send</span></p>
+<p><span class="par">[first part]: If set to 0, assume that the given message is the first part of an overall chain of messages (default: 0).</span></p>
+<p><span class="par">[last part]: If set to 0, assume that the given message is the final part of an overall chain of messages (default: 0).</span></p>
+<p><span class="par">[message handler param i]: Arbitrary parameters to pass to the currently configured message handler (cf. <a href="#b_setMessageHandler">b_setMessageHandler</a>).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code.</span></p>
+</section>
+<section id="b_setMessageHandler" class="level4">
+<h4>b_setMessageHandler [handler]</h4>
+<p><small><em>blib/b_setMessageHandler</em></small></p>
+<p>Set the handler used to send messages to the user. By default, <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a> is used.</p>
+<p><span class="par">[handler]: Function to handle the messages. See <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a> for the requirements.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+</section>
+<section id="b_getMessageHandler" class="level4">
+<h4>b_getMessageHandler</h4>
+<p><small><em>blib/b_getMessageHandler</em></small></p>
+<p>Get the currently configured message handler.</p>
+<p><span class="ret"><strong>returns</strong>: The message handler.</span></p>
 </section>
 <section id="b_enforceUser" class="level4">
 <h4>b_enforceUser [user name]</h4>
@@ -1308,7 +1348,11 @@ Print the given severity in a way for logging. This function is meant to be used
 date<br />
 findmnt<br />
 mktemp<br />
-mount</p>
+mount<br />
+head<br />
+stat<br />
+rm<br />
+sync</p>
 </section>
 <section id="functions-8" class="level3">
 <h3>Functions</h3>
@@ -1389,6 +1433,16 @@ mount</p>
 <p><span class="par">[string]: A string denoting a file system size of the format [number][unit]. Unit may be one of KB 1000, K 1024, MB 1000<em>1000, M 1024</em>1024, GB 1000<em>1000</em>1000, G 1024<em>1024</em>1024, and so on for T, P. If no unit is provided, the number is assumed to denote bytes. The number must be an integer.</span></p>
 <p><span class="par">[check flag]: Check whether the result makes sense (default: 0/true). This check will make integer overflows less likely.</span></p>
 <p><span class="ret"><strong>returns</strong>: The respective number of bytes meant with the given string. <a href="#B_E">B_E</a> is called on parsing errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_fs_removeWithOverwrite" class="level4">
+<h4>b_fs_removeWithOverwrite [file] [randomness source]</h4>
+<p><small><em>fs/b_fs_removeWithOverwrite</em></small></p>
+<p>Overwrite the given file with random data, then remove it. This is meant to prevent a potential reconstruction of the file after its removal.<br />
+<em>Warning</em>: The reconstruction may still work on some types of file systems or physical storage systems (e.g. on flash disks).</p>
+<p><span class="par">[file]: Full path to the file to remove. Directories are currently not supported.</span></p>
+<p><span class="par">[randomness source]: Device to use as source of random data (default: /dev/urandom).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> is called on errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -3002,6 +3056,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_date_diffSeconds">b_date_diffSeconds</a></p>
 <p><a href="#b_date_getDeps">b_date_getDeps</a></p>
 <p><a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></p>
+<p><a href="#b_defaultMessageHandler">b_defaultMessageHandler</a></p>
 <p><a href="#b_delay_execute">b_delay_execute</a></p>
 <p><a href="#B_DELAY_EXECUTED">B_DELAY_EXECUTED</a></p>
 <p><a href="#b_delay_getCommandAt">b_delay_getCommandAt</a></p>
@@ -3043,6 +3098,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#B_E">B_E</a></p>
 <p><a href="#b_enforceUser">b_enforceUser</a></p>
 <p><a href="#B_ERR">B_ERR</a></p>
+<p><a href="#b_error">b_error</a></p>
 <p><a href="#b_execFuncAs">b_execFuncAs</a></p>
 <p><a href="#b_execFuncInCurrentContext">b_execFuncInCurrentContext</a></p>
 <p><a href="#b_flog_close">b_flog_close</a></p>
@@ -3073,10 +3129,12 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a></p>
 <p><a href="#b_fs_parseSize">b_fs_parseSize</a></p>
 <p><a href="#b_fs_removeUnusedLoopDevice">b_fs_removeUnusedLoopDevice</a></p>
+<p><a href="#b_fs_removeWithOverwrite">b_fs_removeWithOverwrite</a></p>
 <p><a href="#b_fs_waitForFile">b_fs_waitForFile</a></p>
 <p><a href="#b_generateStandalone">b_generateStandalone</a></p>
 <p><a href="#b_getBlibModules">b_getBlibModules</a></p>
 <p><a href="#b_getErrorHandler">b_getErrorHandler</a></p>
+<p><a href="#b_getMessageHandler">b_getMessageHandler</a></p>
 <p><a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a></p>
 <p><a href="#b_http_getDeps">b_http_getDeps</a></p>
 <p><a href="#b_http_getOnlineStatus">b_http_getOnlineStatus</a></p>
@@ -3146,6 +3204,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#B_SCRIPT_NAME">B_SCRIPT_NAME</a></p>
 <p><a href="#b_setBE">b_setBE</a></p>
 <p><a href="#b_setErrorHandler">b_setErrorHandler</a></p>
+<p><a href="#b_setMessageHandler">b_setMessageHandler</a></p>
 <p><a href="#b_silence">b_silence</a></p>
 <p><a href="#b_str_getDeps">b_str_getDeps</a></p>
 <p><a href="#b_str_stripQuotes">b_str_stripQuotes</a></p>
