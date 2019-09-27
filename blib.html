@@ -411,6 +411,18 @@ Message handler implementations must support at least the parameters of this fun
 <p><span class="par">[last part]: If set to 0, assume that the given message is the final part of an overall chain of messages (default: 0).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing. Never causes errors.</span></p>
 </section>
+<section id="b_setDefaultMessageHandlerIntermediate" class="level4">
+<h4>b_setDefaultMessageHandlerIntermediate [intermediate]</h4>
+<p><small><em>blib/b_setDefaultMessageHandlerIntermediate</em></small></p>
+<p><span class="par">[intermediate]: String to use as intermediate between two message parts with <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>, i.e. the resulting message should be [part 1][intermediate][part 2]. Default: Space.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+</section>
+<section id="b_getDefaultMessageHandlerIntermediate" class="level4">
+<h4>b_getDefaultMessageHandlerIntermediate</h4>
+<p><small><em>blib/b_getDefaultMessageHandlerIntermediate</em></small></p>
+<p>Get the currently configured intermediate string for the <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>.</p>
+<p><span class="ret"><strong>returns</strong>: The intermediate String.</span></p>
+</section>
 <section id="b_info" class="level4">
 <h4>b_info [message] [first part] [last part] [message handler param 1] ... [message handler param n]</h4>
 <p><small><em>blib/b_info</em></small></p>
@@ -2787,6 +2799,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_fs_waitForFile">b_fs_waitForFile</a></p>
 <p><a href="#b_generateStandalone">b_generateStandalone</a></p>
 <p><a href="#b_getBlibModules">b_getBlibModules</a></p>
+<p><a href="#b_getDefaultMessageHandlerIntermediate">b_getDefaultMessageHandlerIntermediate</a></p>
 <p><a href="#b_getErrorHandler">b_getErrorHandler</a></p>
 <p><a href="#b_getMessageHandler">b_getMessageHandler</a></p>
 <p><a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a></p>
@@ -2857,6 +2870,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#B_SCRIPT_DIR">B_SCRIPT_DIR</a></p>
 <p><a href="#B_SCRIPT_NAME">B_SCRIPT_NAME</a></p>
 <p><a href="#b_setBE">b_setBE</a></p>
+<p><a href="#b_setDefaultMessageHandlerIntermediate">b_setDefaultMessageHandlerIntermediate</a></p>
 <p><a href="#b_setErrorHandler">b_setErrorHandler</a></p>
 <p><a href="#b_setMessageHandler">b_setMessageHandler</a></p>
 <p><a href="#b_silence">b_silence</a></p>
