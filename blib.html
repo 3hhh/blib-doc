@@ -1047,7 +1047,7 @@ Doesn't print informational messages to stdout.</p>
 <h2>date</h2>
 <p>Collection of date and time related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.2</p>
+0.3</p>
 <section id="dependencies-5" class="level3">
 <h3>Dependencies</h3>
 <p>date</p>
@@ -1060,23 +1060,40 @@ Doesn't print informational messages to stdout.</p>
 <p>Get the dependencies of this module.</p>
 <p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
 </section>
+<section id="b_date_add" class="level4">
+<h4>b_date_add [date] [time] [unit] [format] [utc flag]</h4>
+<p><small><em>date/b_date_add</em></small></p>
+<p>Add the given number of seconds to the given date.</p>
+<p><span class="par">[date]: date to add seconds to; the format must be understood by the Unix date utility</span></p>
+<p><span class="par">[time]: amount of time to add</span></p>
+<p><span class="par">[unit]: unit of the time to add, may be one of d (days), h (hours) m (minutes), s (seconds, default)</span></p>
+<p><span class="par">[format]: output format of the date, in Unix date notation (default: use the localized output)</span></p>
+<p><span class="par">[utc flag]: if set to 0, use UTC as time zone if not specified for the input <em>and</em> use it for the output (default: 1 = local time zone)</span></p>
+<p><span class="ret"><strong>returns</strong>: The input date with the given number of seconds added, in the requested format; returns a non-zero exit code on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 <section id="b_date_addDays" class="level4">
 <h4>b_date_addDays [date] [days] [format] [utc flag]</h4>
 <p><small><em>date/b_date_addDays</em></small></p>
-<p>Add the given number of days to the given date.</p>
-<p><span class="par">[date]: date to add days to; the format must be understood by the Unix date utility</span></p>
+<p>Convenience wrapper to <a href="#b_date_add">b_date_add</a> with days.</p>
 <p><span class="par">[days]: number of days to add</span></p>
-<p><span class="par">[format]: output format of the date, in Unix date notation (default: use the localized output)</span></p>
-<p><span class="par">[utc flag]: if set to 0, use UTC as time zone if not specified for the input <em>and</em> use it for the output (default: 1 = local time zone)</span></p>
-<p><span class="ret"><strong>returns</strong>: The input date with the given number of days added, in the requested format; returns a non-zero exit code on errors.</span></p>
+</section>
+<section id="b_date_diff" class="level4">
+<h4>b_date_diff [date 1] [date 2] [unit]</h4>
+<p><small><em>date/b_date_diff</em></small></p>
+<p>Get the amount of time between the two dates, i.e. [date 2] - [date 1].</p>
+<p><span class="par">[date 2], [date 1]: the two dates to subtract; the time part is assumed to be identical if not specified within the dates</span></p>
+<p><span class="par">[unit]: unit of the result, may be one of d (days), h (hours) m (minutes), s (seconds, default)</span></p>
+<p><span class="ret"><strong>returns</strong>: The amount of time between the given two dates [date 2] - [date 1], rounded down. Returns a non-zero exit code on errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
-<section id="b_date_diffSeconds" class="level4">
-<h4>b_date_diffSeconds [date 1] [date 2]</h4>
-<p><small><em>date/b_date_diffSeconds</em></small></p>
-<p>Get the number of seconds between the two dates, i.e. [date 2] - [date 1].</p>
-<p><span class="par">[date 2], [date 1]: the two dates to subtract; the time one is assumed to be identical if not specified within the dates</span></p>
-<p><span class="ret"><strong>returns</strong>: The number of seconds between the given two dates [date 2] - [date 1]; returns a non-zero exit code on errors.</span></p>
+<section id="b_date_getFileModAge" class="level4">
+<h4>b_date_getFileModAge [file] [unit]</h4>
+<p><small><em>date/b_date_getFileModAge</em></small></p>
+<p>Get the time that passed since the last modification of the file.</p>
+<p><span class="par">[file]: Full path to the file to check.</span></p>
+<p><span class="par">[unit]: unit of the time to retrieve, may be one of d (days), h (hours) m (minutes), s (seconds, default)</span></p>
+<p><span class="ret"><strong>returns</strong>: The amount of time in the given unit since the last modification. May be rounded down. Sets a non-zero exit code on errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -1326,7 +1343,6 @@ Print the given severity in a way for logging. This function is meant to be used
 <section id="dependencies-8" class="level3">
 <h3>Dependencies</h3>
 <p>wc<br />
-date<br />
 findmnt<br />
 mktemp<br />
 mount<br />
@@ -1349,14 +1365,6 @@ sync</p>
 <p>Check whether the given directory is empty or non-existing. It is not checked whether the passed parameter is a file preventing a directory from being created.</p>
 <p><span class="par">[dir]: full path to the directory to check</span></p>
 <p><span class="ret"><strong>returns</strong>: a zero exit code if the directory does not exist or is empty</span></p>
-</section>
-<section id="b_fs_getLastModifiedInDays" class="level4">
-<h4>b_fs_getLastModifiedInDays [file]</h4>
-<p><small><em>fs/b_fs_getLastModifiedInDays</em></small></p>
-<p>Get the number of days since when a file was last modified.</p>
-<p><span class="par">[file]: Full path to the file to check.</span></p>
-<p><span class="ret"><strong>returns</strong>: The time in days since the last modification. Sets a non-zero exit code on errors.</span></p>
-<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_fs_getLineCount" class="level4">
 <h4>b_fs_getLineCount [file]</h4>
@@ -2718,9 +2726,11 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_daemon_status">b_daemon_status</a></p>
 <p><a href="#b_daemon_statusPid">b_daemon_statusPid</a></p>
 <p><a href="#b_daemon_stop">b_daemon_stop</a></p>
+<p><a href="#b_date_add">b_date_add</a></p>
 <p><a href="#b_date_addDays">b_date_addDays</a></p>
-<p><a href="#b_date_diffSeconds">b_date_diffSeconds</a></p>
+<p><a href="#b_date_diff">b_date_diff</a></p>
 <p><a href="#b_date_getDeps">b_date_getDeps</a></p>
+<p><a href="#b_date_getFileModAge">b_date_getFileModAge</a></p>
 <p><a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></p>
 <p><a href="#b_defaultMessageHandler">b_defaultMessageHandler</a></p>
 <p><a href="#b_delay_execute">b_delay_execute</a></p>
@@ -2788,7 +2798,6 @@ See the strings manpage for further explanations.</p>
 <p><a href="#B_FLOG_SEV">B_FLOG_SEV</a></p>
 <p><a href="#b_fs_createLoopDeviceIfNecessary">b_fs_createLoopDeviceIfNecessary</a></p>
 <p><a href="#b_fs_getDeps">b_fs_getDeps</a></p>
-<p><a href="#b_fs_getLastModifiedInDays">b_fs_getLastModifiedInDays</a></p>
 <p><a href="#b_fs_getLineCount">b_fs_getLineCount</a></p>
 <p><a href="#b_fs_getMountpoints">b_fs_getMountpoints</a></p>
 <p><a href="#b_fs_isEmptyDir">b_fs_isEmptyDir</a></p>
