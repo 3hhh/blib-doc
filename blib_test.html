@@ -1,58 +1,200 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="generator" content="pandoc">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="David Hobach">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David Hobach" />
   <title>blib Code Reference v1.2</title>
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link href="data:text/css;charset=utf-8,body%20%7B%0Aborder%2Dleft%3A%201px%20solid%20black%3B%0Aborder%2Dright%3A%201px%20solid%20black%3B%0Apadding%2Dright%3A%201em%3B%0Apadding%2Dleft%3A%201em%3B%0Afont%2Dfamily%3A%20Verdana%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%20100%25%3B%0Aline%2Dheight%3A%20140%25%3B%0Aposition%3A%20relative%3B%0Atop%3A%200%3B%0Aleft%3A%20300px%3B%0Awidth%3A%20calc%2897%25%20%2D%20311px%29%3B%0Amargin%2Dleft%3A%2011px%3B%0Az%2Dindex%3A%20%2D1%3B%0A%7D%0Apre%20%7B%0Aborder%3A%201px%20dotted%20gray%3B%0Abackground%2Dcolor%3A%20%23ececec%3B%0Apadding%3A%200%2E5em%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20monospace%3B%0A%7D%0Aa%3Alink%2C%20a%3Avisited%2C%20a%3Ahover%2C%20a%3Aactive%20%7B%0Atext%2Ddecoration%2Dstyle%3A%20dotted%3B%0Acolor%3A%20%239000ff%3B%20%7D%0Ah4%2C%20h5%2C%20h6%20%7B%0Amargin%2Dbottom%3A%200%3B%0Apadding%2Dbottom%3A%200%3B%0A%7D%0Ah4%2Bp%2C%20h5%2Bp%2C%20h6%2Bp%20%7B%0Amargin%2Dtop%3A0%3B%0Apadding%2Dtop%3A%200%3B%0A%7D%0Ah1%20a%2C%20h2%20a%2C%20h3%20a%2C%20h4%20a%2C%20h5%20a%2C%20h6%20a%20%7B%20text%2Ddecoration%3A%20none%3B%0Acolor%3A%20%237a5ada%3B%20%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dweight%3A%20bold%3B%0Aborder%2Dbottom%3A%201px%20dotted%20black%3B%0Acolor%3A%20%237a5ada%3B%0A%7D%0Ah1%2C%20h2%20%7B%0Afont%2Dsize%3A%20130%25%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%20110%25%3B%0A%7D%0Ah4%20%7B%0Afont%2Dsize%3A%2095%25%3B%0A%7D%0Ah5%20%7B%0Afont%2Dsize%3A%2090%25%3B%0Afont%2Dstyle%3A%20italic%3B%0A%7D%0Ah6%20%7B%0Afont%2Dsize%3A%2085%25%3B%0Afont%2Dstyle%3A%20italic%3B%0A%7D%0Ah1%2Etitle%20%7B%0Afont%2Dsize%3A%20200%25%3B%0Afont%2Dweight%3A%20bold%3B%0Apadding%2Dtop%3A%200%2E2em%3B%0Apadding%2Dbottom%3A%200%2E2em%3B%0Atext%2Dalign%3A%20left%3B%0Aborder%3A%20none%3B%0A%7D%0Adt%20code%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Add%20p%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Atable%20%7B%0Aborder%2Dcollapse%3A%20collapse%3B%0Awidth%3A%20100%25%3B%0A%7D%0Atable%20td%2C%20table%20th%20%7B%0Aborder%3A%201px%20solid%20%23ddd%3B%0Apadding%3A%205px%208px%205px%208px%3B%0A%7D%0Atable%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%23f8f8f8%3B%0A%7D%0Atable%20th%20%7B%0Apadding%2Dtop%3A%208px%3B%0Apadding%2Dbottom%3A%208px%3B%0Abackground%2Dcolor%3A%20%23cc99ff%3B%0Acolor%3A%20white%3B%0A%7D%0A%23reflist%20%7B%0Amargin%2Dleft%3A%200%3B%0Apadding%2Dleft%3A10px%3B%0Aposition%3A%20fixed%3B%0Atop%3A%200%3B%0Aleft%3A%200%3B%0Awidth%3A%20300px%3B%0Aheight%3A%20100%25%3B%0Aoverflow%3A%20auto%3B%0Az%2Dindex%3A%201%3B%0Abackground%2Dcolor%3A%20white%3B%0A%7D%0A%23reflist%20p%20%7B%0Amargin%3A%200%3B%0Afont%2Dsize%3A%2080%25%3B%0A%7D%0A%2Eauthor%20%7B%0Adisplay%3A%20none%3B%0A%7D%0A%2Epar%2C%20%2Eann%2C%20%2Eret%20%7B%0Adisplay%3A%20block%3B%0A%7D%0A%2Epar%20%7B%0Amargin%2Dleft%3A%202em%3B%0Abackground%2Dcolor%3A%20%23ebf5fb%3B%0A%7D%0A" rel="stylesheet">
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">body {
+border-left: 1px solid black;
+border-right: 1px solid black;
+padding-right: 1em;
+padding-left: 1em;
+font-family: Verdana, sans-serif;
+font-size: 100%;
+line-height: 140%;
+position: relative;
+top: 0;
+left: 300px;
+width: calc(97% - 311px);
+margin-left: 11px;
+z-index: -1;
+}
+pre {
+border: 1px dotted gray;
+background-color: #ececec;
+padding: 0.5em;
+}
+code {
+font-family: monospace;
+}
+a:link, a:visited, a:hover, a:active {
+text-decoration-style: dotted;
+color: #9000ff; }
+h4, h5, h6 {
+margin-bottom: 0;
+padding-bottom: 0;
+}
+h4+p, h5+p, h6+p {
+margin-top:0;
+padding-top: 0;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { text-decoration: none;
+color: #7a5ada; }
+h1, h2, h3, h4, h5, h6 { font-weight: bold;
+border-bottom: 1px dotted black;
+color: #7a5ada;
+}
+h1, h2 {
+font-size: 130%;
+}
+h3 {
+font-size: 110%;
+}
+h4 {
+font-size: 95%;
+}
+h5 {
+font-size: 90%;
+font-style: italic;
+}
+h6 {
+font-size: 85%;
+font-style: italic;
+}
+h1.title {
+font-size: 200%;
+font-weight: bold;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+text-align: left;
+border: none;
+}
+dt code {
+font-weight: bold;
+}
+dd p {
+margin-top: 0;
+}
+table {
+border-collapse: collapse;
+width: 100%;
+}
+table td, table th {
+border: 1px solid #ddd;
+padding: 5px 8px 5px 8px;
+}
+table tr:nth-child(even) {
+background-color: #f8f8f8;
+}
+table th {
+padding-top: 8px;
+padding-bottom: 8px;
+background-color: #cc99ff;
+color: white;
+}
+#reflist {
+margin-left: 0;
+padding-left:10px;
+position: fixed;
+top: 0;
+left: 0;
+width: 300px;
+height: 100%;
+overflow: auto;
+z-index: 1;
+background-color: white;
+}
+#reflist p {
+margin: 0;
+font-size: 80%;
+}
+.author {
+display: none;
+}
+.par, .ann, .ret {
+display: block;
+}
+.par {
+margin-left: 2em;
+background-color: #ebf5fb;
+}
+</style>
 </head>
 <body>
 <header>
 <h1 class="title">blib Code Reference v1.2</h1>
-<h2 class="author">David Hobach</h2>
+<p class="author">David Hobach</p>
 </header>
 <nav id="TOC">
 <ul>
@@ -61,13 +203,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#coding-conventions">Coding Conventions</a></li>
 <li><a href="#library-usage">Library Usage</a></li>
 <li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#imports">Imports</a></li>
 <li><a href="#global-variables">Global Variables</a></li>
 <li><a href="#global-aliases">Global Aliases</a></li>
 <li><a href="#functions">Functions</a></li>
 </ul></li>
 <li><a href="#args">args</a><ul>
 <li><a href="#dependencies-1">Dependencies</a></li>
-<li><a href="#imports">Imports</a></li>
+<li><a href="#imports-1">Imports</a></li>
 <li><a href="#global-variables-1">Global Variables</a></li>
 <li><a href="#functions-1">Functions</a></li>
 </ul></li>
@@ -81,7 +224,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#daemon">daemon</a><ul>
 <li><a href="#dependencies-4">Dependencies</a></li>
-<li><a href="#imports-1">Imports</a></li>
+<li><a href="#imports-2">Imports</a></li>
 <li><a href="#global-variables-2">Global Variables</a></li>
 <li><a href="#functions-4">Functions</a></li>
 </ul></li>
@@ -95,7 +238,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#flog">flog</a><ul>
 <li><a href="#dependencies-7">Dependencies</a></li>
-<li><a href="#imports-2">Imports</a></li>
+<li><a href="#imports-3">Imports</a></li>
 <li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-7">Functions</a></li>
 </ul></li>
@@ -114,7 +257,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
-<li><a href="#imports-3">Imports</a></li>
+<li><a href="#imports-4">Imports</a></li>
 <li><a href="#functions-11">Functions</a></li>
 </ul></li>
 <li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
@@ -123,7 +266,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
 <li><a href="#dependencies-13">Dependencies</a></li>
-<li><a href="#imports-4">Imports</a></li>
+<li><a href="#imports-5">Imports</a></li>
 <li><a href="#functions-13">Functions</a></li>
 </ul></li>
 <li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
@@ -136,7 +279,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-16">Dependencies</a></li>
-<li><a href="#imports-5">Imports</a></li>
+<li><a href="#imports-6">Imports</a></li>
 <li><a href="#functions-16">Functions</a></li>
 </ul></li>
 <li><a href="#proc">proc</a><ul>
@@ -221,12 +364,12 @@ along with this program. If not, see <a href="https://www.gnu.org/licenses/" cla
 <li>embrace the KISS principle</li>
 <li>some general guidelines: <a href="http://www.kfirlavi.com/blog/2012/11/14/defensive-bash-programming/" class="uri">http://www.kfirlavi.com/blog/2012/11/14/defensive-bash-programming/</a></li>
 <li>use b_[module]_[camel case function name] to denote functions meant to be used by users of the library, B_[module]_[upper case var name] for global variables</li>
-<li>use BLIB_[module]_[upper case var name] for global variables (to be avoided whenever possible) not meant to be used by library users (&quot;private&quot; variables); library users can use setters or getters</li>
-<li>use the BLIB_STORE with the above naming conventions for &quot;private&quot; variables whenever possible</li>
+<li>use BLIB_[module]_[upper case var name] for global variables (to be avoided whenever possible) not meant to be used by library users (“private” variables); library users can use setters or getters</li>
+<li>use the BLIB_STORE with the above naming conventions for “private” variables whenever possible</li>
 <li>use blib_[module]_[camel case function name] to denote private functions not meant to be used by library users; the function name should not contain any underscores</li>
 <li>the blib module itself is the only exception which can use b_, B_, blib_, BLIB_ without module name</li>
 <li>prefixes such as t_, T_ and UTD_ are exclusively related to test code</li>
-<li>set exit codes (!= 0 --&gt; issue) wherever it makes sense</li>
+<li>set exit codes (!= 0 –&gt; issue) wherever it makes sense</li>
 <li>keep the global namespace clean whenever possible</li>
 <li>declare -g must be used in order to allow sourcing from a function (<a href="#b_import">b_import</a>)</li>
 <li>modules must implement a function such as<br />
@@ -236,17 +379,17 @@ along with this program. If not, see <a href="https://www.gnu.org/licenses/" cla
 <li>modules may be placed in subfolders of arbitrary depth</li>
 <li>use 0 to indicate true and 1 to indicate false for variables; for exit codes use a non-zero exit code to indicate the number of errors</li>
 <li>functions should be tagged with the following tags, if applicable:<br />
-<em><span class="citation" data-cites="StateChanging">@StateChanging</span></em> - the function changes the internal state of the script in a way that will not propagate to supershells (e.g. global variables) and should thus not be called from subshells (unless the user wants the state to only change in that shell)<br />
+<em><span class="citation" data-cites="StateChanging">@StateChanging</span></em> - the function changes the internal state of the script in a way that will not propagate to supershells (e.g. global variables) and should thus not be called from subshells (unless the user wants the state to only change in that shell)<br />
 <em><span class="citation" data-cites="B_E">@B_E</span></em> - the function uses <a href="#B_E">B_E</a> for error handling and may thus behave differently depending on the implemented error handler</li>
 </ol>
 </section>
 <section id="library-usage" class="level3">
 <h3>Library Usage</h3>
 <p>with the default bash options:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">source</span> blib
- <span class="ex">b_checkVersion</span> 1 0 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.0 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span>
-
- <span class="ex">b_import</span> [module]</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"> <span class="bu">source</span> blib</a>
+<a class="sourceLine" id="cb1-2" title="2"> <span class="ex">b_checkVersion</span> 1 0 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.0 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"> <span class="ex">b_import</span> [module]</a></code></pre></div>
 </section>
 <section id="dependencies" class="level3">
 <h3>Dependencies</h3>
@@ -257,7 +400,12 @@ sort<br />
 cat<br />
 mktemp<br />
 rm<br />
+mv<br />
 su</p>
+</section>
+<section id="imports" class="level3">
+<h3>Imports</h3>
+<p><a href="#traps">traps</a></p>
 </section>
 <section id="global-variables" class="level3">
 <h3>Global Variables</h3>
@@ -265,7 +413,7 @@ su</p>
 <h4>B_TEST_MODE</h4>
 <p><small><em>blib/B_TEST_MODE</em></small></p>
 <p>blib will set this variable to 0, if blib is running in test mode.<br />
-This variable may be used to bypass code during testing, if bats cannot test that code due to its limitations (e.g. for EXIT traps which bats uses for itself).</p>
+This variable may be used to bypass code during testing, if bats cannot test that code due to its limitations (e.g. for EXIT traps which bats uses for itself).</p>
 </section>
 <section id="B_CALLER_NAME" class="level4">
 <h4>B_CALLER_NAME</h4>
@@ -276,7 +424,7 @@ This variable may be used to bypass code during testing, if bats cannot test tha
 <h4>B_ERR</h4>
 <p><small><em>blib/B_ERR</em></small></p>
 <p>Global variable used for error handling throughout blib, cf. <a href="#B_E">B_E</a>.</p>
-<p>It is recommended to always set an at least partially static error message on confirmed errors as variables may be empty (which would indicate &quot;no error&quot; for <a href="#B_E">B_E</a>).</p>
+<p>It is recommended to always set an at least partially static error message on confirmed errors as variables may be empty (which would indicate “no error” for <a href="#B_E">B_E</a>).</p>
 </section>
 <section id="B_RC" class="level4">
 <h4>B_RC</h4>
@@ -293,7 +441,7 @@ This variable may be used to bypass code during testing, if bats cannot test tha
 <h4>B_SCRIPT</h4>
 <p><small><em>blib/B_SCRIPT</em></small></p>
 <p>Global variable which can be used to obtain the two global variables <a href="#B_SCRIPT_DIR">B_SCRIPT_DIR</a> and <a href="#B_SCRIPT_NAME">B_SCRIPT_NAME</a> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$B_SCRIPT</span><span class="st">&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$B_SCRIPT</span><span class="st">&quot;</span></a></code></pre></div>
 </section>
 <section id="B_SCRIPT_NAME" class="level4">
 <h4>B_SCRIPT_NAME</h4>
@@ -314,11 +462,11 @@ This variable may be used to bypass code during testing, if bats cannot test tha
 <p><small><em>blib/B_E</em></small></p>
 <p><em>The</em> blib error handler: All blib modules use it whenever execution errors require special handling that the currently executing code cannot achieve.</p>
 <p>Syntax:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">B_ERR=</span><span class="st">&quot;This is an error message.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">;</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="va">B_ERR=</span><span class="st">&quot;This is an error message.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">;</span></a></code></pre></div>
 <p>If you need to set the return/exit code, you can do it with <a href="#B_RC">B_RC</a>:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">B_ERR=</span><span class="st">&quot;This is another error message.&quot;</span> ; <span class="va">B_RC=</span>6 ; <span class="ex">B_E</span> <span class="kw">;</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="va">B_ERR=</span><span class="st">&quot;This is another error message.&quot;</span> ; <span class="va">B_RC=</span>6 ; <span class="ex">B_E</span> <span class="kw">;</span></a></code></pre></div>
 <p>Calling <a href="#B_E">B_E</a> means:<br />
-Check <a href="#B_ERR">B_ERR</a> for an error message and if there is one, handle it. It can be placed at the end of a line or on its own line. <a href="#B_E">B_E</a> will then process the error message in the way defined by the error handler (cf. <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a>) and stop any further execution of code in the current context (function, script, ...) returning a non-zero exit code (1) unless the described error was fixed. In the latter unlikely case it'll let execution proceed.</p>
+Check <a href="#B_ERR">B_ERR</a> for an error message and if there is one, handle it. It can be placed at the end of a line or on its own line. <a href="#B_E">B_E</a> will then process the error message in the way defined by the error handler (cf. <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a>) and stop any further execution of code in the current context (function, script, …) returning a non-zero exit code (1) unless the described error was fixed. In the latter unlikely case it’ll let execution proceed.</p>
 <p>The error handler can be re-defined at runtime with <a href="#b_setErrorHandler">b_setErrorHandler</a>.</p>
 </section>
 </section>
@@ -348,9 +496,9 @@ print the current stack trace in a human readable way</p>
 <h4>b_checkVersion [minimum allowed major] [minimum allowed minor] [maximum allowed major] [maximum allowed minor]</h4>
 <p><small><em>blib/b_checkVersion</em></small></p>
 <p>Check whether the currently running blib instance meets the given blib version requirements.<br />
-To e.g. make sure you're on blib version 1.1 or higher, use</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">source</span> blib
- <span class="ex">b_checkVersion</span> 1 2 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.2 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span></code></pre></div>
+To e.g. make sure you’re on blib version 1.1 or higher, use</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"> <span class="bu">source</span> blib</a>
+<a class="sourceLine" id="cb5-2" title="2"> <span class="ex">b_checkVersion</span> 1 2 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.2 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span></a></code></pre></div>
 <p><span class="par">[minimum allowed major]: The lowest acceptable major version number (default: 0).</span></p>
 <p><span class="par">[minimum allowed minor]: The lowest acceptable minor version number (default: 0).</span></p>
 <p><span class="par">[maximum allowed major]: The highest acceptable major version number (default: infinite).</span></p>
@@ -370,12 +518,14 @@ As any error handler it must</p>
 <li>ideally use <a href="#b_error">b_error</a> to send error messages to the user</li>
 <li>return one of the following exit codes:
 <ol type="a">
-<li>0: <strong>if and only if</strong> the error was fixed entirely and the caller may ignore the error (i.e. probably never)</li>
-<li>1: The error wasn't fixed. Functions should return to their caller indicating an error (non-zero status code). Direct shell calls will exit. <a href="#B_ERR">B_ERR</a> is <strong>not</strong> reset to blank, i.e. the next call to <a href="#B_E">B_E</a> in the same context will cause another error. The caller may use this to either <em>throw</em> the error further or handle and clear the error.</li>
+<li>0: <strong>if and only if</strong> the error was fixed entirely and the caller may ignore the error (i.e. probably never)</li>
+<li>1: The error wasn’t fixed. Functions should return to their caller indicating an error (non-zero status code). Direct shell calls will exit. <a href="#B_ERR">B_ERR</a> is <strong>not</strong> reset to blank, i.e. the next call to <a href="#B_E">B_E</a> in the same context will cause another error. The caller may use this to either <em>throw</em> the error further or handle and clear the error.
+<ol start="3" type="a">
 <li>2: Force a stop of execution in the current shell / error out.</li>
 </ol></li>
+</ol></li>
 </ol>
-<p><span class="par">[error out]: Whether or not to call exit after the error message handling, if the error couldn't be handled (default: 0 = always error out / call exit). If set to 1, <a href="#B_E">B_E</a> will allow e.g. functions to return to their callers.</span></p>
+<p><span class="par">[error out]: Whether or not to call exit after the error message handling, if the error couldn’t be handled (default: 0 = always error out / call exit). If set to 1, <a href="#B_E">B_E</a> will allow e.g. functions to return to their callers.</span></p>
 <p><span class="par">[send err]: Whether or not to send the error message to the user (default: 0 = send).</span></p>
 <p><span class="par">[send stack trace]: Whether or not to send a stack trace to the user (default: 0 = send).</span></p>
 <p><span class="ret"><strong>returns</strong>: see the description above</span></p>
@@ -386,10 +536,10 @@ As any error handler it must</p>
 <p>Set the [error out] behaviour of the currently configured error handler.</p>
 <p>Contrary to <a href="#b_setErrorHandler">b_setErrorHandler</a> this function may be called by blib modules as all error handlers are required to support [error out] as parameter.</p>
 <p>Example for switching the error out behaviour:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="ex">b_setBE</span> 1
- <span class="ex">funcThatMayCallB_E</span> <span class="co">#without subshell</span>
- <span class="va">ret=$?</span>
- <span class="ex">b_resetErrorHandler</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"> <span class="ex">b_setBE</span> 1</a>
+<a class="sourceLine" id="cb6-2" title="2"> <span class="ex">funcThatMayCallB_E</span> <span class="co">#without subshell</span></a>
+<a class="sourceLine" id="cb6-3" title="3"> <span class="va">ret=$?</span></a>
+<a class="sourceLine" id="cb6-4" title="4"> <span class="ex">b_resetErrorHandler</span></a></code></pre></div>
 <p><span class="par">[error out]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 0)</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing, always sets a zero exit code</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
@@ -398,7 +548,7 @@ As any error handler it must</p>
 <h4>b_setErrorHandler [handler]</h4>
 <p><small><em>blib/b_setErrorHandler</em></small></p>
 <p>Set the error handler for all future exections of <a href="#B_E">B_E</a> in the current scope.</p>
-<p>You can do this in e.g. subshells to limit the effect.</p>
+<p>You can do this in e.g. subshells to limit the effect.</p>
 <p>blib modules should only use this function if absolutely necessary to temporarily modify the error behaviour whilst making sure that <a href="#b_resetErrorHandler">b_resetErrorHandler</a> is called in the end. Otherwise it will prevent library users from setting the general behaviour in their scripts.</p>
 <p>Usually you do not want to write an entirely new handler, but modify the <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> parameters with this setter or use <a href="#b_setBE">b_setBE</a> for that.</p>
 <p><span class="par">[handler]: Function to handle errors. See <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> for details.</span></p>
@@ -424,10 +574,10 @@ As any error handler it must</p>
 <p><small><em>blib/b_silence</em></small></p>
 <p>Call the given function with its parameters in the current shell context whilst suppressing all of its output to both stdout and stderr. Anything written to <a href="#B_ERR">B_ERR</a> however is passed to <a href="#B_E">B_E</a> (which can still write to stderr).</p>
 <p>This function is useful when you want to keep an error message set with <a href="#B_ERR">B_ERR</a>, but discard everything else.<br />
-In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <span class="op">&amp;&gt;</span> /dev/null</code> may also drop the error message, if you're using an error handler (see <a href="#B_E">B_E</a>) that writes to stdout or stderr.</p>
+In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <span class="op">&amp;&gt;</span> /dev/null</code> may also drop the error message, if you’re using an error handler (see <a href="#B_E">B_E</a>) that writes to stdout or stderr.</p>
 <p><span class="par">[function]: The function to execute.</span></p>
 <p><span class="par">[param p]: An arbitrary number of function parameters.</span></p>
-<p><span class="ret"><strong>returns</strong>: Sets the status code of the called function, but doesn't print anything. <a href="#B_E">B_E</a> is called on errors.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets the status code of the called function, but doesn’t print anything. <a href="#B_E">B_E</a> is called on errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_defaultMessageHandler" class="level4">
@@ -435,17 +585,38 @@ In contrast <code class="sourceCode bash"><span class="ex">yourfunction</span> <
 <p><small><em>blib/b_defaultMessageHandler</em></small></p>
 <p>Handles the given message by printing information to stdout and errors to stderr.<br />
 This is the default message handler used by blib. It can be changed by <a href="#b_setMessageHandler">b_setMessageHandler</a>.<br />
-Message handler implementations must support at least the parameters of this function, but may add additional parameters.</p>
+Message handler implementations must support at least the parameters of this function, but may add additional parameters. If an handler implementation does not support partial messages (i.e. the [first part] and [last part] parameters), it should be chained to a <a href="#b_cachingMessageHandler">b_cachingMessageHandler</a>.</p>
 <p><span class="par">[message type]: 0=informational message, 1=error message.</span></p>
 <p><span class="par">[message]: String representing the message.</span></p>
 <p><span class="par">[first part]: If set to 0, assume that the given message is the first part of an overall chain of messages (default: 0).</span></p>
 <p><span class="par">[last part]: If set to 0, assume that the given message is the final part of an overall chain of messages (default: 0).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing. Never causes errors.</span></p>
 </section>
+<section id="b_cachingMessageHandler" class="level4">
+<h4>b_cachingMessageHandler [message handler] [message type] [message] [first part] [last part]</h4>
+<p><small><em>blib/b_cachingMessageHandler</em></small></p>
+<p>A message handler implementation which caches partial messages for a receiving message handler that cannot handle them until they are completed.<br />
+Use <code class="sourceCode bash"><span class="ex">b_initCachingMessageHandler</span> <span class="kw">&amp;&amp;</span> <span class="ex">b_setMessageHandler</span> <span class="st">&quot;b_cachingMessageHandler [your message handler]&quot;</span></code> to set your receiving message handler as message handler to cache messages for.<br />
+This implementation uses the <a href="#b_getDefaultMessageHandlerIntermediate">b_getDefaultMessageHandlerIntermediate</a> as separator between partial messages.</p>
+<p><span class="par">[message handler]: The function implementing the receiving message handler. It must handle the [message type] and the [message].</span></p>
+<p><span class="par">[message type]: See <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>.</span></p>
+<p><span class="par">[message]: See <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>.</span></p>
+<p><span class="par">[first part]: See <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>.</span></p>
+<p><span class="par">[last part]: See <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. Never causes errors.</span></p>
+</section>
+<section id="b_initCachingMessageHandler" class="level4">
+<h4>b_initCachingMessageHandler [maximum message type]</h4>
+<p><small><em>blib/b_initCachingMessageHandler</em></small></p>
+<p>Initializes a new cache for a <a href="#b_cachingMessageHandler">b_cachingMessageHandler</a>. This function <em>must</em> be called at least once before using <a href="#b_cachingMessageHandler">b_cachingMessageHandler</a>.</p>
+<p><span class="par">[maximum message type]: Maximum message type for which to allocate caches (default: 1 –&gt; allocate caches for 0..1/info..error).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 <section id="b_setDefaultMessageHandlerIntermediate" class="level4">
 <h4>b_setDefaultMessageHandlerIntermediate [intermediate]</h4>
 <p><small><em>blib/b_setDefaultMessageHandlerIntermediate</em></small></p>
-<p><span class="par">[intermediate]: String to use as intermediate between two message parts with <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>, i.e. the resulting message should be [part 1][intermediate][part 2]. Default: Space.</span></p>
+<p><span class="par">[intermediate]: String to use as intermediate between two message parts with <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>, i.e. the resulting message should be [part 1][intermediate][part 2]. Default: Space.</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
 </section>
 <section id="b_getDefaultMessageHandlerIntermediate" class="level4">
@@ -454,8 +625,22 @@ Message handler implementations must support at least the parameters of this fun
 <p>Get the currently configured intermediate string for the <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>.</p>
 <p><span class="ret"><strong>returns</strong>: The intermediate String.</span></p>
 </section>
+<section id="b_setDefaultMessageHandlerPrefix" class="level4">
+<h4>b_setDefaultMessageHandlerPrefix [message type] [prefix]</h4>
+<p><small><em>blib/b_setDefaultMessageHandlerPrefix</em></small></p>
+<p>Set the prefix to use for the default message handler and the given message type.</p>
+<p><span class="par">[message type]: 0=informational message, 1=error message.</span></p>
+<p><span class="par">[prefix]: A string to prefix all messages of the given type.</span></p>
+</section>
+<section id="b_getDefaultMessageHandlerPrefix" class="level4">
+<h4>b_getDefaultMessageHandlerPrefix [message type]</h4>
+<p><small><em>blib/b_getDefaultMessageHandlerPrefix</em></small></p>
+<p>Get the prefix used for the default message handler and the given message type.</p>
+<p><span class="par">[message type]: 0=informational message, 1=error message.</span></p>
+<p><span class="ret"><strong>returns</strong>: The currently configured prefix.</span></p>
+</section>
 <section id="b_info" class="level4">
-<h4>b_info [message] [first part] [last part] [message handler param 1] ... [message handler param n]</h4>
+<h4>b_info [message] [first part] [last part] [message handler param 1] … [message handler param n]</h4>
 <p><small><em>blib/b_info</em></small></p>
 <p>Send an informational message to the user. The message is dispatched via the currently configured message handler (default: <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>).</p>
 <p><span class="par">[message]: to send</span></p>
@@ -465,7 +650,7 @@ Message handler implementations must support at least the parameters of this fun
 <p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code.</span></p>
 </section>
 <section id="b_error" class="level4">
-<h4>b_error [message] [first part] [last part] [message handler param 1] ... [message handler param n]</h4>
+<h4>b_error [message] [first part] [last part] [message handler param 1] … [message handler param n]</h4>
 <p><small><em>blib/b_error</em></small></p>
 <p>Send an error message to the user <em>without</em> erroring out. The message is dispatched via the currently configured message handler (default: <a href="#b_defaultMessageHandler">b_defaultMessageHandler</a>).<br />
 99.9% of all users will want to use the combination of <a href="#B_ERR">B_ERR</a> and <a href="#B_E">B_E</a> for proper error handling instead.</p>
@@ -534,7 +719,7 @@ Message handler implementations must support at least the parameters of this fun
 <p><small><em>blib/b_import</em></small></p>
 <p>Import the given module into the current context.</p>
 <p><span class="par">[module]: relative path of the module to import (relative to the blib/lib root directory)</span></p>
-<p><span class="par">[double import]: if set to 1, import the given module regardless of whether it was imported before (default: 0 = don't do duplicate imports)</span></p>
+<p><span class="par">[double import]: if set to 1, import the given module regardless of whether it was imported before (default: 0 = don’t do duplicate imports)</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing, errors out if the import failed and sets a non-zero status code; if the import was successful or previously done, a zero exit code is set</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -547,7 +732,7 @@ Message handler implementations must support at least the parameters of this fun
 <p><span class="par">[function]: The function to call when the generated script is executed. All script parameters when calling [output file] are passed to this function. The function must be available in the current context.</span></p>
 <p><span class="par">[module dep i]: Names of the modules to include in the standalone file. They do not need to be imported.</span></p>
 <p><span class="par">[-]: Dash used as separator between the various types of arguments. If none is provided, all parameters are assumed to be modules.</span></p>
-<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
+<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you’ll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
 <p><span class="par">[function param p]: Static parameters to add to the function as single String. Dynamic parameters should be passed to the generated script.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code and prints the output file to stdout on success. May error out otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -572,9 +757,9 @@ Message handler implementations must support at least the parameters of this fun
 <p><span class="par">[function]: The function to execute.</span></p>
 <p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
 <p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
-<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
+<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you’ll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
 <p><span class="par">[function param p]: An arbitrary number of function parameters.</span></p>
-<p><span class="ret"><strong>returns</strong>: Whatever the executed function returns. A non-zero exit code may also indicate that the user switch didn't work. In particular <a href="#B_E">B_E</a> is <em>not</em> called if the executed function returns an error.</span></p>
+<p><span class="ret"><strong>returns</strong>: Whatever the executed function returns. A non-zero exit code may also indicate that the user switch didn’t work. In particular <a href="#B_E">B_E</a> is <em>not</em> called if the executed function returns an error.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_isModule" class="level4">
@@ -589,7 +774,7 @@ Message handler implementations must support at least the parameters of this fun
 <h2>args</h2>
 <p>Stateful argument parser for bash.</p>
 <p>Regular arguments and options are parsed via <a href="#b_args_parse">b_args_parse</a>. Afterwards they can be retrieved via <a href="#b_args_get">b_args_get</a> and <a href="#b_args_getOption">b_args_getOption</a>. Options may have parameters, can be repeated and combined.</p>
-<p>The module can also check the correctness of options. All remaining correctness checks (e.g. for regular or option parameters) are left to the user of this module.</p>
+<p>The module can also check the correctness of options. All remaining correctness checks (e.g. for regular or option parameters) are left to the user of this module.</p>
 <p>Conventions:</p>
 <ul>
 <li>Options always start with <code>-</code> and may occur everywhere.</li>
@@ -603,7 +788,7 @@ Message handler implementations must support at least the parameters of this fun
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports" class="level3">
+<section id="imports-1" class="level3">
 <h3>Imports</h3>
 <p><a href="#types">types</a></p>
 </section>
@@ -646,7 +831,7 @@ Instead of using it directly, it is recommended to use <a href="#b_args_getOptio
 <p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
 </section>
 <section id="b_args_init" class="level4">
-<h4>b_args_init [allow flag] [option 1] [option param count 1] ... [option n] [option param count n]</h4>
+<h4>b_args_init [allow flag] [option 1] [option param count 1] … [option n] [option param count n]</h4>
 <p><small><em>args/b_args_init</em></small></p>
 <p>Initialize the args module. It is recommended to call this function before using this module, if you want to achieve any non-default behaviour.</p>
 <p><span class="par">[allow flag]: If set to 0, assume that non-specified options do not have any parameters (default). If set to 1, enforce that only the given options are allowed and otherwise error out.</span></p>
@@ -661,13 +846,13 @@ Instead of using it directly, it is recommended to use <a href="#b_args_getOptio
 <p><small><em>args/b_args_parse</em></small></p>
 <p>Parse the given arguments.<br />
 Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any non-default parsing behaviour.</p>
-<p><span class="par">[arguments]: The arguments meant to be parsed, usually &quot;$@&quot;.</span></p>
+<p><span class="par">[arguments]: The arguments meant to be parsed, usually “$@”.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and calls <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_args_assertOptions" class="level4">
-<h4>b_args_assertOptions [option 1] ... [option n]</h4>
+<h4>b_args_assertOptions [option 1] … [option n]</h4>
 <p><small><em>args/b_args_assertOptions</em></small></p>
 <p>Assert that the parsed options contain only the given allowed options (or less).</p>
 <p><span class="par">[option i]: Option to check against.</span></p>
@@ -740,14 +925,14 @@ Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any no
 <p><small><em>arr/b_arr_join</em></small></p>
 <p>Join the given array; elements are separated with the given delimiter. The array is not checked to exist.</p>
 <p><span class="par">[delimiter]: String to use as delimiter.</span></p>
-<p><span class="par">[array]: Expanded array to join, e.g. &quot;${arr[@]}&quot;.</span></p>
+<p><span class="par">[array]: Expanded array to join, e.g. “${arr[@]}”.</span></p>
 <p><span class="ret"><strong>returns</strong>: Joined version of the array. The exit code is always zero.</span></p>
 </section>
 <section id="b_arr_toList" class="level4">
 <h4>b_arr_toList [array]</h4>
 <p><small><em>arr/b_arr_toList</em></small></p>
 <p>Create a newline-separated list from the given array.</p>
-<p><span class="par">[array]: Expanded array to join, e.g. &quot;${arr[@]}&quot;.</span></p>
+<p><span class="par">[array]: Expanded array to join, e.g. “${arr[@]}”.</span></p>
 <p><span class="ret"><strong>returns</strong>: List version of the array. The exit code is always zero.</span></p>
 </section>
 <section id="b_arr_contains" class="level4">
@@ -755,14 +940,14 @@ Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any no
 <p><small><em>arr/b_arr_contains</em></small></p>
 <p>Check whether an array contains an element.</p>
 <p><span class="par">[element]: element to check for its existence in the array</span></p>
-<p><span class="par">[array]: expanded array to check, e.g. &quot;${arr[@]}&quot;</span></p>
+<p><span class="par">[array]: expanded array to check, e.g. “${arr[@]}”</span></p>
 <p><span class="ret"><strong>returns</strong>: an exit code of 0, if the element was found and 1 otherwise</span></p>
 </section>
 <section id="b_arr_mapsAreEqual" class="level4">
 <h4>b_arr_mapsAreEqual [map spec 1] [map spec 2]</h4>
 <p><small><em>arr/b_arr_mapsAreEqual</em></small></p>
 <p>Check whether the two given maps/associative arrays are equal.</p>
-<p><span class="par">[map spec 1]: First map specification to check. Since maps cannot be passed directly to functions in Bash 4.2, you'll have to use <code>&quot;$(declare -p &quot;yourmap&quot;)&quot;</code> instead.</span></p>
+<p><span class="par">[map spec 1]: First map specification to check. Since maps cannot be passed directly to functions in Bash 4.2, you’ll have to use <code>&quot;$(declare -p &quot;yourmap&quot;)&quot;</code> instead.</span></p>
 <p><span class="par">[map spec 1]: Second map specification to check.</span></p>
 <p><span class="ret"><strong>returns</strong>: an exit code of 0, if the maps are equal and 1 otherwise; <a href="#B_E">B_E</a> is only triggered on programming errors</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -771,9 +956,9 @@ Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any no
 </section>
 <section id="cdoc" class="level2">
 <h2>cdoc</h2>
-<p>Generate code documentation in many formats (e.g. html, pdf, manpage, ...) from code comments.</p>
-<p>Lines applicable for the documentation in your code are assumed to match static (configurable) regular expressions. These lines are then fed to <a href="https://pandoc.org/">pandoc</a> in order to generate a single html page (or pdf, manpage, ...) as documentation. If no conversion is required (input format = desired output format), pandoc is bypassed.</p>
-<p>It should be possible to use this way of generating code documentation with most programming languages (incl. bash). The defaults however are set for bash and the blib way of documenting its code, i.e. you'll have to use the getters and setters of this module if you want something different. For instance the default is to check for lines starting with <em>#+</em> (a special bash comment line) and add everything afterwards to the output documentation.</p>
+<p>Generate code documentation in many formats (e.g. html, pdf, manpage, …) from code comments.</p>
+<p>Lines applicable for the documentation in your code are assumed to match static (configurable) regular expressions. These lines are then fed to <a href="https://pandoc.org/">pandoc</a> in order to generate a single html page (or pdf, manpage, …) as documentation. If no conversion is required (input format = desired output format), pandoc is bypassed.</p>
+<p>It should be possible to use this way of generating code documentation with most programming languages (incl. bash). The defaults however are set for bash and the blib way of documenting its code, i.e. you’ll have to use the getters and setters of this module if you want something different. For instance the default is to check for lines starting with <em>#+</em> (a special bash comment line) and add everything afterwards to the output documentation.</p>
 <p>Various callback functions can be used to add content to the output of b_cdoc_generate. See the documentation of that function for details.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
@@ -890,7 +1075,7 @@ returns:                whatever should be added to the end of the output
 <section id="b_cdoc_setSpaceCallback" class="level4">
 <h4>b_cdoc_setSpaceCallback [callback function name]</h4>
 <p><small><em>cdoc/b_cdoc_setSpaceCallback</em></small></p>
-<p>Set the function to call by b_cdoc_generate each time it hits &quot;space&quot; (non-matching lines) between two matching lines.</p>
+<p>Set the function to call by b_cdoc_generate each time it hits “space” (non-matching lines) between two matching lines.</p>
 <p>The callback function should be declared as follows:</p>
 <pre><code>callback_function_name [matching line] [input file] [previous space count] [document output format]
 [matching line]: The first matching line before which no match was found.
@@ -917,22 +1102,20 @@ returns:         whatever should be added in front of the matching line;
 <ol type="1">
 <li>call the file filter callback to obtain the final list of input source code files to use for document generation, respect the order (default: use all files passed as input)</li>
 <li>call the document begin callback function with the output file path to get user-specific output (default: do nothing)</li>
-<li>for all input files:
-<ol type="i">
-<li>for all lines of a file:
+<li>for all input files:<br />
+i. for all lines of a file:
 <ol type="a">
 <li>store lines matching b_cdoc_getExtractionRegex in a variable <em>o</em></li>
-<li>between any two matching lines for b_cdoc_getExtractionRegex that had a non-matching line in between them: call the space callback function (default: add an empty line to the output)</li>
-</ol></li>
-<li>pass <em>o</em> and the file name to the post processing callback function (default: return the input) - users could add e.g. the file name as section header here</li>
-<li>add the output of the post processing function to the output document</li>
+<li>between any two matching lines for b_cdoc_getExtractionRegex that had a non-matching line in between them: call the space callback function (default: add an empty line to the output)<br />
+ii. pass <em>o</em> and the file name to the post processing callback function (default: return the input) - users could add e.g. the file name as section header here<br />
+iii. add the output of the post processing function to the output document</li>
 </ol></li>
 <li>call the document end callback function with the output file path to get user-specific output (default: do nothing)</li>
 <li>do all necessary output conversions using <a href="https://pandoc.org/">pandoc</a></li>
 </ol>
 <p><span class="par">[input files]: Newline-separated list of files or directories to generate the documentation from. The given order is respected; directories are recursively searched for files. It is currently assumed that these files are encoded in UTF-8.</span></p>
 <p><span class="par">[output file]: Path to the documentation file to generate. Should not exist.</span></p>
-<p><span class="par">[output format]: The target format of the documentation to generate. See <a href="https://pandoc.org/">pandoc</a> for a list of available output formats. If none is specified, <a href="https://pandoc.org/">pandoc</a> is bypassed and the input format is chosen as output format. Passing &quot;pandoc&quot; will let <a href="https://pandoc.org/">pandoc</a> decide based on the extension of the output file.</span></p>
+<p><span class="par">[output format]: The target format of the documentation to generate. See <a href="https://pandoc.org/">pandoc</a> for a list of available output formats. If none is specified, <a href="https://pandoc.org/">pandoc</a> is bypassed and the input format is chosen as output format. Passing “pandoc” will let <a href="https://pandoc.org/">pandoc</a> decide based on the extension of the output file.</span></p>
 <p><span class="par">[additional pandoc options]: All remainining parameters will be directly passed to <a href="https://pandoc.org/">pandoc</a>. If none are provided, -s is implicitly added as default.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a non-zero exit code and exits the script on errors. output from <a href="https://pandoc.org/">pandoc</a> and other calls may be printed. Otherwise nothing is returned.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -972,7 +1155,7 @@ returns:         whatever should be added in front of the matching line;
 <p>Each background process is assumed to implement a <code>daemon_main</code> function and must be identified by a unique String.</p>
 <p>If you need to exchange data with the background service, please have a look at the <a href="#multithreadingipcv">multithreading/ipcv</a> or <a href="#multithreadingipcm">multithreading/ipcm</a> modules.</p>
 <p>Known Issue:<br />
-Since the daemon cannot detach from its session via <code>setsid</code> in bash, the daemon will remain in the process group of its parent. So killing the parent with e.g. Ctrl-C will cause the parent group including the daemon to terminate. As a workaround, users may either ignore SIGINT requests or make sure the parent exits as soon as possible (recommended).</p>
+Since the daemon cannot detach from its session via <code>setsid</code> in bash, the daemon will remain in the process group of its parent. So killing the parent with e.g. Ctrl-C will cause the parent group including the daemon to terminate. As a workaround, users may either ignore SIGINT requests or make sure the parent exits as soon as possible (recommended).</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.4</p>
 <section id="dependencies-4" class="level3">
@@ -983,7 +1166,7 @@ mkdir<br />
 rm<br />
 mktemp</p>
 </section>
-<section id="imports-1" class="level3">
+<section id="imports-2" class="level3">
 <h3>Imports</h3>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
 <p><a href="#proc">proc</a></p>
@@ -1008,7 +1191,7 @@ mktemp</p>
 <h4>b_daemon_init [quiet flag] [main name] [stdout file] [stderr file] [umask setting]</h4>
 <p><small><em>daemon/b_daemon_init</em></small></p>
 <p>Init the module paramters. It is necessary to call this method <em>before</em> using any other of this module unless you want to use the default paramters.</p>
-<p><span class="par">[quiet flag]: If set to 0 (default), don't print anything to stdout during the execution of start|stop|restart|status. Otherwise use <a href="#b_info">b_info</a> to print informational messages.</span></p>
+<p><span class="par">[quiet flag]: If set to 0 (default), don’t print anything to stdout during the execution of start|stop|restart|status. Otherwise use <a href="#b_info">b_info</a> to print informational messages.</span></p>
 <p><span class="par">[main name]: Name of the main loop function to execute in the background process. Returning from that function will exit the background process. Default: <code>daemon_main</code></span></p>
 <p><span class="par">[stdout file]: Where the background process should write its stdout stream to (default: /dev/null). Lines are appended.</span></p>
 <p><span class="par">[stderr file]: Where the background process should write its stderr stream to (default: /dev/null). Lines are appended.</span></p>
@@ -1017,7 +1200,7 @@ mktemp</p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
 <section id="b_daemon_start" class="level4">
-<h4>b_daemon_start [id] [arg 1] ... [arg n]</h4>
+<h4>b_daemon_start [id] [arg 1] … [arg n]</h4>
 <p><small><em>daemon/b_daemon_start</em></small></p>
 <p>Start the background process.<br />
 If you need to start it as a different user, simply run this function as a different user with e.g. (b_execFuncAs)[#b_execFuncAs]. Please keep in mind that control processes must have the permission to send signals to the daemon PID though.</p>
@@ -1033,11 +1216,11 @@ If you need to start it as a different user, simply run this function as a diffe
 <p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
 <p><span class="par">[termination signal]: A number specifying the signal to send to the daemon (default: 15 / SIGTERM). See <code>kill -l</code> for an overview.</span></p>
 <p><span class="par">[kill timeout]: Time in seconds after which the background process will be killed, if it remains unresponsive to the termination signal (default: 0 = wait indefinitely).</span></p>
-<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon terminated by itself. An exit code of 2 indicates that the daemon had to be killed. An exit code of 3 means that it wasn't running. <a href="#B_E">B_E</a> is called on unexpected errors.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon terminated by itself. An exit code of 2 indicates that the daemon had to be killed. An exit code of 3 means that it wasn’t running. <a href="#B_E">B_E</a> is called on unexpected errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_daemon_restart" class="level4">
-<h4>b_daemon_restart [id] [termination signal] [kill timeout] [arg 1] ... [arg n]</h4>
+<h4>b_daemon_restart [id] [termination signal] [kill timeout] [arg 1] … [arg n]</h4>
 <p><small><em>daemon/b_daemon_restart</em></small></p>
 <p>Restart the background process.</p>
 <p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
@@ -1051,7 +1234,7 @@ If you need to start it as a different user, simply run this function as a diffe
 <h4>b_daemon_statusPid [id]</h4>
 <p><small><em>daemon/b_daemon_statusPid</em></small></p>
 <p>Check the status of the background process.<br />
-Doesn't print informational messages to stdout.</p>
+Doesn’t print informational messages to stdout.</p>
 <p><span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span></p>
 <p><span class="ret"><strong>returns</strong>: The PID and sets a zero exit code, if the daemon is running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -1157,7 +1340,7 @@ Requires polling.</p>
 <h4>b_delay_to [timestamp] [command]</h4>
 <p><small><em>delay/b_delay_to</em></small></p>
 <p>Delay the given command to be executed at the given time.</p>
-<p><span class="par">[timestamp]: An integer timestamp (e.g. $SECONDS, Unix timestamp in s/ms/ns, ...).</span></p>
+<p><span class="par">[timestamp]: An integer timestamp (e.g. $SECONDS, Unix timestamp in s/ms/ns, …).</span></p>
 <p><span class="par">[command]: The command to execute at the given time.</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
@@ -1181,7 +1364,7 @@ Requires polling.</p>
 </section>
 <section id="flog" class="level2">
 <h2>flog</h2>
-<p>Flexible log writer for bash supporting arbitrary piped output (files, network streams, stdout, stderr, ...) in a user-defined output format.<br />
+<p>Flexible log writer for bash supporting arbitrary piped output (files, network streams, stdout, stderr, …) in a user-defined output format.<br />
 Log files can be automatically reduced to their last X lines.</p>
 <p>In order to log to the system log, please use the logger command instead. This library is mostly meant for application logs handled in a more custom manner.</p>
 <p>Currently only a single writer per instance of this library/thread is kept in memory, but you can user multiple one after another or in multiple threads. Each writer should have a dedicated log file to write to.</p>
@@ -1203,7 +1386,7 @@ tail<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-2" class="level3">
+<section id="imports-3" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 </section>
@@ -1237,7 +1420,7 @@ Print the given severity in a way for logging. This function is meant to be used
 <h4>b_flog_init [log file name] [header callback function] [log reduction lines]</h4>
 <p><small><em>flog/b_flog_init</em></small></p>
 <p>Initialize this log writer. This function <strong>must</strong> be called before any others.</p>
-<p><span class="par">[log file name]: name of the log file to write to; special files such as /dev/stdout, /dev/stderr (default), /dev/tcp, /dev/udp are supported if your bash version supports them; the file doesn't need to exist, but directories above it must exist</span></p>
+<p><span class="par">[log file name]: name of the log file to write to; special files such as /dev/stdout, /dev/stderr (default), /dev/tcp, /dev/udp are supported if your bash version supports them; the file doesn’t need to exist, but directories above it must exist</span></p>
 <p><span class="par">[header callback function]: optional name of the function to be called whenever a new log entry is generated; the function must be defined as follows:</span></p>
 <pre><code> [header callback function] [severity]
  [severity]: see [b_flog_log](#b_flog_log)
@@ -1245,7 +1428,7 @@ Print the given severity in a way for logging. This function is meant to be used
           with the given severity (without knowing the message details)
           and sets a non-zero exit code on errors; errors may cause the
           message to be logged without header</code></pre>
-<p><span class="par">[log reduction lines]: if set to a positive integer, reduce the log file approximately to that number of lines during logging (default: 3000) - see b_flog_setLogReductionLinesApprox for details; this option has no effect on non-file outputs (stdout, network output, ...)</span></p>
+<p><span class="par">[log reduction lines]: if set to a positive integer, reduce the log file approximately to that number of lines during logging (default: 3000) - see b_flog_setLogReductionLinesApprox for details; this option has no effect on non-file outputs (stdout, network output, …)</span></p>
 <p><span class="ret"><strong>returns</strong>: sets a non-zero exit code on errors and may exit the script</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -1255,7 +1438,7 @@ Print the given severity in a way for logging. This function is meant to be used
 <p><small><em>flog/b_flog_log</em></small></p>
 <p>Log the given message with the given optional severity.</p>
 <p><span class="par">[message]: message to log</span></p>
-<p><span class="par">[severity]: users may pass arbitrary numbers or even Strings here, but it is recommended to stick to the priorities defined in $BLIB_FLOG_SEV (default: ${B_FLOG_SEV[&quot;info&quot;]})</span></p>
+<p><span class="par">[severity]: users may pass arbitrary numbers or even Strings here, but it is recommended to stick to the priorities defined in $BLIB_FLOG_SEV (default: ${B_FLOG_SEV[“info”]})</span></p>
 <p><span class="ret"><strong>returns</strong>: sets a non-zero exit code on errors and may exit the script</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -1268,7 +1451,7 @@ Print the given severity in a way for logging. This function is meant to be used
 <p><span class="par">[print stack trace]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 1 / log only)</span></p>
 <p><span class="par">[print log errors]: whether or not to print errors related to the logging itself to stderr (default: 0 / print)</span></p>
 <p><span class="par">[log stack trace]: whether or not to log the stack trace (default: 1 / do not log it)</span></p>
-<p><span class="par">[severity]: the severity to use for all errors, defaults to ${B_FLOG_SEV[&quot;critical&quot;]}</span></p>
+<p><span class="par">[severity]: the severity to use for all errors, defaults to ${B_FLOG_SEV[“critical”]}</span></p>
 <p><span class="ret"><strong>returns</strong>: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a></span></p>
 </section>
 <section id="b_flog_getDeps" class="level4">
@@ -1280,13 +1463,13 @@ Print the given severity in a way for logging. This function is meant to be used
 <section id="b_flog_getDateFormat" class="level4">
 <h4>b_flog_getDateFormat</h4>
 <p><small><em>flog/b_flog_getDateFormat</em></small></p>
-<p>Get the date format used for the header by this log writer (see &quot;man date&quot; for explanations).</p>
+<p>Get the date format used for the header by this log writer (see “man date” for explanations).</p>
 <p><span class="ret"><strong>returns</strong>: see above</span></p>
 </section>
 <section id="b_flog_setDateFormat" class="level4">
 <h4>b_flog_setDateFormat [format string]</h4>
 <p><small><em>flog/b_flog_setDateFormat</em></small></p>
-<p>Set the date format used for the header by this log writer (see &quot;man date&quot; for explanations).</p>
+<p>Set the date format used for the header by this log writer (see “man date” for explanations).</p>
 <p><span class="ret"><strong>returns</strong>: nothing</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
@@ -1423,7 +1606,7 @@ sync</p>
 <section id="b_fs_mountIfNecessary" class="level4">
 <h4>b_fs_mountIfNecessary [device] [mount point] [enforce]</h4>
 <p><small><em>fs/b_fs_mountIfNecessary</em></small></p>
-<p>Mount the given device if it isn't already mounted.</p>
+<p>Mount the given device if it isn’t already mounted.</p>
 <p><span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span></p>
 <p><span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span></p>
 <p><span class="par">[enforce]: If set to 0, enforce the given mount point to be used in addition to potentially existing ones (default: 1).</span></p>
@@ -1459,7 +1642,7 @@ sync</p>
 <h4>b_fs_removeWithOverwrite [file] [randomness source]</h4>
 <p><small><em>fs/b_fs_removeWithOverwrite</em></small></p>
 <p>Overwrite the given file with random data, then remove it. This is meant to prevent a potential reconstruction of the file after its removal.<br />
-<em>Warning</em>: The reconstruction may still work on some types of file systems or physical storage systems (e.g. on flash disks).</p>
+<em>Warning</em>: The reconstruction may still work on some types of file systems or physical storage systems (e.g. on flash disks).</p>
 <p><span class="par">[file]: Full path to the file to remove. Directories are currently not supported.</span></p>
 <p><span class="par">[randomness source]: Device to use as source of random data (default: /dev/urandom).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> is called on errors.</span></p>
@@ -1515,7 +1698,7 @@ Defaults to the European/US Alexa Top 10 (which hopefully blends in to the masse
 <p>Find out whether we are online or not by attempting an http connection.<br />
 One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited during the process.</p>
 <p><span class="par">[timeout]: Timeout in seconds for hanging checks (default: 5).</span></p>
-<p><span class="ret"><strong>returns</strong>: 0, if we're online, 1 if only DNS works, 2 if neither DNS nor http(s) worked, 3 if the check timed out; <a href="#B_E">B_E</a> will be called if the status cannot be determined.</span></p>
+<p><span class="ret"><strong>returns</strong>: 0, if we’re online, 1 if only DNS works, 2 if neither DNS nor http(s) worked, 3 if the check timed out; <a href="#B_E">B_E</a> will be called if the status cannot be determined.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -1531,7 +1714,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <li>whitespace lines are ignored</li>
 <li>duplicate names may result in undefined behaviour (usually the second will override the first)</li>
 <li>all characters following the = are considered part of the value (incl. whitespace); whitespace before and after the value may be trimmed by the getters though (check their description)</li>
-<li>values are not interpreted (e.g. quotes, escape characters, ...)</li>
+<li>values are not interpreted (e.g. quotes, escape characters, …)</li>
 <li>whitespace around keys and around section qualifiers is ignored</li>
 </ul>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
@@ -1563,7 +1746,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p>get the value for the ini entry with the given name as String in raw format</p>
 <p><span class="par">[name]: name/key of the ini entry to retrieve</span></p>
 <p><span class="par">[section]: section where to look for the entry with the given name (default: without section)</span></p>
-<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name incl. any whitespace; a non-zero exit code is set if such an entry wasn't found</span></p>
+<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name incl. any whitespace; a non-zero exit code is set if such an entry wasn’t found</span></p>
 </section>
 <section id="b_ini_getString" class="level4">
 <h4>b_ini_getString [name] [section]</h4>
@@ -1571,7 +1754,7 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p>get the value for the ini entry with the given name as String and remove all whitespace around the returned String</p>
 <p><span class="par">[name]: name/key of the ini entry to retrieve</span></p>
 <p><span class="par">[section]: section where to look for the entry with the given name (default: without section)</span></p>
-<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name excl. any whitespace around; a non-zero exit code is set if such an entry wasn't found</span></p>
+<p><span class="ret"><strong>returns</strong>: value of the ini entry matching exactly the given section and name excl. any whitespace around; a non-zero exit code is set if such an entry wasn’t found</span></p>
 </section>
 <section id="b_ini_getInt" class="level4">
 <h4>b_ini_getInt [name] [section]</h4>
@@ -1590,14 +1773,14 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <p><span class="ret"><strong>returns</strong>: see <a href="#b_ini_get">b_ini_get</a>; 0 is returned via echo for true, 1 for false; the exit code indicates a potential error during parsing (2) or a missing entry (1) and <em>not</em> true/false</span></p>
 </section>
 <section id="b_ini_assertNames" class="level4">
-<h4>b_ini_assertNames [section 1] [name 1] ... [name n] -- [section 2] [name 1] ... [name m]</h4>
+<h4>b_ini_assertNames [section 1] [name 1] … [name n] – [section 2] [name 1] … [name m]</h4>
 <p><small><em>ini/b_ini_assertNames</em></small></p>
 <p>Assert that the given sections contains <em>at most</em> the given names and no additional ones.<br />
 This is a useful function to detect user mistakes and should be called right after <a href="#b_ini_read">b_ini_read</a>.<br />
-Multiple sections can be separated with &quot;--&quot;.</p>
+Multiple sections can be separated with “–”.</p>
 <p><span class="par">[section]: see <a href="#b_ini_get">b_ini_get</a></span></p>
 <p><span class="par">[name]: see <a href="#b_ini_get">b_ini_get</a></span></p>
-<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if and only if the last read ini file doesn't contain any additional names. Otherwise <a href="#B_E">B_E</a> is triggered. <a href="#B_ERR">B_ERR</a> will list the invalid names.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if and only if the last read ini file doesn’t contain any additional names. Otherwise <a href="#B_E">B_E</a> is triggered. <a href="#B_ERR">B_ERR</a> will list the invalid names.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -1643,7 +1826,7 @@ Multiple sections can be separated with &quot;--&quot;.</p>
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-3" class="level3">
+<section id="imports-4" class="level3">
 <h3>Imports</h3>
 <p><a href="#multithreadingipcv">multithreading/ipcv</a></p>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
@@ -1706,8 +1889,8 @@ It is recommended to call this function when all processes finished their work.<
 <section id="multithreadingipcv" class="level2">
 <h2>multithreading/ipcv</h2>
 <p>Provides means for inter-process communication (ipc) via global bash variables (v).</p>
-<p>This implementation uses shared memory, i.e. it should be reasonably fast.</p>
-<p>Only a single process or thread is assumed to be writing (i.e. use <a href="#b_ipcv_save">b_ipcv_save</a>) a variable at a time and multiple processes may read it (using e.g. <a href="#b_ipcv_load">b_ipcv_load</a>). If you need to write a single variable from multiple processes, please consider using the <a href="#multithreadingmtx">multithreading/mtx</a> module or similar locking means in combination with this module (or just <a href="#multithreadingipcm">multithreading/ipcm</a>).</p>
+<p>This implementation uses shared memory, i.e. it should be reasonably fast.</p>
+<p>Only a single process or thread is assumed to be writing (i.e. use <a href="#b_ipcv_save">b_ipcv_save</a>) a variable at a time and multiple processes may read it (using e.g. <a href="#b_ipcv_load">b_ipcv_load</a>). If you need to write a single variable from multiple processes, please consider using the <a href="#multithreadingmtx">multithreading/mtx</a> module or similar locking means in combination with this module (or just <a href="#multithreadingipcm">multithreading/ipcm</a>).</p>
 <table>
 <thead>
 <tr class="header">
@@ -1760,7 +1943,7 @@ rm</p>
 <h4>b_ipcv_save [namespace] [var name 1] .. [var name n]</h4>
 <p><small><em>multithreading/ipcv/b_ipcv_save</em></small></p>
 <p>Save the current values of the given variables so that they are made available for other processes under the given namespace.</p>
-<p>Please note that each variable is saved atomically, but individually. I.e. if you need multiple values to be updated at the same time, please use a single variable (e.g. a map).</p>
+<p>Please note that each variable is saved atomically, but individually. I.e. if you need multiple values to be updated at the same time, please use a single variable (e.g. a map).</p>
 <p><span class="par">[namespace]: Name for a common group under which the given variables should be saved. The combination of [namespace] and [variable name] must be a unique identifier across all processes running on the system.</span></p>
 <p><span class="par">[var name i]: The name of the global variable to make accessible for other processes. An arbitrary number of variable names can be specified.</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing, but a non-zero exit code indicates failed variable save attempts. A failed save attempt also triggers <a href="#B_E">B_E</a>.</span></p>
@@ -1822,7 +2005,7 @@ rmdir<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-4" class="level3">
+<section id="imports-5" class="level3">
 <h3>Imports</h3>
 <p><a href="#proc">proc</a></p>
 </section>
@@ -1838,7 +2021,7 @@ mktemp</p>
 <h4>b_mtx_setSleepTime [ms]</h4>
 <p><small><em>multithreading/mtx/b_mtx_setSleepTime</em></small></p>
 <p>Sets the time to sleep for this module whenever active polling is done (default: 500).</p>
-<p><span class="par">[ms]: time in miliseconds between active polling requests for e.g. mutexes done by this module; must be an integer</span></p>
+<p><span class="par">[ms]: time in miliseconds between active polling requests for e.g. mutexes done by this module; must be an integer</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code.</span></p>
 </section>
 <section id="b_mtx_getSleepTime" class="level4">
@@ -1873,7 +2056,7 @@ mktemp</p>
 <section id="b_mtx_pass" class="level4">
 <h4>b_mtx_pass [mutex] [block ID]</h4>
 <p><small><em>multithreading/mtx/b_mtx_pass</em></small></p>
-<p>Pass a blocked mutex to another block ID (i.e. change the block ID of the given mutex).<br />
+<p>Pass a blocked mutex to another block ID (i.e. change the block ID of the given mutex).<br />
 You should only do this if you currently own the mutex and the new process is ready to take over.</p>
 <p><span class="par">[mutex]: A mutex obtained via <a href="#b_mtx_create">b_mtx_create</a>.</span></p>
 <p><span class="par">[block ID]: The block ID to set for the given mutex.</span></p>
@@ -1885,21 +2068,21 @@ You should only do this if you currently own the mutex and the new process is re
 <p><small><em>multithreading/mtx/b_mtx_try</em></small></p>
 <p>Attempt to obtain the given mutex. Return immediately even if it cannot be obtained.</p>
 <p><span class="par">[mutex]: A mutex obtained via <a href="#b_mtx_create">b_mtx_create</a>. You may also use a static and otherwise unused directory path as mutex and share it across all relevant processes.</span></p>
-<p><span class="par">[block ID]: The ID to use by which to block (default: running (sub)shell process id $$). This should be the process ID of the process attempting to obtain the mutex or you should know what you're doing. If you're in a subshell that should deploy a mutex against other subshells, store their $BASHPID and call the function with that.</span></p>
-<p><span class="par">[claim stale]: If set to 0, claim the mutex even if it is still blocked by some other process, but that process isn't running anymore. If set to 1 (default), the function returns without obtaining the mutex. In general this should only be used in situations where a mutex has a high probability of being stale (e.g. application start).</span></p>
+<p><span class="par">[block ID]: The ID to use by which to block (default: running (sub)shell process id $$). This should be the process ID of the process attempting to obtain the mutex or you should know what you’re doing. If you’re in a subshell that should deploy a mutex against other subshells, store their $BASHPID and call the function with that.</span></p>
+<p><span class="par">[claim stale]: If set to 0, claim the mutex even if it is still blocked by some other process, but that process isn’t running anymore. If set to 1 (default), the function returns without obtaining the mutex. In general this should only be used in situations where a mutex has a high probability of being stale (e.g. application start).</span></p>
 <p><span class="par">[claim own]: If set to 0 (default), claim the mutex if it appears to be blocked by the provided block ID. If set to 1, consider it blocked even then.</span></p>
 <p><span class="ret"><strong>returns</strong>: The function incl. parameters to execute to remove the mutex if it was obtained and an error message stating the reason otherwise. The provided function <em>should</em> be called as part of an exit trap of the calling script or via eval. Sets an exit code of 0, if the mutex was obtained. An exit code of 1 is set, if the mutex was blocked and another non-zero exit code if some other error occurred (the mutex might be blocked even then). </span></p>
 <p>Example code:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span>
- <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span>
- <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span>
- <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span>
- <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span>
- <span class="co">#assuming the mutex is only meant to be removed after full</span>
- <span class="co">#execution of the script:</span>
- <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT
- <span class="co">#direct removal:</span>
- <span class="co">#b_mtx_release &quot;$mutex&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb14-2" title="2"> <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb14-3" title="3"> <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb14-4" title="4"> <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb14-5" title="5"> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb14-6" title="6"> <span class="co">#assuming the mutex is only meant to be removed after full</span></a>
+<a class="sourceLine" id="cb14-7" title="7"> <span class="co">#execution of the script:</span></a>
+<a class="sourceLine" id="cb14-8" title="8"> <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT</a>
+<a class="sourceLine" id="cb14-9" title="9"> <span class="co">#direct removal:</span></a>
+<a class="sourceLine" id="cb14-10" title="10"> <span class="co">#b_mtx_release &quot;$mutex&quot;</span></a></code></pre></div>
 </section>
 <section id="b_mtx_waitFor" class="level4">
 <h4>b_mtx_waitFor [mutex] [block ID] [claim stale] [maximum time]</h4>
@@ -1918,7 +2101,7 @@ You should only do this if you currently own the mutex and the new process is re
 <p>Allow multiple processes to write to a <em>virtual</em> file at the same time without causing write inconsitencies (written data from each process mangled with each other).</p>
 <p>This is achieved by keeping one file per process and relies on the assumption that both replacing and reading a symlink on your Linux distribution is atomic.</p>
 <p>In order for this to work, all write operations must go through this module.</p>
-<p>Currently reading only returns the data written by the process which wrote last. If you need some sort of appending, it makes more sense to deploy a mutex using e.g. the <a href="#multithreadingmtx">multithreading/mtx</a> module.</p>
+<p>Currently reading only returns the data written by the process which wrote last. If you need some sort of appending, it makes more sense to deploy a mutex using e.g. the <a href="#multithreadingmtx">multithreading/mtx</a> module.</p>
 <table>
 <thead>
 <tr class="header">
@@ -2019,7 +2202,7 @@ This function should only be called when all processes finished reading and writ
 <section id="b_osid_init" class="level4">
 <h4>b_osid_init [force]</h4>
 <p><small><em>os/osid/b_osid_init</em></small></p>
-<p><span class="par">[force]: if set to 0, force an init even if it would otherwise not be necessary (default: 1 - only initialize if it didn't happen before)</span><br />
+<p><span class="par">[force]: if set to 0, force an init even if it would otherwise not be necessary (default: 1 - only initialize if it didn’t happen before)</span><br />
 Initialize the osid module. It should normally <em>not</em> be necessary to call this function directly, but it will be called by the osid module internally as needed.</p>
 <p><span class="ret"><strong>returns</strong>: May error out and set a non-zero exit code on failures.</span></p>
 </section>
@@ -2032,7 +2215,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <section id="b_osid_isDebianLike" class="level4">
 <h4>b_osid_isDebianLike</h4>
 <p><small><em>os/osid/b_osid_isDebianLike</em></small></p>
-<p>Check whether the OS running this function is a Debian Linux or one of its derivatives (e.g. ubuntu).</p>
+<p>Check whether the OS running this function is a Debian Linux or one of its derivatives (e.g. ubuntu).</p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
 </section>
 <section id="b_osid_isOpenSuse" class="level4">
@@ -2068,7 +2251,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <section id="b_osid_isFedoraLike" class="level4">
 <h4>b_osid_isFedoraLike</h4>
 <p><small><em>os/osid/b_osid_isFedoraLike</em></small></p>
-<p>Check whether the OS running this function is a Fedora Linux or one of its derivatives (e.g. CentOS, Red Hat, Qubes OS).</p>
+<p>Check whether the OS running this function is a Fedora Linux or one of its derivatives (e.g. CentOS, Red Hat, Qubes OS).</p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the check returns true. Does not print any output.</span></p>
 </section>
 <section id="b_osid_isQubesDom0" class="level4">
@@ -2088,7 +2271,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <section id="osqubes4dom0" class="level2">
 <h2>os/qubes4/dom0</h2>
 <p>Collection of functions supporting scripting in Qubes OS 4.x dom0.</p>
-<p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data's confidentiality.</p>
+<p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data’s confidentiality.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.5</p>
 <section id="dependencies-16" class="level3">
@@ -2116,7 +2299,7 @@ setsid<br />
 sort<br />
 tar</p>
 </section>
-<section id="imports-5" class="level3">
+<section id="imports-6" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 <p><a href="#proc">proc</a></p>
@@ -2147,23 +2330,23 @@ These dependencies are checked before <em>any</em> execution of commands in <em>
 <p><span class="ret"><strong>returns</strong>: The current list of dependencies for VMs.</span></p>
 </section>
 <section id="b_dom0_qvmRun" class="level4">
-<h4>b_dom0_qvmRun [parameter 1] ... [parameter n]</h4>
+<h4>b_dom0_qvmRun [parameter 1] … [parameter n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_qvmRun</em></small></p>
 <p>A wrapper for qvm-run which sets reasonable defaults for shell scripting and applies various fixes.</p>
 <p>Most calls to qvm-run should be made via this function rather than interacting with qvm-run directly as the Qubes OS qvm-run was designed with interactive shell usage in mind whereas this wrapper is intended for bash developers.</p>
 <p>Particular features:</p>
 <ul>
 <li>a certain set of reasonable default parameters is used: -p -q -n -u root</li>
-<li>-n was set as auto-starting VMs during Bash scripting can heavily influence the user experience (imagine the VM being shut down manually by the user whilst a bash script is running --&gt; constant restarts)</li>
-<li>stdin is redirected to /dev/null by default to avoid potential security implications (accidental reads from dom0 stdin passed to a VM); this can be overriden using --stdin</li>
+<li>-n was set as auto-starting VMs during Bash scripting can heavily influence the user experience (imagine the VM being shut down manually by the user whilst a bash script is running –&gt; constant restarts)</li>
+<li>stdin is redirected to /dev/null by default to avoid potential security implications (accidental reads from dom0 stdin passed to a VM); this can be overriden using –stdin</li>
 <li>stdout has the VM output and the exit code is the one of the VM</li>
-<li>distinguished exit conditions (executed command failed vs. qvm-run failed)</li>
-<li>workarounds for known Qubes bugs wrt qvm-run may be implemented here (e.g. qubes issues #3083, #4476, #4633 in the past)</li>
+<li>distinguished exit conditions (executed command failed vs. qvm-run failed)</li>
+<li>workarounds for known Qubes bugs wrt qvm-run may be implemented here (e.g. qubes issues #3083, #4476, #4633 in the past)</li>
 <li>VM dependencies set with <a href="#b_dom0_setVMDeps">b_dom0_setVMDeps</a> are checked</li>
 </ul>
 <p>Please note that calling this function will make your script wait for the execution of the commands in the client VM.</p>
-<p>Wherever possible, this function should be combined with <a href="#b_silence">b_silence</a> as the VM output shouldn't be trusted. Otherwise please keep in mind that <strong>both</strong> stdout <em>and</em> stderr may have untrusted output which may even contain binary data. In order to validate against binary data you can e.g. use <a href="#b_types_parseString">b_types_parseString</a>.</p>
-<p><span class="par">[parameters]: Any parameters supported by qvm-run. If you pass -a, the default -n will be overriden. If you pass -u, the default root user is overriden. If you pass -v, -q will be overriden. If you pass --stdin, even stdin is passed to qvm-run. -p can be overriden by using /dev/null redirection. Only the short parameter versions are supported.</span></p>
+<p>Wherever possible, this function should be combined with <a href="#b_silence">b_silence</a> as the VM output shouldn’t be trusted. Otherwise please keep in mind that <strong>both</strong> stdout <em>and</em> stderr may have untrusted output which may even contain binary data. In order to validate against binary data you can e.g. use <a href="#b_types_parseString">b_types_parseString</a>.</p>
+<p><span class="par">[parameters]: Any parameters supported by qvm-run. If you pass -a, the default -n will be overriden. If you pass -u, the default root user is overriden. If you pass -v, -q will be overriden. If you pass –stdin, even stdin is passed to qvm-run. -p can be overriden by using /dev/null redirection. Only the short parameter versions are supported.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets the exit code of qvm-run and prints its output. May error out using <a href="#B_E">B_E</a> if qvm-run itself fails.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2178,7 +2361,7 @@ These dependencies are checked before <em>any</em> execution of commands in <em>
 <h4>b_dom0_startDispVM [template]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_startDispVM</em></small></p>
 <p>Start a dispVM from the given template in the background and return its name.<br />
-The disposable VM will remain started until it is shut down. If you only wish to execute a single command, please use <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a> with the --dispVM parameter.<br />
+The disposable VM will remain started until it is shut down. If you only wish to execute a single command, please use <a href="#b_dom0_qvmRun">b_dom0_qvmRun</a> with the –dispVM parameter.<br />
 It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="par">[template]: The template to use for the dispVM. If no template is specified, use the default Qubes template.</span></p>
 <p><span class="ret"><strong>returns</strong>: Name of the dispVM that was started and sets a zero exit code on success. This function may error out.</span></p>
@@ -2218,7 +2401,7 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p><span class="par">[function]: Name of the function as it is declared in the current scope.</span></p>
 <p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
 <p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
-<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you'll have to pass B as one of its dependencies). Dependencies that can be found in added modules must <em>not</em> be added.</span></p>
+<p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you’ll have to pass B as one of its dependencies). Dependencies that can be found in added modules must <em>not</em> be added.</span></p>
 <p><span class="par">[function param p]: An arbitrary number of function parameters.</span></p>
 <p><span class="ret"><strong>returns</strong>: see <a href="#b_dom0_execIn">b_dom0_execIn</a>; <a href="#B_E">B_E</a> is <em>not</em> called if the executed command returns an error</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -2236,13 +2419,13 @@ It may take a while for this function to obtain the name of the dispVM.</p>
 <p>Check whether the device is mounted in the given VM.</p>
 <p><span class="par">[vm]: VM where to execute.</span></p>
 <p><span class="par">[device]: Full path to the device (incl. /dev/) to check.</span></p>
-<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the device is mounted in the VM; a non-zero exit code means that it's either not mounted or some other error occurred.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code if the device is mounted in the VM; a non-zero exit code means that it’s either not mounted or some other error occurred.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_mountIfNecessary" class="level4">
 <h4>b_dom0_mountIfNecessary [vm] [device] [mount point] [enforce]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_mountIfNecessary</em></small></p>
-<p>Mount the given device in the target VM if it isn't already mounted there. Actually a wrapper for <a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a>.</p>
+<p>Mount the given device in the target VM if it isn’t already mounted there. Actually a wrapper for <a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a>.</p>
 <p><span class="par">[vm]: VM where to execute.</span></p>
 <p><span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span></p>
 <p><span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span></p>
@@ -2264,7 +2447,7 @@ This usually requires root privileges.</p>
 <h4>b_dom0_removeUnusedLoopDevice [vm] [device|file] [type] [map]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_removeUnusedLoopDevice</em></small></p>
 <p>Remove a loop device from the given VM, if it is <em>neither</em> used by Qubes OS <em>nor</em> by the given VM.<br />
-<em>Important</em>: Calling this function may cause the device to be removed as soon as it becomes unused by the VM (and the VM <em>only</em>!). So if you called this function, you should <em>not</em> use the device any further from dom0 with e.g. <code>qvm-block</code> afterwards - even if it wasn't removed.</p>
+<em>Important</em>: Calling this function may cause the device to be removed as soon as it becomes unused by the VM (and the VM <em>only</em>!). So if you called this function, you should <em>not</em> use the device any further from dom0 with e.g. <code>qvm-block</code> afterwards - even if it wasn’t removed.</p>
 <p><span class="par">[vm]: VM where to remove the loop device.</span></p>
 <p><span class="par">[device|file]: Full path (incl. /dev/) to the loop device or to the backing file inside the VM.</span></p>
 <p><span class="par">[type]: Whether the given path represents a loop device (0) or the backing file (1). If not specified, a device will be assumed, if and only if the path starts with <code>/dev/</code>.</span></p>
@@ -2298,36 +2481,36 @@ This usually requires root privileges.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_ensureRunning" class="level4">
-<h4>b_dom0_ensureRunning [vm 1] ... [vm n]</h4>
+<h4>b_dom0_ensureRunning [vm 1] … [vm n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_ensureRunning</em></small></p>
 <p>Start the given VMs if needed.</p>
 <p><span class="par">[vm i]: The VM to start.</span></p>
-<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that could not be started (maybe they don't exist?).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that could not be started (maybe they don’t exist?).</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_isRunning" class="level4">
-<h4>b_dom0_isRunning [vm 1] ... [vm n]</h4>
+<h4>b_dom0_isRunning [vm 1] … [vm n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_isRunning</em></small></p>
 <p>Check whether the given VMs are running <em>and</em> fully operational / not hanging / not booting.<br />
-In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are currently booting and <code>qvm-ls</code> doesn't check whether the OS of a VM is hanging.</p>
+In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are currently booting and <code>qvm-ls</code> doesn’t check whether the OS of a VM is hanging.</p>
 <p><span class="par">[vm i]: The VM to check.</span></p>
-<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not running (or don't exist?).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not running (or don’t exist?).</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_isHalted" class="level4">
-<h4>b_dom0_isHalted [vm 1] ... [vm n]</h4>
+<h4>b_dom0_isHalted [vm 1] … [vm n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_isHalted</em></small></p>
 <p>Check whether the given VMs are halted.</p>
 <p><span class="par">[vm i]: The VM to check.</span></p>
-<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not halted (or don't exist?).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not halted (or don’t exist?).</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_ensureHalted" class="level4">
-<h4>b_dom0_ensureHalted [vm 1] ... [vm n]</h4>
+<h4>b_dom0_ensureHalted [vm 1] … [vm n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_ensureHalted</em></small></p>
 <p>Shut down the given VMs if needed.</p>
 <p><span class="par">[vm i]: The VM to halt.</span></p>
-<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that could not be halted (maybe they don't exist?).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that could not be halted (maybe they don’t exist?).</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_exists" class="level4">
@@ -2347,7 +2530,7 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><span class="par">[rw flag]: 0=open read-write, 1=open read-only (default: 0)</span></p>
 <p><span class="par">[mount point]: Where to mount the decrypted data to. Non-existing directories will be created. If no mount point is specified, it will not be mounted (default).</span></p>
 <p><span class="par">[key file]: Full vm path to the key to use for decryption. If none is specified, password-based decryption is assumed and stdin will be read to obtain the password.</span></p>
-<p><span class="par">[additional options]: Single string with additional cryptsetup parameters to pass on (default: none). They are passed <em>as-is</em>, i.e. you'll have to take care of proper escaping etc. yourself.</span></p>
+<p><span class="par">[additional options]: Single string with additional cryptsetup parameters to pass on (default: none). They are passed <em>as-is</em>, i.e. you’ll have to take care of proper escaping etc. yourself.</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing (except for user interaction prompts if no key file is provided), but sets a non-zero exit code on errors</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2366,7 +2549,7 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><small><em>os/qubes4/dom0/b_dom0_parseQvmBlock</em></small></p>
 <p>Parse data from <code>qvm-block ls</code> to an associative array.<br />
 The indices of the associative array will be of the format <em>[counter]_[field]</em> (counters run from 0 (inclusive) to max (exclusive)).<br />
-The special index &quot;max&quot; is equal to the number of lines. It can be used for iterations over the map.<br />
+The special index “max” is equal to the number of lines. It can be used for iterations over the map.<br />
 Currently supported [field] values: backend|device id|id|description|used by|read-only|frontend-dev</p>
 <p><span class="par">[variable name]: Name of the associative array to use as output.</span></p>
 <p><span class="par">[input]: Optional output from a previous <code>qvm-block ls</code> call; if none is specified, this function will execute the call and use its output.</span></p>
@@ -2401,7 +2584,7 @@ The function may attempt to acquire root privileges (and thus display a password
 <h4>b_dom0_attachVMDisk [source VM] [target VM] [dom0 working folder] [rw flag]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_attachVMDisk</em></small></p>
 <p>Attach the entire private disk image (private.img) of the source VM to the target VM.<br />
-<strong>Warning</strong>: This is contradictory to all Qubes principles and should only be done if you know exactly what you're doing. Qubes OS even has some countermeasures to prevent accidental use of this feature which are bypassed here.</p>
+<strong>Warning</strong>: This is contradictory to all Qubes principles and should only be done if you know exactly what you’re doing. Qubes OS even has some countermeasures to prevent accidental use of this feature which are bypassed here.</p>
 <p><span class="par">[source VM]: Name of the VM whose private disk to attach to the target VM. <em>All data</em> of that VM will be shared with the target VM. Will be shut down as part of this function and must remain shut down as long as the disk is attached.</span></p>
 <p><span class="par">[target VM]: VM where to attach the disk as block device to. Must be started.</span></p>
 <p><span class="par">[dom0 working folder]: Path to a folder that this function may use at will to create or delete temporary data. Must be on the same drive as /var/lib/qubes (for example /tmp/ does <em>not</em> work) and should <strong>exclusively</strong> be used for calls to this function. Can safely be removed once your program finishes and the target VM is shut down.</span></p>
@@ -2444,7 +2627,7 @@ This is merely a convenience wrapper for <code>qvm-block attach</code>.</p>
 <section id="b_dom0_enterEventLoop" class="level4">
 <h4>b_dom0_enterEventLoop [callback function] [heartbeat interval]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_enterEventLoop</em></small></p>
-<p>Enter a blocking loop to react to Qubes OS events. <a href="#b_dom0_disconnectEventLoop">b_dom0_disconnectEventLoop</a> can be used to disconnect from the event loop asynchronously, e.g. from exit traps.<br />
+<p>Enter a blocking loop to react to Qubes OS events. <a href="#b_dom0_disconnectEventLoop">b_dom0_disconnectEventLoop</a> can be used to disconnect from the event loop asynchronously, e.g. from exit traps.<br />
 If you want to obtain an overview of Qubes OS events, please use the <code>qwatch</code> utility manually.</p>
 <p><span class="par">[callback function]: Name of the function to call for <em>every</em> Qubes OS event. Since the number of events may be high, the function should do appropriate filtering at high performance.</span><br />
 The callback function should be declared as follows:</p>
@@ -2465,7 +2648,7 @@ returns:  Nothing. A non-zero exit code will abort further processing.</code></p
 <h4>b_dom0_disconnectEventLoop</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_disconnectEventLoop</em></small></p>
 <p>Send a termination request to a dom0 event loop started with <a href="#b_dom0_enterEventLoop">b_dom0_enterEventLoop</a>. This is useful to exit the event loop from outside of it.</p>
-<p><span class="ret"><strong>returns</strong>: A non-zero exit code indicates that either no active event loop existed or the signal sending failed. Never errors out to be suitable for e.g. exit traps.</span></p>
+<p><span class="ret"><strong>returns</strong>: A non-zero exit code indicates that either no active event loop existed or the signal sending failed. Never errors out to be suitable for e.g. exit traps.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
 <section id="b_dom0_testMultiple" class="level4">
@@ -2474,7 +2657,7 @@ returns:  Nothing. A non-zero exit code will abort further processing.</code></p
 <p>Run multiple <code>test</code> checks inside the given VM with a single <code>qvm-run</code> call.</p>
 <p><span class="par">[vm]: Where to run the checks.</span></p>
 <p><span class="par">[operator]: The test operator to use for the list of parameters, e.g. <code>-f</code>.</span></p>
-<p><span class="par">[list]: Newline-separated list of parameters to check, e.g. a list of files for the <code>-f</code> operator.</span></p>
+<p><span class="par">[list]: Newline-separated list of parameters to check, e.g. a list of files for the <code>-f</code> operator.</span></p>
 <p><span class="ret"><strong>returns</strong>: The subset of the list that matched the operator and sets a zero exit code on success.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2503,7 +2686,7 @@ timeout</p>
 <p><small><em>proc/b_proc_pidExists</em></small></p>
 <p>Check whether the given process ID exists on the system.</p>
 <p><span class="par">[pid]: process ID to check for existence (process exists)</span></p>
-<p><span class="ret"><strong>returns</strong>: A zero exit code, if it exists and a non-zero exit code if it doesn't; this function attempts to check the existence of the given process across <em>all</em> users, but it cannot guarantee correctness if the user running this script has very low privileges.</span></p>
+<p><span class="ret"><strong>returns</strong>: A zero exit code, if it exists and a non-zero exit code if it doesn’t; this function attempts to check the existence of the given process across <em>all</em> users, but it cannot guarantee correctness if the user running this script has very low privileges.</span></p>
 </section>
 <section id="b_proc_childExists" class="level4">
 <h4>b_proc_childExists [pid]</h4>
@@ -2515,8 +2698,8 @@ timeout</p>
 <section id="b_proc_waitForPid" class="level4">
 <h4>b_proc_waitForPid [pid] [maximum time]</h4>
 <p><small><em>proc/b_proc_waitForPid</em></small></p>
-<p>Wait for the given process to exit. If it doesn't exist, exit immediately.</p>
-<p><span class="par">[pid]: Process ID of the process to wait for. Doesn't need to be a child.</span></p>
+<p>Wait for the given process to exit. If it doesn’t exist, exit immediately.</p>
+<p><span class="par">[pid]: Process ID of the process to wait for. Doesn’t need to be a child.</span></p>
 <p><span class="par">[maximum time]: Maximum time in seconds to wait for the process to exit (default: 0 = indefinitely).</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code. Use <a href="#b_proc_pidExists">b_proc_pidExists</a> if you need to know whether the process finished.</span></p>
 </section>
@@ -2543,7 +2726,7 @@ timeout</p>
 <h4>b_str_stripQuotes [string]</h4>
 <p><small><em>str/b_str_stripQuotes</em></small></p>
 <p>Remove any single or double quotes around the given string.</p>
-<p><span class="par">[string]: string which might be enclosed in single or double quotes (' or &quot;)</span></p>
+<p><span class="par">[string]: string which might be enclosed in single or double quotes (’ or &quot;)</span></p>
 <p><span class="ret"><strong>returns</strong>: [string] without the enclosed single or double quotes, if there were any; if none were found the original string is returned; the exit code is always zero</span></p>
 </section>
 <section id="b_str_trim" class="level4">
@@ -2558,8 +2741,8 @@ timeout</p>
 <section id="tcolors" class="level2">
 <h2>tcolors</h2>
 <p>Defines some tput related constants. In order to change terminal colors you can then use something such as</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span>
-<span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></a></code></pre></div>
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
@@ -2638,7 +2821,7 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Remove the commands tagged with the given tag from the signal trap.</p>
 <p><span class="par">[signal]: Name of the signal to remove the commands from.</span></p>
 <p><span class="par">[tag]: The <em>unique</em> marker to identify the commands to be removed.</span></p>
-<p><span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code on success. May error out if the tag isn't found or the internal trap call failed.</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code on success. May error out if the tag isn’t found or the internal trap call failed.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -2687,13 +2870,13 @@ See the strings manpage for further explanations.</p>
 <li>Even builtins such as <code>echo</code> do not necessarily play well with binary data. So it is recommended to pipe binary data through this function before further processing.</li>
 </ul>
 <p>Examples:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"> <span class="co">#check a file</span>
- <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span>
-
- <span class="co">#read parts of a file as string</span>
- <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span>
-<span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></code></pre></div>
-<p><span class="par">[encoding]: The encoding of the string lying in stdin. Use <a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a> for this parameter. Defaults to ${B_TYPES_ENCODINGS[&quot;7-bit&quot;]}, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing.</span></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"> <span class="co">#check a file</span></a>
+<a class="sourceLine" id="cb17-2" title="2"> <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span></a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"> <span class="co">#read parts of a file as string</span></a>
+<a class="sourceLine" id="cb17-5" title="5"> <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb17-6" title="6"><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></a></code></pre></div>
+<p><span class="par">[encoding]: The encoding of the string lying in stdin. Use <a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a> for this parameter. Defaults to ${B_TYPES_ENCODINGS[“7-bit”]}, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing.</span></p>
 <p><span class="ret"><strong>returns</strong>: The data as String, if the input data was found to be a String. If no String was found to be lying in stdin, the output is an undefined string and a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2860,15 +3043,15 @@ The state can be managed with the load/save/clearBlibTestState functions below.<
 <p><small><em>tests/test_common.bash/skipIfNoUserData</em></small></p>
 <p>Skip the test if no user data was found.</p>
 </section>
-<section id="skipIfNoUserData" class="level4">
-<h4>skipIfNoUserData</h4>
-<p><small><em>tests/test_common.bash/skipIfNoUserData</em></small></p>
+<section id="skipIfNoPandoc" class="level4">
+<h4>skipIfNoPandoc</h4>
+<p><small><em>tests/test_common.bash/skipIfNoPandoc</em></small></p>
 <p>Skip the test if pandoc is not installed.</p>
 </section>
 <section id="skipIfNotQubesDom0" class="level4">
 <h4>skipIfNotQubesDom0</h4>
 <p><small><em>tests/test_common.bash/skipIfNotQubesDom0</em></small></p>
-<p>Skip the test if we're not running inside Qubes OS dom0.</p>
+<p>Skip the test if we’re not running inside Qubes OS dom0.</p>
 </section>
 <section id="loadBlibTestState" class="level4">
 <h4>loadBlibTestState</h4>
@@ -2922,7 +3105,7 @@ The state can be managed with the load/save/clearBlibTestState functions below.<
 This <em>should</em> be the default method of executing tests for blib.<br />
 If the given commands are expected to change the state, use <a href="#runSC">runSC</a> instead. In particular the default bats <code>run</code> should almost never be used.<br />
 Also prints an identifier for easier debugging. The identifier starts at 1 on the first run call per test and increases with each further run call.<br />
-<em>WARNING</em>: As the bats <code>run</code> it runs inside a subshell. So don't expect changes to persist.</p>
+<em>WARNING</em>: As the bats <code>run</code> it runs inside a subshell. So don’t expect changes to persist.</p>
 <p><span class="par">[commands]: The commands to run.</span></p>
 <p><span class="ret"><strong>returns</strong>: whatever bats run returns</span></p>
 </section>
@@ -2932,7 +3115,7 @@ Also prints an identifier for easier debugging. The identifier starts at 1 on th
 <p>A version of the bats <code>run</code> command which ignore changes to the bash runtime state (SC = state changing).<br />
 If the given commands are expected to be stateless, use <a href="#runSL">runSL</a> instead. In particular the default bats <code>run</code> should almost never be used.<br />
 Also prints an identifier for easier debugging. The identifier starts at 1 on the first run call per test and increases with each further run call.<br />
-<em>WARNING</em>: As the bats <code>run</code> it runs inside a subshell. So don't expect changes to persist.</p>
+<em>WARNING</em>: As the bats <code>run</code> it runs inside a subshell. So don’t expect changes to persist.</p>
 <p><span class="par">[commands]: The commands to run.</span></p>
 <p><span class="ret"><strong>returns</strong>: whatever bats run returns</span></p>
 </section>
@@ -2953,8 +3136,8 @@ Also prints an identifier for easier debugging. The identifier starts at 1 on th
 <section id="testsuser_test_data.bash.example" class="level2">
 <h2>tests/user_test_data.bash.example</h2>
 <p>Example of a user_test_data file.<br />
-That file is meant for static bash varibles that must be set <em>by the user</em> (as they may e.g. be OS specific) in order for some tests to work.<br />
-If that file doesn't exist or could not be loaded, these tests may be skipped by blib.</p>
+That file is meant for static bash varibles that must be set <em>by the user</em> (as they may e.g. be OS specific) in order for some tests to work.<br />
+If that file doesn’t exist or could not be loaded, these tests may be skipped by blib.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
 <section id="global-variables-8" class="level3">
@@ -2980,19 +3163,19 @@ no|vm|dom0</p>
 <section id="UTD_QUBES_TESTVM" class="level4">
 <h4>UTD_QUBES_TESTVM</h4>
 <p><small><em>tests/user_test_data.bash.example/UTD_QUBES_TESTVM</em></small></p>
-<p>If you're using Qubes OS, please specify a <em>disposable</em> virtual machine with a static name to be used for testing here. This test VM may crash, be destroyed or whatever - so please don't use a production VM!<br />
+<p>If you’re using Qubes OS, please specify a <em>disposable</em> virtual machine with a static name to be used for testing here. This test VM may crash, be destroyed or whatever - so please don’t use a production VM!<br />
 Apart from that, the tests will be conducted with disposable VMs with dynamic names using your default template.</p>
 <p>Example command to create such a test VM:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">qvm-create</span> --class DispVM --prop netvm=<span class="st">''</span> --template nonet-dvm -l red d-testing</code></pre></div>
-<p>Can safely be ignored if you don't run Qubes OS-related tests.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="ex">qvm-create</span> --class DispVM --prop netvm=<span class="st">''</span> --template nonet-dvm -l red d-testing</a></code></pre></div>
+<p>Can safely be ignored if you don’t run Qubes OS-related tests.</p>
 </section>
 <section id="UTD_QUBES_TESTVM_PERSISTENT" class="level4">
 <h4>UTD_QUBES_TESTVM_PERSISTENT</h4>
 <p><small><em>tests/user_test_data.bash.example/UTD_QUBES_TESTVM_PERSISTENT</em></small></p>
-<p>If you're using Qubes OS, please specify a <em>persistent/non-disposable</em> virtual machine with a static name to be used for testing here. This test VM may crash, be destroyed or whatever - so please don't use a production VM!</p>
+<p>If you’re using Qubes OS, please specify a <em>persistent/non-disposable</em> virtual machine with a static name to be used for testing here. This test VM may crash, be destroyed or whatever - so please don’t use a production VM!</p>
 <p>Example command to create such a test VM:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">qvm-create</span> -l red --prop netvm=<span class="st">''</span> testing-pers</code></pre></div>
-<p>Can safely be ignored if you don't run Qubes OS-related tests.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="ex">qvm-create</span> -l red --prop netvm=<span class="st">''</span> testing-pers</a></code></pre></div>
+<p>Can safely be ignored if you don’t run Qubes OS-related tests.</p>
 </section>
 <section id="UTD_QUBES_DISPVM_TEMPLATE" class="level4">
 <h4>UTD_QUBES_DISPVM_TEMPLATE</h4>
@@ -3004,14 +3187,14 @@ If no template is specified, the Qubes OS default template is used.</p>
 <h4>UTD_QUBES_DOM0_WD</h4>
 <p><small><em>tests/user_test_data.bash.example/UTD_QUBES_DOM0_WD</em></small></p>
 <p>Full path to a folder in Qubes dom0 that can be created and deleted at will (working directory). Do <strong>not</strong> use an existing folder here!</p>
-<p>Can safely be ignored if you don't run Qubes OS-related tests.</p>
+<p>Can safely be ignored if you don’t run Qubes OS-related tests.</p>
 </section>
 <section id="UTD_PW_FREE_USER" class="level4">
 <h4>UTD_PW_FREE_USER</h4>
 <p><small><em>tests/user_test_data.bash.example/UTD_PW_FREE_USER</em></small></p>
 <p>A user that allows password-less logons with sudo or su for testing.</p>
 <p>If you run bats as root, neither sudo nor su should ask for a password.<br />
-Tests requiring admin privileges (e.g. mounting devices) may require this to be root or skip otherwise.</p>
+Tests requiring admin privileges (e.g. mounting devices) may require this to be root or skip otherwise.</p>
 </section>
 </section>
 </section>
@@ -3043,6 +3226,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_arr_mapsAreEqual">b_arr_mapsAreEqual</a></p>
 <p><a href="#b_arr_toList">b_arr_toList</a></p>
 <p><a href="#b_blib_getDeps">b_blib_getDeps</a></p>
+<p><a href="#b_cachingMessageHandler">b_cachingMessageHandler</a></p>
 <p><a href="#B_CALLER_NAME">B_CALLER_NAME</a></p>
 <p><a href="#b_cdoc_cbPrintFirstParam">b_cdoc_cbPrintFirstParam</a></p>
 <p><a href="#b_cdoc_cbPrintNewline">b_cdoc_cbPrintNewline</a></p>
@@ -3155,6 +3339,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_generateStandalone">b_generateStandalone</a></p>
 <p><a href="#b_getBlibModules">b_getBlibModules</a></p>
 <p><a href="#b_getDefaultMessageHandlerIntermediate">b_getDefaultMessageHandlerIntermediate</a></p>
+<p><a href="#b_getDefaultMessageHandlerPrefix">b_getDefaultMessageHandlerPrefix</a></p>
 <p><a href="#b_getErrorHandler">b_getErrorHandler</a></p>
 <p><a href="#b_getMessageHandler">b_getMessageHandler</a></p>
 <p><a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a></p>
@@ -3171,6 +3356,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#b_ini_getInt">b_ini_getInt</a></p>
 <p><a href="#b_ini_getString">b_ini_getString</a></p>
 <p><a href="#b_ini_read">b_ini_read</a></p>
+<p><a href="#b_initCachingMessageHandler">b_initCachingMessageHandler</a></p>
 <p><a href="#b_ipcm_change">b_ipcm_change</a></p>
 <p><a href="#b_ipcm_get">b_ipcm_get</a></p>
 <p><a href="#b_ipcm_getDeps">b_ipcm_getDeps</a></p>
@@ -3226,6 +3412,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#B_SCRIPT_NAME">B_SCRIPT_NAME</a></p>
 <p><a href="#b_setBE">b_setBE</a></p>
 <p><a href="#b_setDefaultMessageHandlerIntermediate">b_setDefaultMessageHandlerIntermediate</a></p>
+<p><a href="#b_setDefaultMessageHandlerPrefix">b_setDefaultMessageHandlerPrefix</a></p>
 <p><a href="#b_setErrorHandler">b_setErrorHandler</a></p>
 <p><a href="#b_setMessageHandler">b_setMessageHandler</a></p>
 <p><a href="#b_silence">b_silence</a></p>
@@ -3253,8 +3440,8 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be 
 <p><a href="#runSC">runSC</a></p>
 <p><a href="#runSL">runSL</a></p>
 <p><a href="#saveBlibState">saveBlibState</a></p>
+<p><a href="#skipIfNoPandoc">skipIfNoPandoc</a></p>
 <p><a href="#skipIfNotQubesDom0">skipIfNotQubesDom0</a></p>
-<p><a href="#skipIfNoUserData">skipIfNoUserData</a></p>
 <p><a href="#skipIfNoUserData">skipIfNoUserData</a></p>
 <p><a href="#startTimer">startTimer</a></p>
 <p><a href="#testGetterSetter">testGetterSetter</a></p>
