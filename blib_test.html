@@ -2281,7 +2281,10 @@ qvm-block<br />
 qvm-ls<br />
 qvm-shutdown<br />
 qvm-check<br />
+qvm-pool<br />
 qubes-prefs<br />
+qubesdb-write<br />
+qubesdb-rm<br />
 dirname<br />
 basename<br />
 mktemp<br />
@@ -2570,26 +2573,26 @@ More simple, but less flexible than <a href="#b_dom0_parseQvmBlock">b_dom0_parse
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_attachFile" class="level4">
-<h4>b_dom0_attachFile [dom0 file] [target VM] [rw flag]</h4>
+<h4>b_dom0_attachFile [dom0 file] [target VM] [rw flag] [force]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_attachFile</em></small></p>
 <p>Attach the given file from dom0 (!) as block device to the target VM.<br />
 The function may attempt to acquire root privileges (and thus display a password prompt).</p>
 <p><span class="par">[dom0 file]: Full path to the file <em>in dom0</em> to attach.</span></p>
 <p><span class="par">[target VM]: VM to attach the file to. Must be started.</span></p>
 <p><span class="par">[rw flag]: If set to 0, attaches the dom0 file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
+<p><span class="par">[force]: If set to 0, attempt to force Qubes OS to recognize the device (default: 1). This is required for e.g. VM images.</span></p>
 <p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_attachVMDisk" class="level4">
-<h4>b_dom0_attachVMDisk [source VM] [target VM] [dom0 working folder] [rw flag]</h4>
+<h4>b_dom0_attachVMDisk [source VM] [target VM] [rw flag]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_attachVMDisk</em></small></p>
 <p>Attach the entire private disk image (private.img) of the source VM to the target VM.<br />
 <strong>Warning</strong>: This is contradictory to all Qubes principles and should only be done if you know exactly what you’re doing. Qubes OS even has some countermeasures to prevent accidental use of this feature which are bypassed here.</p>
 <p><span class="par">[source VM]: Name of the VM whose private disk to attach to the target VM. <em>All data</em> of that VM will be shared with the target VM. Will be shut down as part of this function and must remain shut down as long as the disk is attached.</span></p>
 <p><span class="par">[target VM]: VM where to attach the disk as block device to. Must be started.</span></p>
-<p><span class="par">[dom0 working folder]: Path to a folder that this function may use at will to create or delete temporary data. Must be on the same drive as /var/lib/qubes (for example /tmp/ does <em>not</em> work) and should <strong>exclusively</strong> be used for calls to this function. Can safely be removed once your program finishes and the target VM is shut down.</span></p>
 <p><span class="par">[rw flag]: If set to 0, attaches the disk file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span></p>
-<p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span></p>
+<p><span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set. Please call <a href="#b_dom0_detachDevice">b_dom0_detachDevice</a> with the clean flag for the detach operation.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_crossAttachDevice" class="level4">
@@ -2616,11 +2619,12 @@ This is merely a convenience wrapper for <code>qvm-block attach</code>.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_detachDevice" class="level4">
-<h4>b_dom0_detachDevice [vm] [device]</h4>
+<h4>b_dom0_detachDevice [vm] [device] [clean flag]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_detachDevice</em></small></p>
 <p>Attempts to detach the given device from the VM. This may fail if the VM is using the device and thus it is usually a better idea to just shut the VM down.</p>
 <p><span class="par">[vm]: VM from which to detach the device.</span></p>
 <p><span class="par">[device]: Full path to the device in the VM. E.g. the return values of <a href="#b_dom0_crossAttachFile">b_dom0_crossAttachFile</a>, <a href="#b_dom0_attachFile">b_dom0_attachFile</a> or <a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a>.</span></p>
+<p><span class="par">[clean flag]: Also wipe the device from the Qubes DB, if it’s there (default: 1).</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing, but sets a zero exit code on success</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -3183,12 +3187,6 @@ Apart from that, the tests will be conducted with disposable VMs with dynamic na
 <p>Qubes OS disposable VM template to use for testing. The test code will create disposable VMs from that template. It will <em>not</em> modify the template itself.<br />
 If no template is specified, the Qubes OS default template is used.</p>
 </section>
-<section id="UTD_QUBES_DOM0_WD" class="level4">
-<h4>UTD_QUBES_DOM0_WD</h4>
-<p><small><em>tests/user_test_data.bash.example/UTD_QUBES_DOM0_WD</em></small></p>
-<p>Full path to a folder in Qubes dom0 that can be created and deleted at will (working directory). Do <strong>not</strong> use an existing folder here!</p>
-<p>Can safely be ignored if you don’t run Qubes OS-related tests.</p>
-</section>
 <section id="UTD_PW_FREE_USER" class="level4">
 <h4>UTD_PW_FREE_USER</h4>
 <p><small><em>tests/user_test_data.bash.example/UTD_PW_FREE_USER</em></small></p>
@@ -3451,7 +3449,6 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#UTD_PW_FREE_USER">UTD_PW_FREE_USER</a></p>
 <p><a href="#UTD_QUBES">UTD_QUBES</a></p>
 <p><a href="#UTD_QUBES_DISPVM_TEMPLATE">UTD_QUBES_DISPVM_TEMPLATE</a></p>
-<p><a href="#UTD_QUBES_DOM0_WD">UTD_QUBES_DOM0_WD</a></p>
 <p><a href="#UTD_QUBES_TESTVM">UTD_QUBES_TESTVM</a></p>
 <p><a href="#UTD_QUBES_TESTVM_PERSISTENT">UTD_QUBES_TESTVM_PERSISTENT</a></p>
 </section>
