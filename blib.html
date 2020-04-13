@@ -236,73 +236,87 @@ background-color: #ebf5fb;
 <li><a href="#dependencies-6">Dependencies</a></li>
 <li><a href="#functions-6">Functions</a></li>
 </ul></li>
-<li><a href="#flog">flog</a><ul>
+<li><a href="#dmcrypt">dmcrypt</a><ul>
 <li><a href="#dependencies-7">Dependencies</a></li>
 <li><a href="#imports-3">Imports</a></li>
-<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-7">Functions</a></li>
 </ul></li>
-<li><a href="#fs">fs</a><ul>
+<li><a href="#flog">flog</a><ul>
 <li><a href="#dependencies-8">Dependencies</a></li>
+<li><a href="#imports-4">Imports</a></li>
+<li><a href="#global-variables-3">Global Variables</a></li>
 <li><a href="#functions-8">Functions</a></li>
 </ul></li>
-<li><a href="#http">http</a><ul>
+<li><a href="#fs">fs</a><ul>
 <li><a href="#dependencies-9">Dependencies</a></li>
-<li><a href="#global-variables-4">Global Variables</a></li>
 <li><a href="#functions-9">Functions</a></li>
 </ul></li>
-<li><a href="#ini">ini</a><ul>
+<li><a href="#http">http</a><ul>
 <li><a href="#dependencies-10">Dependencies</a></li>
+<li><a href="#global-variables-4">Global Variables</a></li>
 <li><a href="#functions-10">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
+<li><a href="#ini">ini</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
-<li><a href="#imports-4">Imports</a></li>
 <li><a href="#functions-11">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
+<li><a href="#keys">keys</a><ul>
 <li><a href="#dependencies-12">Dependencies</a></li>
+<li><a href="#imports-5">Imports</a></li>
 <li><a href="#functions-12">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
+<li><a href="#multithreadingipcm">multithreading/ipcm</a><ul>
 <li><a href="#dependencies-13">Dependencies</a></li>
-<li><a href="#imports-5">Imports</a></li>
+<li><a href="#imports-6">Imports</a></li>
 <li><a href="#functions-13">Functions</a></li>
 </ul></li>
-<li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
+<li><a href="#multithreadingipcv">multithreading/ipcv</a><ul>
 <li><a href="#dependencies-14">Dependencies</a></li>
 <li><a href="#functions-14">Functions</a></li>
 </ul></li>
-<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#multithreadingmtx">multithreading/mtx</a><ul>
 <li><a href="#dependencies-15">Dependencies</a></li>
+<li><a href="#imports-7">Imports</a></li>
 <li><a href="#functions-15">Functions</a></li>
 </ul></li>
-<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#multithreadingmultiw">multithreading/multiw</a><ul>
 <li><a href="#dependencies-16">Dependencies</a></li>
-<li><a href="#imports-6">Imports</a></li>
 <li><a href="#functions-16">Functions</a></li>
 </ul></li>
-<li><a href="#proc">proc</a><ul>
+<li><a href="#ososid">os/osid</a><ul>
 <li><a href="#dependencies-17">Dependencies</a></li>
 <li><a href="#functions-17">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-18">Dependencies</a></li>
+<li><a href="#imports-8">Imports</a></li>
 <li><a href="#functions-18">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#proc">proc</a><ul>
 <li><a href="#dependencies-19">Dependencies</a></li>
-<li><a href="#global-variables-5">Global Variables</a></li>
 <li><a href="#functions-19">Functions</a></li>
 </ul></li>
-<li><a href="#traps">traps</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-20">Dependencies</a></li>
 <li><a href="#functions-20">Functions</a></li>
 </ul></li>
-<li><a href="#types">types</a><ul>
+<li><a href="#tcolors">tcolors</a><ul>
 <li><a href="#dependencies-21">Dependencies</a></li>
-<li><a href="#global-variables-6">Global Variables</a></li>
+<li><a href="#global-variables-5">Global Variables</a></li>
 <li><a href="#functions-21">Functions</a></li>
+</ul></li>
+<li><a href="#traps">traps</a><ul>
+<li><a href="#dependencies-22">Dependencies</a></li>
+<li><a href="#functions-22">Functions</a></li>
+</ul></li>
+<li><a href="#types">types</a><ul>
+<li><a href="#dependencies-23">Dependencies</a></li>
+<li><a href="#global-variables-6">Global Variables</a></li>
+<li><a href="#functions-23">Functions</a></li>
+</ul></li>
+<li><a href="#ui">ui</a><ul>
+<li><a href="#dependencies-24">Dependencies</a></li>
+<li><a href="#functions-24">Functions</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
 </ul>
@@ -374,7 +388,7 @@ su</p>
 </section>
 <section id="imports" class="level3">
 <h3>Imports</h3>
-<p><a href="#traps">traps</a></p>
+<p>[“traps” || B_E]</p>
 </section>
 <section id="global-variables" class="level3">
 <h3>Global Variables</h3>
@@ -406,6 +420,11 @@ This variable may be used to bypass code during testing, if bats cannot test tha
 <p><small><em>blib/B_LIB_DIR</em></small></p>
 <p>Path of the blib installation directory.</p>
 </section>
+<section id="B_CONF_DIR" class="level4">
+<h4>B_CONF_DIR</h4>
+<p><small><em>blib/B_CONF_DIR</em></small></p>
+<p>Path to blib configuration directory. Modules may create subfolders named by their module name there. May not exist.</p>
+</section>
 <section id="B_SCRIPT" class="level4">
 <h4>B_SCRIPT</h4>
 <p><small><em>blib/B_SCRIPT</em></small></p>
@@ -436,6 +455,24 @@ This variable may be used to bypass code during testing, if bats cannot test tha
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="va">B_ERR=</span><span class="st">&quot;This is another error message.&quot;</span> ; <span class="va">B_RC=</span>6 ; <span class="ex">B_E</span> <span class="kw">;</span></a></code></pre></div>
 <p>Calling <a href="#B_E">B_E</a> means:<br />
 Check <a href="#B_ERR">B_ERR</a> for an error message and if there is one, handle it. It can be placed at the end of a line or on its own line. <a href="#B_E">B_E</a> will then process the error message in the way defined by the error handler (cf. <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a>) and stop any further execution of code in the current context (function, script, …) returning a non-zero exit code (1) unless the described error was fixed. In the latter unlikely case it’ll let execution proceed.</p>
+<p>More examples:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="co">#handle a potentially failing command:</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="ex">cmd</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;cmd failed.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#capture stdout of a potentially failing command:</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="bu">local</span> <span class="va">out=</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="va">out=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">cmd</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;cmd failed.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#handle multiple potentially failing commands in a try/catch like manner:</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="kw">(</span>   <span class="kw">set</span> <span class="ex">-e</span></a>
+<a class="sourceLine" id="cb5-10" title="10">    <span class="ex">cmd1</span></a>
+<a class="sourceLine" id="cb5-11" title="11">    <span class="ex">cmd2</span></a>
+<a class="sourceLine" id="cb5-12" title="12">    <span class="ex">cmd3</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="kw">)</span> <span class="co">#NOTE: || doesn't work here!</span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="kw">if</span><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-ne</span> 0<span class="bu"> ]</span> ; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb5-15" title="15">    <span class="va">B_ERR=</span><span class="st">&quot;Some commands failed.&quot;</span></a>
+<a class="sourceLine" id="cb5-16" title="16">    <span class="ex">B_E</span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="kw">fi</span></a></code></pre></div>
 <p>The error handler can be re-defined at runtime with <a href="#b_setErrorHandler">b_setErrorHandler</a>.</p>
 </section>
 </section>
@@ -466,8 +503,8 @@ print the current stack trace in a human readable way</p>
 <p><small><em>blib/b_checkVersion</em></small></p>
 <p>Check whether the currently running blib instance meets the given blib version requirements.<br />
 To e.g. make sure you’re on blib version 1.1 or higher, use</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"> <span class="bu">source</span> blib</a>
-<a class="sourceLine" id="cb5-2" title="2"> <span class="ex">b_checkVersion</span> 1 2 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.2 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"> <span class="bu">source</span> blib</a>
+<a class="sourceLine" id="cb6-2" title="2"> <span class="ex">b_checkVersion</span> 1 2 <span class="kw">||</span> <span class="kw">{</span> <span class="op">&gt;&amp;2</span> <span class="bu">echo</span> <span class="st">&quot;This script depends on blib (https://github.com/3hhh/blib) version 1.2 or higher. Please install a supported version.&quot;</span> <span class="kw">;</span> <span class="bu">exit</span> 1 <span class="kw">;</span> <span class="kw">}</span></a></code></pre></div>
 <p><span class="par">[minimum allowed major]: The lowest acceptable major version number (default: 0).</span></p>
 <p><span class="par">[minimum allowed minor]: The lowest acceptable minor version number (default: 0).</span></p>
 <p><span class="par">[maximum allowed major]: The highest acceptable major version number (default: infinite).</span></p>
@@ -505,10 +542,10 @@ As any error handler it must</p>
 <p>Set the [error out] behaviour of the currently configured error handler.</p>
 <p>Contrary to <a href="#b_setErrorHandler">b_setErrorHandler</a> this function may be called by blib modules as all error handlers are required to support [error out] as parameter.</p>
 <p>Example for switching the error out behaviour:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"> <span class="ex">b_setBE</span> 1</a>
-<a class="sourceLine" id="cb6-2" title="2"> <span class="ex">funcThatMayCallB_E</span> <span class="co">#without subshell</span></a>
-<a class="sourceLine" id="cb6-3" title="3"> <span class="va">ret=$?</span></a>
-<a class="sourceLine" id="cb6-4" title="4"> <span class="ex">b_resetErrorHandler</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"> <span class="ex">b_setBE</span> 1</a>
+<a class="sourceLine" id="cb7-2" title="2"> <span class="ex">funcThatMayCallB_E</span> <span class="co">#without subshell</span></a>
+<a class="sourceLine" id="cb7-3" title="3"> <span class="va">ret=$?</span></a>
+<a class="sourceLine" id="cb7-4" title="4"> <span class="ex">b_resetErrorHandler</span></a></code></pre></div>
 <p><span class="par">[error out]: see <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a> (default: 0)</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing, always sets a zero exit code</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
@@ -699,7 +736,7 @@ This implementation uses the <a href="#b_getDefaultMessageHandlerIntermediate">b
 <p>Create a standalone variant of blib in a single file running the given function when called (sourcing that file will only make the functions available) and print that file to stdout.</p>
 <p>The current execution state is not retained.</p>
 <p><span class="par">[function]: The function to call when the generated script is executed. All script parameters when calling [output file] are passed to this function. The function must be available in the current context.</span></p>
-<p><span class="par">[module dep i]: Names of the modules to include in the standalone file. They do not need to be imported.</span></p>
+<p><span class="par">[module dep i]: Names of the modules to include in the standalone file. They do not need to be imported. They are loaded in the specified order.</span></p>
 <p><span class="par">[-]: Dash used as separator between the various types of arguments. If none is provided, all parameters are assumed to be modules.</span></p>
 <p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you’ll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
 <p><span class="par">[function param p]: Static parameters to add to the function as single String. Dynamic parameters should be passed to the generated script.</span></p>
@@ -721,10 +758,10 @@ This implementation uses the <a href="#b_getDefaultMessageHandlerIntermediate">b
 <p><small><em>blib/b_execFuncAs</em></small></p>
 <p>Attempt to execute the Bash function as the given user.</p>
 <p>Whether or not this works highly depends on the underlying OS and its (sudo &amp; su) configuration. In particular this function may cause further execution to wait for the user to type in the password of the requested user.</p>
-<p>If the given user is identical to the current user, <a href="#b_execFuncAs">b_execFuncAs</a> may decide to run the function in the current context. Otherwise it may run in a different process.</p>
+<p>If the given user is identical to the current user, <a href="#b_execFuncAs">b_execFuncAs</a> may decide to run the function in the current context. Otherwise it may run in a different process, i.e. all initialization and state may be lost. Thus make sure to create any required state within your function.</p>
 <p><span class="par">[user]: User to execute the function as (default: root).</span></p>
 <p><span class="par">[function]: The function to execute.</span></p>
-<p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself.</span></p>
+<p><span class="par">[module dep i]: Names of the modules required by the function. They do not need to be imported by the function itself. They are loaded in the specified order.</span></p>
 <p><span class="par">[-]: A dash as separator character between the various parameters.</span></p>
 <p><span class="par">[function dep j]: An arbitrary number of functions that need to be added in order to satisfy the dependencies of the function to call (e.g. if function A is meant to be called, but uses function B internally, you’ll have to pass B as one of its dependencies). Dependencies that can be found in added modules should <em>not</em> be added.</span></p>
 <p><span class="par">[function param p]: An arbitrary number of function parameters.</span></p>
@@ -1331,6 +1368,96 @@ Requires polling.</p>
 </section>
 </section>
 </section>
+<section id="dmcrypt" class="level2">
+<h2>dmcrypt</h2>
+<p>Abstraction layer for cryptsetup / dm-crypt.</p>
+<p>Features:<br />
+- automatic management of dm-crypt devices<br />
+- password support for non-tty environments</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.6</p>
+<section id="dependencies-7" class="level3">
+<h3>Dependencies</h3>
+<p>dirname<br />
+mkdir<br />
+head<br />
+md5sum<br />
+readlink</p>
+</section>
+<section id="imports-3" class="level3">
+<h3>Imports</h3>
+<p><a href="#ui">ui</a></p>
+</section>
+<section id="functions-7" class="level3">
+<h3>Functions</h3>
+<section id="b_dmcrypt_getDeps" class="level4">
+<h4>b_dmcrypt_getDeps</h4>
+<p><small><em>dmcrypt/b_dmcrypt_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_dmcrypt_init" class="level4">
+<h4>b_dmcrypt_init [ui mode]</h4>
+<p><small><em>dmcrypt/b_dmcrypt_init</em></small></p>
+<p>Initialize this module. This function <em>must</em> be called at least once before using any of the other functions.</p>
+<p><span class="par">[ui mode]: How to request a password from the user: auto|gui|tty (default: auto).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dmcrypt_getMapperName" class="level4">
+<h4>b_dmcrypt_getMapperName [path]</h4>
+<p><small><em>dmcrypt/b_dmcrypt_getMapperName</em></small></p>
+<p>Get the name of the dm-crypt mapper for a given path.</p>
+<p><span class="par">[path]: Full path to an encrypted file.</span></p>
+<p><span class="ret"><strong>returns</strong>: A mapper name. This doesn’t necessarily mean that the encrypted container is open. Use <a href="#b_dmcrypt_isOpen">b_dmcrypt_isOpen</a> for that.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dmcrypt_createLuks" class="level4">
+<h4>b_dmcrypt_createLuks [path] [size] [fs type] [entropy source] [password prompt] [dm-crypt option 1] … [dm-crypt option n]</h4>
+<p><small><em>dmcrypt/b_dmcrypt_createLuks</em></small></p>
+<p>Create an encrypted luks container file at the given location.<br />
+This function may request a password from the user and usually requires root access rights.</p>
+<p><span class="par">[path]: Full path to the encrypted file to create.</span></p>
+<p><span class="par">[size]: Filesystem size in bytes to create. Supported suffixes: b 512, kB 1000, K 1024, MB 1000<em>1000, M 1024</em>1024, GB 1000<em>1000</em>1000, G 1024<em>1024</em>1024</span></p>
+<p><span class="par">[fs type]: Filesystem to create inside the encrypted container. If none is specified (default), no file system is created.</span></p>
+<p><span class="par">[entropy source]: Source of entropy to use for the file setup (default: /dev/urandom).</span></p>
+<p><span class="par">[password prompt]: Prompt string to ask the user for his password (optional).</span></p>
+<p><span class="par">[dm-crypt option i]: These options are directly passed to <code>cryptsetup</code>.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dmcrypt_open" class="level4">
+<h4>b_dmcrypt_open [path] [mount point] [output var] [password prompt] [dm-crypt option 1] … [dm-crypt option n]</h4>
+<p><small><em>dmcrypt/b_dmcrypt_open</em></small></p>
+<p>Open/Decrypt the given container and optionally mount it.</p>
+<p><span class="par">[path]: Full path to the encrypted file.</span></p>
+<p><span class="par">[mount point]: Where to mount the decrypted data (optional). If no mount point is specified, it will not be mounted.</span></p>
+<p><span class="par">[output var]: The name of the variable to write the created device to (optional).</span></p>
+<p><span class="par">[password prompt]: Prompt string to ask the user for his password (optional).</span></p>
+<p><span class="par">[dm-crypt option i]: These options are directly passed to <code>cryptsetup</code>.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dmcrypt_close" class="level4">
+<h4>b_dmcrypt_close [path] [dm-crypt option 1] … [dm-crypt option n]</h4>
+<p><small><em>dmcrypt/b_dmcrypt_close</em></small></p>
+<p>Close the given encrypted container.</p>
+<p><span class="par">[path]: Full path to the encrypted file.</span></p>
+<p><span class="par">[dm-crypt option i]: These options are directly passed to <code>cryptsetup</code>.</span></p>
+<p><span class="ret"><strong>returns</strong>: A zero exit code on success. The exit code may also be zero for non-existing or already closed containers.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dmcrypt_isOpen" class="level4">
+<h4>b_dmcrypt_isOpen [path]</h4>
+<p><small><em>dmcrypt/b_dmcrypt_isOpen</em></small></p>
+<p>Check whether the given encrypted container is open (not necessarily mounted).</p>
+<p><span class="par">[path]: Full path to the encrypted file.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if and only if the container is open. <a href="#B_E">B_E</a> is only called for exceptional errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
 <section id="flog" class="level2">
 <h2>flog</h2>
 <p>Flexible log writer for bash supporting arbitrary piped output (files, network streams, stdout, stderr, …) in a user-defined output format.<br />
@@ -1348,14 +1475,14 @@ Log files can be automatically reduced to their last X lines.</p>
            by date +&quot;%F %T %Z&quot; (the format can be changed)</code></pre>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-7" class="level3">
+<section id="dependencies-8" class="level3">
 <h3>Dependencies</h3>
 <p>date<br />
 tail<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-3" class="level3">
+<section id="imports-4" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
 </section>
@@ -1369,7 +1496,7 @@ It was inspired by the severities of RFC5424.<br />
 Currently supported values: emergency|alert|critical|crit|error|err|warning|warn|notice|informational|info|debug</p>
 </section>
 </section>
-<section id="functions-7" class="level3">
+<section id="functions-8" class="level3">
 <h3>Functions</h3>
 <section id="b_flog_printSeverity" class="level4">
 <h4>b_flog_printSeverity [severity]</h4>
@@ -1523,7 +1650,7 @@ Print the given severity in a way for logging. This function is meant to be used
 <p>Collection of file and file system related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-8" class="level3">
+<section id="dependencies-9" class="level3">
 <h3>Dependencies</h3>
 <p>wc<br />
 findmnt<br />
@@ -1534,7 +1661,7 @@ stat<br />
 rm<br />
 sync</p>
 </section>
-<section id="functions-8" class="level3">
+<section id="functions-9" class="level3">
 <h3>Functions</h3>
 <section id="b_fs_getDeps" class="level4">
 <h4>b_fs_getDeps</h4>
@@ -1624,7 +1751,7 @@ sync</p>
 <p>Collection of http related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-9" class="level3">
+<section id="dependencies-10" class="level3">
 <h3>Dependencies</h3>
 <p>curl</p>
 </section>
@@ -1638,7 +1765,7 @@ It is recommended to pick a relatively large number of URLs with SSL support to 
 Defaults to the European/US Alexa Top 10 (which hopefully blends in to the masses).</p>
 </section>
 </section>
-<section id="functions-9" class="level3">
+<section id="functions-10" class="level3">
 <h3>Functions</h3>
 <section id="b_http_getDeps" class="level4">
 <h4>b_http_getDeps</h4>
@@ -1688,11 +1815,11 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 </ul>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-10" class="level3">
+<section id="dependencies-11" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-10" class="level3">
+<section id="functions-11" class="level3">
 <h3>Functions</h3>
 <section id="b_ini_getDeps" class="level4">
 <h4>b_ini_getDeps</h4>
@@ -1754,6 +1881,99 @@ Multiple sections can be separated with “–”.</p>
 </section>
 </section>
 </section>
+<section id="keys" class="level2">
+<h2>keys</h2>
+<p>Simple <em>system-wide</em> cryptographic key store protected by a master password.</p>
+<p>A key store is only opened when necessary. It’ll remain open from then on until an application calls <a href="#b_keys_close">b_keys_close</a>.</p>
+<p>It can be found at <code>/etc/blib/keys/keys.lks</code>.</p>
+<p>Usually requires root access rights.</p>
+<p>Features:<br />
+- thread safe: no write operation can happen to a closed key store (<a href="#b_keys_close">b_keys_close</a> and write operations are single threaded only)<br />
+- retrieved keys are read-only unless managed via this interface</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.5</p>
+<section id="dependencies-12" class="level3">
+<h3>Dependencies</h3>
+<p>mkdir<br />
+cat<br />
+readlink<br />
+cp<br />
+rm<br />
+findmnt</p>
+</section>
+<section id="imports-5" class="level3">
+<h3>Imports</h3>
+<p><a href="#fs">fs</a></p>
+<p><a href="#dmcrypt">dmcrypt</a></p>
+<p><a href="#multithreadingmtx">multithreading/mtx</a></p>
+</section>
+<section id="functions-12" class="level3">
+<h3>Functions</h3>
+<section id="b_keys_getDeps" class="level4">
+<h4>b_keys_getDeps</h4>
+<p><small><em>keys/b_keys_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_keys_init" class="level4">
+<h4>b_keys_init [app id] [auto create] [ui mode] [password prompt] [wait time]</h4>
+<p><small><em>keys/b_keys_init</em></small></p>
+<p>Initialize this module. This function <em>must</em> be called at least once before any other function except <a href="#b_keys_create">b_keys_create</a> can be used.<br />
+Will open the key store, if it’s closed.</p>
+<p><span class="par">[app id]: Unique application ID (recommended: <a href="#B_SCRIPT">$B_SCRIPT_NAME</a>).</span></p>
+<p><span class="par">[auto create]: Automatically create a new key store, if none exists (default: 0 = do it). Users may create their own key store using <code>cryptsetup</code> otherwise.</span></p>
+<p><span class="par">[ui mode]: How to request the master password from the user: auto|gui|tty (default: auto).</span></p>
+<p><span class="par">[password prompt]: Prompt string to ask the user for his password (optional).</span></p>
+<p><span class="par">[wait time]: Maximum time in ms to wait for another process writing to a key (default: 300) (-1 = indefinitely).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_keys_add" class="level4">
+<h4>b_keys_add [key id] [key path] [keep flag]</h4>
+<p><small><em>keys/b_keys_add</em></small></p>
+<p>Add the given key to the key store.</p>
+<p><span class="par">[key id]: Unique identifier for the key to add.</span></p>
+<p><span class="par">[key path]: Full path to the key to add.</span></p>
+<p><span class="par">[keep flag]: Keep the [key path] file after a successful copy operation (default: 0 / keep). If set to 1, it is safely removed from disk.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_keys_get" class="level4">
+<h4>b_keys_get [key id]</h4>
+<p><small><em>keys/b_keys_get</em></small></p>
+<p>Retrieve the given key from the store. If you need the content as String, please use <a href="#b_keys_getContent">b_keys_getContent</a>.</p>
+<p><span class="par">[key id]: Unique identifier for the key to retrieve.</span></p>
+<p><span class="ret"><strong>returns</strong>: Path to the key. It may not exist, if the key store was closed in the meantime or the provided ID does not exist.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_keys_getContent" class="level4">
+<h4>b_keys_getContent [key id]</h4>
+<p><small><em>keys/b_keys_getContent</em></small></p>
+<p>Retrieve the given key content from the store. For binary keys please use <a href="#b_keys_get">b_keys_get</a>.</p>
+<p><span class="par">[key id]: Unique identifier for the key to retrieve.</span></p>
+<p><span class="ret"><strong>returns</strong>: The key content as String. If it doesn’t exist or other errors occurred, <a href="#B_E">B_E</a> is called.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_keys_delete" class="level4">
+<h4>b_keys_delete [key id] [backup]</h4>
+<p><small><em>keys/b_keys_delete</em></small></p>
+<p>Delete the given key from the key store.</p>
+<p><span class="par">[key id]: Unique identifier for the key to delete.</span></p>
+<p><span class="par">[backup]: Whether (0) or not (1) to create a backup (default: 0).</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_keys_close" class="level4">
+<h4>b_keys_close</h4>
+<p><small><em>keys/b_keys_close</em></small></p>
+<p>Close the key store, if necessary.</p>
+<p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success (closed key store) and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
 <section id="multithreadingipcm" class="level2">
 <h2>multithreading/ipcm</h2>
 <p>An inter-process map implementation.</p>
@@ -1791,16 +2011,16 @@ Multiple sections can be separated with “–”.</p>
 </table>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-11" class="level3">
+<section id="dependencies-13" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-4" class="level3">
+<section id="imports-6" class="level3">
 <h3>Imports</h3>
 <p><a href="#multithreadingipcv">multithreading/ipcv</a></p>
 <p><a href="#multithreadingmtx">multithreading/mtx</a></p>
 </section>
-<section id="functions-11" class="level3">
+<section id="functions-13" class="level3">
 <h3>Functions</h3>
 <section id="b_ipcm_getDeps" class="level4">
 <h4>b_ipcm_getDeps</h4>
@@ -1892,7 +2112,7 @@ It is recommended to call this function when all processes finished their work.<
 </table>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-12" class="level3">
+<section id="dependencies-14" class="level3">
 <h3>Dependencies</h3>
 <p>findmnt<br />
 mkdir<br />
@@ -1900,7 +2120,7 @@ mktemp<br />
 mv<br />
 rm</p>
 </section>
-<section id="functions-12" class="level3">
+<section id="functions-14" class="level3">
 <h3>Functions</h3>
 <section id="b_ipcv_getDeps" class="level4">
 <h4>b_ipcv_getDeps</h4>
@@ -1961,10 +2181,11 @@ Please note that the variables will remain set in your current process context, 
 <h2>multithreading/mtx</h2>
 <p>Collection of mutex related functions.</p>
 <p>Mutex: Only a single process may have it at any point in time.<br />
-Lock: A specific maximum number of processes may have it at any point in time.</p>
+Semaphore: A specific maximum number of processes may have it at any point in time.</p>
+<p>See the <a href="#keys">keys</a> module source code for an example on how to use this mutex implementation efficiently.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.3</p>
-<section id="dependencies-13" class="level3">
+<section id="dependencies-15" class="level3">
 <h3>Dependencies</h3>
 <p>mkdir<br />
 touch<br />
@@ -1974,11 +2195,11 @@ rmdir<br />
 cat<br />
 mktemp</p>
 </section>
-<section id="imports-5" class="level3">
+<section id="imports-7" class="level3">
 <h3>Imports</h3>
 <p><a href="#proc">proc</a></p>
 </section>
-<section id="functions-13" class="level3">
+<section id="functions-15" class="level3">
 <h3>Functions</h3>
 <section id="b_mtx_getDeps" class="level4">
 <h4>b_mtx_getDeps</h4>
@@ -2042,16 +2263,16 @@ You should only do this if you currently own the mutex and the new process is re
 <p><span class="par">[claim own]: If set to 0 (default), claim the mutex if it appears to be blocked by the provided block ID. If set to 1, consider it blocked even then.</span></p>
 <p><span class="ret"><strong>returns</strong>: The function incl. parameters to execute to remove the mutex if it was obtained and an error message stating the reason otherwise. The provided function <em>should</em> be called as part of an exit trap of the calling script or via eval. Sets an exit code of 0, if the mutex was obtained. An exit code of 1 is set, if the mutex was blocked and another non-zero exit code if some other error occurred (the mutex might be blocked even then). </span></p>
 <p>Example code:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb14-2" title="2"> <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb14-3" title="3"> <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
-<a class="sourceLine" id="cb14-4" title="4"> <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb14-5" title="5"> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
-<a class="sourceLine" id="cb14-6" title="6"> <span class="co">#assuming the mutex is only meant to be removed after full</span></a>
-<a class="sourceLine" id="cb14-7" title="7"> <span class="co">#execution of the script:</span></a>
-<a class="sourceLine" id="cb14-8" title="8"> <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT</a>
-<a class="sourceLine" id="cb14-9" title="9"> <span class="co">#direct removal:</span></a>
-<a class="sourceLine" id="cb14-10" title="10"> <span class="co">#b_mtx_release &quot;$mutex&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb15-2" title="2"> <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb15-3" title="3"> <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb15-4" title="4"> <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb15-5" title="5"> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb15-6" title="6"> <span class="co">#assuming the mutex is only meant to be removed after full</span></a>
+<a class="sourceLine" id="cb15-7" title="7"> <span class="co">#execution of the script:</span></a>
+<a class="sourceLine" id="cb15-8" title="8"> <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT</a>
+<a class="sourceLine" id="cb15-9" title="9"> <span class="co">#direct removal:</span></a>
+<a class="sourceLine" id="cb15-10" title="10"> <span class="co">#b_mtx_release &quot;$mutex&quot;</span></a></code></pre></div>
 </section>
 <section id="b_mtx_waitFor" class="level4">
 <h4>b_mtx_waitFor [mutex] [block ID] [claim stale] [maximum time]</h4>
@@ -2103,7 +2324,7 @@ You should only do this if you currently own the mutex and the new process is re
 </table>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-14" class="level3">
+<section id="dependencies-16" class="level3">
 <h3>Dependencies</h3>
 <p>shuf<br />
 mv<br />
@@ -2111,7 +2332,7 @@ ln<br />
 stat<br />
 rm</p>
 </section>
-<section id="functions-14" class="level3">
+<section id="functions-16" class="level3">
 <h3>Functions</h3>
 <section id="b_multiw_getDeps" class="level4">
 <h4>b_multiw_getDeps</h4>
@@ -2156,11 +2377,11 @@ This function should only be called when all processes finished reading and writ
 <p>Functions for operating system identification.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-15" class="level3">
+<section id="dependencies-17" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-15" class="level3">
+<section id="functions-17" class="level3">
 <h3>Functions</h3>
 <section id="b_osid_getDeps" class="level4">
 <h4>b_osid_getDeps</h4>
@@ -2243,7 +2464,7 @@ Initialize the osid module. It should normally <em>not</em> be necessary to call
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data’s confidentiality.</p>
 <p>Copyright (C) 2019 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-16" class="level3">
+<section id="dependencies-18" class="level3">
 <h3>Dependencies</h3>
 <p>qvm-run<br />
 qvm-block<br />
@@ -2271,13 +2492,14 @@ setsid<br />
 sort<br />
 tar</p>
 </section>
-<section id="imports-6" class="level3">
+<section id="imports-8" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a></p>
+<p><a href="#ui">ui</a></p>
 <p><a href="#proc">proc</a></p>
 <p><a href="#types">types</a></p>
 </section>
-<section id="functions-16" class="level3">
+<section id="functions-18" class="level3">
 <h3>Functions</h3>
 <section id="b_dom0_getDeps" class="level4">
 <h4>b_dom0_getDeps</h4>
@@ -2493,7 +2715,7 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code, if the VM exists a non-zero exit code otherwise.</span></p>
 </section>
 <section id="b_dom0_openCrypt" class="level4">
-<h4>b_dom0_openCrypt [vm] [device] [mapper name] [rw flag] [mount point] [key file] [additional options]</h4>
+<h4>b_dom0_openCrypt [vm] [device] [mapper name] [rw flag] [mount point] [key file] [additional options] [password prompt]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_openCrypt</em></small></p>
 <p>In the given VM, open the given crypto device with dm-crypt and mount it to the mount point.</p>
 <p><span class="par">[vm]: The VM where to open the crypto device.</span></p>
@@ -2503,6 +2725,7 @@ In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are
 <p><span class="par">[mount point]: Where to mount the decrypted data to. Non-existing directories will be created. If no mount point is specified, it will not be mounted (default).</span></p>
 <p><span class="par">[key file]: Full vm path to the key to use for decryption. If none is specified, password-based decryption is assumed and stdin will be read to obtain the password.</span></p>
 <p><span class="par">[additional options]: Single string with additional cryptsetup parameters to pass on (default: none). They are passed <em>as-is</em>, i.e. you’ll have to take care of proper escaping etc. yourself.</span></p>
+<p><span class="par">[password prompt]: Optional string to use when the user is required to provide a decryption password.</span></p>
 <p><span class="ret"><strong>returns</strong>: nothing (except for user interaction prompts if no key file is provided), but sets a non-zero exit code on errors</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2641,12 +2864,12 @@ returns:  Nothing. A non-zero exit code will abort further processing.</code></p
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-17" class="level3">
+<section id="dependencies-19" class="level3">
 <h3>Dependencies</h3>
 <p>tail<br />
 timeout</p>
 </section>
-<section id="functions-17" class="level3">
+<section id="functions-19" class="level3">
 <h3>Functions</h3>
 <section id="b_proc_getDeps" class="level4">
 <h4>b_proc_getDeps</h4>
@@ -2683,11 +2906,11 @@ timeout</p>
 <p>Collection of string related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-18" class="level3">
+<section id="dependencies-20" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-18" class="level3">
+<section id="functions-20" class="level3">
 <h3>Functions</h3>
 <section id="b_str_getDeps" class="level4">
 <h4>b_str_getDeps</h4>
@@ -2714,12 +2937,12 @@ timeout</p>
 <section id="tcolors" class="level2">
 <h2>tcolors</h2>
 <p>Defines some tput related constants. In order to change terminal colors you can then use something such as</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span></a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></a></code></pre></div>
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-19" class="level3">
+<section id="dependencies-21" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
@@ -2732,7 +2955,7 @@ timeout</p>
 Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 </section>
 </section>
-<section id="functions-19" class="level3">
+<section id="functions-21" class="level3">
 <h3>Functions</h3>
 <section id="b_tcolors_getDeps" class="level4">
 <h4>b_tcolors_getDeps</h4>
@@ -2747,11 +2970,11 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-20" class="level3">
+<section id="dependencies-22" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="functions-20" class="level3">
+<section id="functions-22" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getDeps" class="level4">
 <h4>b_traps_getDeps</h4>
@@ -2804,7 +3027,7 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-21" class="level3">
+<section id="dependencies-23" class="level3">
 <h3>Dependencies</h3>
 <p>mktemp<br />
 mkfifo<br />
@@ -2824,7 +3047,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-21" class="level3">
+<section id="functions-23" class="level3">
 <h3>Functions</h3>
 <section id="b_types_getDeps" class="level4">
 <h4>b_types_getDeps</h4>
@@ -2843,12 +3066,12 @@ See the strings manpage for further explanations.</p>
 <li>Even builtins such as <code>echo</code> do not necessarily play well with binary data. So it is recommended to pipe binary data through this function before further processing.</li>
 </ul>
 <p>Examples:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"> <span class="co">#check a file</span></a>
-<a class="sourceLine" id="cb17-2" title="2"> <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span></a>
-<a class="sourceLine" id="cb17-3" title="3"></a>
-<a class="sourceLine" id="cb17-4" title="4"> <span class="co">#read parts of a file as string</span></a>
-<a class="sourceLine" id="cb17-5" title="5"> <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb17-6" title="6"><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"> <span class="co">#check a file</span></a>
+<a class="sourceLine" id="cb18-2" title="2"> <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span></a>
+<a class="sourceLine" id="cb18-3" title="3"></a>
+<a class="sourceLine" id="cb18-4" title="4"> <span class="co">#read parts of a file as string</span></a>
+<a class="sourceLine" id="cb18-5" title="5"> <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></a></code></pre></div>
 <p><span class="par">[encoding]: The encoding of the string lying in stdin. Use <a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a> for this parameter. Defaults to ${B_TYPES_ENCODINGS[“7-bit”]}, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing.</span></p>
 <p><span class="ret"><strong>returns</strong>: The data as String, if the input data was found to be a String. If no String was found to be lying in stdin, the output is an undefined string and a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -2859,6 +3082,38 @@ See the strings manpage for further explanations.</p>
 <p>Check whether the given String is an integer (positive or negative) or not.</p>
 <p><span class="par">[string]: The string to check. If it may be binary data, please make sure to pass it through <a href="#b_types_parseString">b_types_parseString</a> first.</span></p>
 <p><span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code if and only if the given string represents an integer.</span></p>
+</section>
+</section>
+</section>
+<section id="ui" class="level2">
+<h2>ui</h2>
+<p>Collection of user interface and user interaction related functions.</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-24" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="functions-24" class="level3">
+<h3>Functions</h3>
+<section id="b_ui_getDeps" class="level4">
+<h4>b_ui_getDeps</h4>
+<p><small><em>ui/b_ui_getDeps</em></small></p>
+<p>Get the dependencies of this module.</p>
+<p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
+</section>
+<section id="b_ui_passwordPrompt" class="level4">
+<h4>b_ui_passwordPrompt [output var] [ui mode] [prompt string]</h4>
+<p><small><em>ui/b_ui_passwordPrompt</em></small></p>
+<p>Prompt the user for a password. Should run inside the parent process (i.e. not inside a subshell).<br />
+Once you do not need the password anymore, it is recommended to wipe it from memory as such:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="co">#overwrite the password in memory with zeroes, then free it</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="va">pass=</span><span class="st">&quot;</span><span class="va">${pass//</span>?<span class="va">/</span>0<span class="va">}</span><span class="st">&quot;</span> ; <span class="va">pass=</span><span class="st">&quot;&quot;</span></a></code></pre></div>
+<p><span class="par">[output var]: The name of the variable to write the password to.</span></p>
+<p><span class="par">[ui mode]: How to request the password from the user: auto|gui|tty (default: auto).</span></p>
+<p><span class="par">[prompt string]: The string to present to the user asking for the password (default: “Password:”).</span></p>
+<p><span class="ret"><strong>returns</strong>: Nothing. Sets a non-zero exit code on errors.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
 </section>
@@ -2905,6 +3160,7 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_cdoc_setSpaceCallback">b_cdoc_setSpaceCallback</a></p>
 <p><a href="#b_checkDeps">b_checkDeps</a></p>
 <p><a href="#b_checkVersion">b_checkVersion</a></p>
+<p><a href="#B_CONF_DIR">B_CONF_DIR</a></p>
 <p><a href="#b_daemon_getDeps">b_daemon_getDeps</a></p>
 <p><a href="#b_daemon_getPid">b_daemon_getPid</a></p>
 <p><a href="#B_DAEMON_ID">B_DAEMON_ID</a></p>
@@ -2926,6 +3182,13 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_delay_getCommandAt">b_delay_getCommandAt</a></p>
 <p><a href="#b_delay_getDeps">b_delay_getDeps</a></p>
 <p><a href="#b_delay_to">b_delay_to</a></p>
+<p><a href="#b_dmcrypt_close">b_dmcrypt_close</a></p>
+<p><a href="#b_dmcrypt_createLuks">b_dmcrypt_createLuks</a></p>
+<p><a href="#b_dmcrypt_getDeps">b_dmcrypt_getDeps</a></p>
+<p><a href="#b_dmcrypt_getMapperName">b_dmcrypt_getMapperName</a></p>
+<p><a href="#b_dmcrypt_init">b_dmcrypt_init</a></p>
+<p><a href="#b_dmcrypt_isOpen">b_dmcrypt_isOpen</a></p>
+<p><a href="#b_dmcrypt_open">b_dmcrypt_open</a></p>
 <p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
 <p><a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a></p>
 <p><a href="#b_dom0_closeCrypt">b_dom0_closeCrypt</a></p>
@@ -3029,6 +3292,13 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_ipcv_unsetNamespace">b_ipcv_unsetNamespace</a></p>
 <p><a href="#b_isFunction">b_isFunction</a></p>
 <p><a href="#b_isModule">b_isModule</a></p>
+<p><a href="#b_keys_add">b_keys_add</a></p>
+<p><a href="#b_keys_close">b_keys_close</a></p>
+<p><a href="#b_keys_delete">b_keys_delete</a></p>
+<p><a href="#b_keys_get">b_keys_get</a></p>
+<p><a href="#b_keys_getContent">b_keys_getContent</a></p>
+<p><a href="#b_keys_getDeps">b_keys_getDeps</a></p>
+<p><a href="#b_keys_init">b_keys_init</a></p>
 <p><a href="#B_LIB_DIR">B_LIB_DIR</a></p>
 <p><a href="#b_listContains">b_listContains</a></p>
 <p><a href="#b_mtx_create">b_mtx_create</a></p>
@@ -3089,6 +3359,8 @@ See the strings manpage for further explanations.</p>
 <p><a href="#b_types_getDeps">b_types_getDeps</a></p>
 <p><a href="#b_types_isInteger">b_types_isInteger</a></p>
 <p><a href="#b_types_parseString">b_types_parseString</a></p>
+<p><a href="#b_ui_getDeps">b_ui_getDeps</a></p>
+<p><a href="#b_ui_passwordPrompt">b_ui_passwordPrompt</a></p>
 <p><a href="#b_version">b_version</a></p>
 </section>
 </body>
