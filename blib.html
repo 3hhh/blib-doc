@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David Hobach" />
-  <title>blib Code Reference v1.2</title>
+  <title>blib Code Reference v1.3</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -193,7 +193,7 @@ background-color: #ebf5fb;
 </head>
 <body>
 <header>
-<h1 class="title">blib Code Reference v1.2</h1>
+<h1 class="title">blib Code Reference v1.3</h1>
 <p class="author">David Hobach</p>
 </header>
 <nav id="TOC">
@@ -1899,7 +1899,8 @@ cat<br />
 readlink<br />
 cp<br />
 rm<br />
-findmnt</p>
+findmnt<br />
+find</p>
 </section>
 <section id="imports-5" class="level3">
 <h3>Imports</h3>
@@ -1928,7 +1929,6 @@ Will open the key store, if it’s closed.</p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
-<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_keys_add" class="level4">
 <h4>b_keys_add [key id] [key path] [keep flag]</h4>
@@ -1946,6 +1946,14 @@ Will open the key store, if it’s closed.</p>
 <p>Retrieve the given key from the store. If you need the content as String, please use <a href="#b_keys_getContent">b_keys_getContent</a>.</p>
 <p><span class="par">[key id]: Unique identifier for the key to retrieve.</span></p>
 <p><span class="ret"><strong>returns</strong>: Path to the key. It may not exist, if the key store was closed in the meantime or the provided ID does not exist.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_keys_getAll" class="level4">
+<h4>b_keys_getAll [global]</h4>
+<p><small><em>keys/b_keys_getAll</em></small></p>
+<p>Retrieve all keys from the store.</p>
+<p><span class="par">[global]: If set to 0, also retrieve keys for other application IDs (default: 1).</span><br />
+<span class="citation" data-cites="returns">@returns</span>: All key paths for reading as a newline-separated list. If the key store is closed or modified during the runtime, the list may be empty or incomplete.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_keys_getContent" class="level4">
@@ -1968,7 +1976,8 @@ Will open the key store, if it’s closed.</p>
 <section id="b_keys_close" class="level4">
 <h4>b_keys_close</h4>
 <p><small><em>keys/b_keys_close</em></small></p>
-<p>Close the key store, if necessary.</p>
+<p>Close the key store, if necessary.<br />
+<em>WARNING</em>: 99% of all applications should <em>never</em> call this function as it may block all subsequent read operations by any other applications using this system-wide key store. The only applications that might call this function are key store management applications and only upon explicit user request. The key store is otherwise automatically closed upon system shutdown by the running OS.</p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success (closed key store) and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -3296,6 +3305,7 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p><a href="#b_keys_close">b_keys_close</a></p>
 <p><a href="#b_keys_delete">b_keys_delete</a></p>
 <p><a href="#b_keys_get">b_keys_get</a></p>
+<p><a href="#b_keys_getAll">b_keys_getAll</a></p>
 <p><a href="#b_keys_getContent">b_keys_getContent</a></p>
 <p><a href="#b_keys_getDeps">b_keys_getDeps</a></p>
 <p><a href="#b_keys_init">b_keys_init</a></p>
