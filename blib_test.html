@@ -1919,13 +1919,13 @@ Multiple sections can be separated with “–”.</p>
 <h2>keys</h2>
 <p>Simple <em>system-wide</em> cryptographic key store protected by a master password.</p>
 <p>A key store is only opened when necessary. It’ll remain open from then on until an application calls <a href="#b_keys_close">b_keys_close</a>.</p>
-<p>It can be found at <code>/etc/blib/keys/keys.lks</code>.</p>
+<p>The default key store can be found at <code>/etc/blib/keys/keys.lks</code>. Applications may deploy their own exclusive key store, if necessary (not recommended).</p>
 <p>Usually requires root access rights.</p>
 <p>Features:<br />
 - thread safe: no write operation can happen to a closed key store (<a href="#b_keys_close">b_keys_close</a> and write operations are single threaded only)<br />
 - retrieved keys are read-only unless managed via this interface</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
-0.5</p>
+0.6</p>
 <section id="dependencies-12" class="level3">
 <h3>Dependencies</h3>
 <p>mkdir<br />
@@ -1951,7 +1951,7 @@ find</p>
 <p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
 </section>
 <section id="b_keys_init" class="level4">
-<h4>b_keys_init [app id] [auto create] [ui mode] [password prompt] [wait time]</h4>
+<h4>b_keys_init [app id] [auto create] [ui mode] [password prompt] [wait time] [store dir]</h4>
 <p><small><em>keys/b_keys_init</em></small></p>
 <p>Initialize this module. This function <em>must</em> be called at least once before any other function except <a href="#b_keys_create">b_keys_create</a> can be used.<br />
 Will open the key store, if it’s closed.</p>
@@ -1960,6 +1960,7 @@ Will open the key store, if it’s closed.</p>
 <p><span class="par">[ui mode]: How to request the master password from the user: auto|gui|tty (default: auto).</span></p>
 <p><span class="par">[password prompt]: Prompt string to ask the user for his password (optional).</span></p>
 <p><span class="par">[wait time]: Maximum time in ms to wait for another process writing to a key (default: 300) (-1 = indefinitely).</span></p>
+<p><span class="par">[store dir]: Full path to a directory where to manage the keys (default: $B_CONF_DIR/keys). Only applications requiring an exclusive key store should use a non-default value here.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -2008,10 +2009,11 @@ Will open the key store, if it’s closed.</p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_keys_close" class="level4">
-<h4>b_keys_close</h4>
+<h4>b_keys_close [store dir]</h4>
 <p><small><em>keys/b_keys_close</em></small></p>
-<p>Close the key store, if necessary.<br />
+<p>Close the key store, if necessary. Works without initialisation (which might open the key store), if necessary.<br />
 <em>WARNING</em>: 99% of all applications should <em>never</em> call this function as it may block all subsequent read operations by any other applications using this system-wide key store. The only applications that might call this function are key store management applications and only upon explicit user request. The key store is otherwise automatically closed upon system shutdown by the running OS.</p>
+<p><span class="par">[store dir]: The main directory of the store to close (default: the key store directory used in <a href="#b_keys_init">b_keys_init</a> or - if not initialised - $B_CONF_DIR/keys).</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success (closed key store) and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
