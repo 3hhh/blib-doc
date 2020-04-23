@@ -203,14 +203,13 @@ background-color: #ebf5fb;
 <li><a href="#coding-conventions">Coding Conventions</a></li>
 <li><a href="#library-usage">Library Usage</a></li>
 <li><a href="#dependencies">Dependencies</a></li>
-<li><a href="#imports">Imports</a></li>
 <li><a href="#global-variables">Global Variables</a></li>
 <li><a href="#global-aliases">Global Aliases</a></li>
 <li><a href="#functions">Functions</a></li>
 </ul></li>
 <li><a href="#args">args</a><ul>
 <li><a href="#dependencies-1">Dependencies</a></li>
-<li><a href="#imports-1">Imports</a></li>
+<li><a href="#imports">Imports</a></li>
 <li><a href="#global-variables-1">Global Variables</a></li>
 <li><a href="#functions-1">Functions</a></li>
 </ul></li>
@@ -220,6 +219,7 @@ background-color: #ebf5fb;
 </ul></li>
 <li><a href="#cdoc">cdoc</a><ul>
 <li><a href="#dependencies-3">Dependencies</a></li>
+<li><a href="#imports-1">Imports</a></li>
 <li><a href="#functions-3">Functions</a></li>
 </ul></li>
 <li><a href="#daemon">daemon</a><ul>
@@ -325,7 +325,7 @@ background-color: #ebf5fb;
 <h2>blib</h2>
 <p>blib - a bash library</p>
 <p>The basic functions which are imported by default.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
 version: Execute <code>blib version</code> or use <a href="#b_version">b_version</a>.</p>
 <section id="disclaimer" class="level3">
 <h3>Disclaimer</h3>
@@ -385,10 +385,6 @@ mktemp<br />
 rm<br />
 mv<br />
 su</p>
-</section>
-<section id="imports" class="level3">
-<h3>Imports</h3>
-<p>[“traps” || B_E]</p>
 </section>
 <section id="global-variables" class="level3">
 <h3>Global Variables</h3>
@@ -794,7 +790,7 @@ This implementation uses the <a href="#b_getDefaultMessageHandlerIntermediate">b
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-1" class="level3">
+<section id="imports" class="level3">
 <h3>Imports</h3>
 <p><a href="#types">types</a></p>
 </section>
@@ -966,13 +962,17 @@ Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any no
 <p>Lines applicable for the documentation in your code are assumed to match static (configurable) regular expressions. These lines are then fed to <a href="https://pandoc.org/">pandoc</a> in order to generate a single html page (or pdf, manpage, …) as documentation. If no conversion is required (input format = desired output format), pandoc is bypassed.</p>
 <p>It should be possible to use this way of generating code documentation with most programming languages (incl. bash). The defaults however are set for bash and the blib way of documenting its code, i.e. you’ll have to use the getters and setters of this module if you want something different. For instance the default is to check for lines starting with <em>#+</em> (a special bash comment line) and add everything afterwards to the output documentation.</p>
 <p>Various callback functions can be used to add content to the output of b_cdoc_generate. See the documentation of that function for details.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.2</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.4</p>
 <section id="dependencies-3" class="level3">
 <h3>Dependencies</h3>
 <p>mv<br />
 rm<br />
 mktemp</p>
+</section>
+<section id="imports-1" class="level3">
+<h3>Imports</h3>
+<p><a href="#fs">fs</a></p>
 </section>
 <section id="functions-3" class="level3">
 <h3>Functions</h3>
@@ -1078,25 +1078,24 @@ returns:                whatever should be added to the end of the output
 <p>See the setter.</p>
 <p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
 </section>
-<section id="b_cdoc_setSpaceCallback" class="level4">
-<h4>b_cdoc_setSpaceCallback [callback function name]</h4>
-<p><small><em>cdoc/b_cdoc_setSpaceCallback</em></small></p>
-<p>Set the function to call by b_cdoc_generate each time it hits “space” (non-matching lines) between two matching lines.</p>
+<section id="b_cdoc_setBlockCallback" class="level4">
+<h4>b_cdoc_setBlockCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setBlockCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate each time it hits a block of matching comments.</p>
 <p>The callback function should be declared as follows:</p>
-<pre><code>callback_function_name [matching line] [input file] [previous space count] [document output format]
-[matching line]: The first matching line before which no match was found.
+<pre><code>callback_function_name [block] [input file] [document output format]
+[block]:         The full block of documentation that was identified.
+[block counter]: Number of blocks previously seen.
 [input file]:    The original input file.
-[previous space count]: The number of times this function was previously 
-                 called for the currently processed file.
 [document output format]: chosen output format
-returns:         whatever should be added in front of the matching line;
+returns:         whatever should be added instead of the given block;
                  a non-zero exit code will abort further processing</code></pre>
 <p><span class="ret"><strong>returns</strong>: nothing</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
-<section id="b_cdoc_getSpaceCallback" class="level4">
-<h4>b_cdoc_getSpaceCallback</h4>
-<p><small><em>cdoc/b_cdoc_getSpaceCallback</em></small></p>
+<section id="b_cdoc_getBlockCallback" class="level4">
+<h4>b_cdoc_getBlockCallback</h4>
+<p><small><em>cdoc/b_cdoc_getBlockCallback</em></small></p>
 <p>See the setter.</p>
 <p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
 </section>
@@ -1104,21 +1103,17 @@ returns:         whatever should be added in front of the matching line;
 <h4>b_cdoc_generate [input files] [output file] [output format] [additional pandoc options]</h4>
 <p><small><em>cdoc/b_cdoc_generate</em></small></p>
 <p>Generate a documentation file from the given list of input files or directories.</p>
-<p>pseudo code description for the document generation:</p>
-<ol type="1">
-<li>call the file filter callback to obtain the final list of input source code files to use for document generation, respect the order (default: use all files passed as input)</li>
-<li>call the document begin callback function with the output file path to get user-specific output (default: do nothing)</li>
-<li>for all input files:<br />
-i. for all lines of a file:
-<ol type="a">
-<li>store lines matching b_cdoc_getExtractionRegex in a variable <em>o</em></li>
-<li>between any two matching lines for b_cdoc_getExtractionRegex that had a non-matching line in between them: call the space callback function (default: add an empty line to the output)<br />
-ii. pass <em>o</em> and the file name to the post processing callback function (default: return the input) - users could add e.g. the file name as section header here<br />
-iii. add the output of the post processing function to the output document</li>
-</ol></li>
-<li>call the document end callback function with the output file path to get user-specific output (default: do nothing)</li>
-<li>do all necessary output conversions using <a href="https://pandoc.org/">pandoc</a></li>
-</ol>
+<p>The concept is really simple: Each <em>block</em> of documentation will trigger the <a href="#b_cdoc_getBlockCallback">b_cdoc_getBlockCallback</a> exactly once and you may add additional parsing logic on a block-wise level.<br />
+The following example will call the block callback twice (once with three <code>block 1</code> lines and once with two <code>block 2</code> lines):</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"> <span class="co">#+block 1</span></a>
+<a class="sourceLine" id="cb13-2" title="2"> <span class="co">#+block 1</span></a>
+<a class="sourceLine" id="cb13-3" title="3"> <span class="co">#+block 1</span></a>
+<a class="sourceLine" id="cb13-4" title="4"> </a>
+<a class="sourceLine" id="cb13-5" title="5"> <span class="co">#say hello</span></a>
+<a class="sourceLine" id="cb13-6" title="6"> <span class="bu">echo</span> <span class="st">&quot;hello world&quot;</span></a>
+<a class="sourceLine" id="cb13-7" title="7"> <span class="co">#+block 2</span></a>
+<a class="sourceLine" id="cb13-8" title="8"> <span class="co">#+block 2</span></a></code></pre></div>
+<p>The other callback functions may be used for further processing.</p>
 <p><span class="par">[input files]: Newline-separated list of files or directories to generate the documentation from. The given order is respected; directories are recursively searched for files. It is currently assumed that these files are encoded in UTF-8.</span></p>
 <p><span class="par">[output file]: Path to the documentation file to generate. Should not exist.</span></p>
 <p><span class="par">[output format]: The target format of the documentation to generate. See <a href="https://pandoc.org/">pandoc</a> for a list of available output formats. If none is specified, <a href="https://pandoc.org/">pandoc</a> is bypassed and the input format is chosen as output format. Passing “pandoc” will let <a href="https://pandoc.org/">pandoc</a> decide based on the extension of the output file.</span></p>
@@ -1744,6 +1739,15 @@ sync</p>
 <p><span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> is called on errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_fs_enumerate" class="level4">
+<h4>b_fs_enumerate [path list] [nonexisting]</h4>
+<p><small><em>fs/b_fs_enumerate</em></small></p>
+<p>Enumerate all files found in the given list of paths. Recurse into directories as necessary.</p>
+<p><span class="par">[path list]: Newline-separated list of files and directories.</span></p>
+<p><span class="par">[nonexisting]: 0 = Error out with <a href="#B_E">B_E</a> on non-existing files (default). 1 = Silently drop non-existing files. 2 = Include non-exiting files in the output.</span></p>
+<p><span class="ret"><strong>returns</strong>: List of files found in all of the given paths.</span></p>
+<p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 </section>
 </section>
 <section id="http" class="level2">
@@ -1885,7 +1889,7 @@ Multiple sections can be separated with “–”.</p>
 <h2>keys</h2>
 <p>Simple <em>system-wide</em> cryptographic key store protected by a master password.</p>
 <p>A key store is only opened when necessary. It’ll remain open from then on until an application calls <a href="#b_keys_close">b_keys_close</a>.</p>
-<p>The default key store can be found at <code>/etc/blib/keys/keys.lks</code>. Applications may deploy their own exclusive key store, if necessary (not recommended).</p>
+<p>The default key store can be found at <code>/etc/blib/keys</code>. Applications may deploy their own exclusive key store, if necessary (not recommended).</p>
 <p>Usually requires root access rights.</p>
 <p>Features:<br />
 - thread safe: no write operation can happen to a closed key store (<a href="#b_keys_close">b_keys_close</a> and write operations are single threaded only)<br />
@@ -1916,6 +1920,12 @@ find</p>
 <p>Get the dependencies of this module.</p>
 <p><span class="ret"><strong>returns</strong>: newline-separated list of dependencies of this module</span></p>
 </section>
+<section id="b_keys_getDefaultStore" class="level4">
+<h4>b_keys_getDefaultStore</h4>
+<p><small><em>keys/b_keys_getDefaultStore</em></small></p>
+<p>Get the system-wide default key store directory.</p>
+<p><span class="ret"><strong>returns</strong>: The default store directory. Always sets a zero exit code.</span></p>
+</section>
 <section id="b_keys_init" class="level4">
 <h4>b_keys_init [app id] [auto create] [ui mode] [password prompt] [wait time] [store dir]</h4>
 <p><small><em>keys/b_keys_init</em></small></p>
@@ -1926,7 +1936,7 @@ Will open the key store, if it’s closed.</p>
 <p><span class="par">[ui mode]: How to request the master password from the user: auto|gui|tty (default: auto).</span></p>
 <p><span class="par">[password prompt]: Prompt string to ask the user for his password (optional).</span></p>
 <p><span class="par">[wait time]: Maximum time in ms to wait for another process writing to a key (default: 300) (-1 = indefinitely).</span></p>
-<p><span class="par">[store dir]: Full path to a directory where to manage the keys (default: $B_CONF_DIR/keys). Only applications requiring an exclusive key store should use a non-default value here.</span></p>
+<p><span class="par">[store dir]: Full path to a directory where to manage the keys (default: <a href="#b_keys_getDefaultStore">b_keys_getDefaultStore</a>). Only applications requiring an exclusive key store should use a non-default value here.</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -1979,7 +1989,7 @@ Will open the key store, if it’s closed.</p>
 <p><small><em>keys/b_keys_close</em></small></p>
 <p>Close the key store, if necessary. Works without initialisation (which might open the key store), if necessary.<br />
 <em>WARNING</em>: 99% of all applications should <em>never</em> call this function as it may block all subsequent read operations by any other applications using this system-wide key store. The only applications that might call this function are key store management applications and only upon explicit user request. The key store is otherwise automatically closed upon system shutdown by the running OS.</p>
-<p><span class="par">[store dir]: The main directory of the store to close (default: the key store directory used in <a href="#b_keys_init">b_keys_init</a> or - if not initialised - $B_CONF_DIR/keys).</span></p>
+<p><span class="par">[store dir]: The main directory of the store to close (default: the key store directory used in <a href="#b_keys_init">b_keys_init</a> or - if not initialised - <a href="#b_keys_getDefaultStore">b_keys_getDefaultStore</a>).</span></p>
 <p><span class="ret"><strong>returns</strong>: Sets a zero exit code on success (closed key store) and errors out with <a href="#B_E">B_E</a> otherwise.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2274,16 +2284,16 @@ You should only do this if you currently own the mutex and the new process is re
 <p><span class="par">[claim own]: If set to 0 (default), claim the mutex if it appears to be blocked by the provided block ID. If set to 1, consider it blocked even then.</span></p>
 <p><span class="ret"><strong>returns</strong>: The function incl. parameters to execute to remove the mutex if it was obtained and an error message stating the reason otherwise. The provided function <em>should</em> be called as part of an exit trap of the calling script or via eval. Sets an exit code of 0, if the mutex was obtained. An exit code of 1 is set, if the mutex was blocked and another non-zero exit code if some other error occurred (the mutex might be blocked even then). </span></p>
 <p>Example code:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb15-2" title="2"> <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb15-3" title="3"> <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
-<a class="sourceLine" id="cb15-4" title="4"> <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span></a>
-<a class="sourceLine" id="cb15-5" title="5"> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
-<a class="sourceLine" id="cb15-6" title="6"> <span class="co">#assuming the mutex is only meant to be removed after full</span></a>
-<a class="sourceLine" id="cb15-7" title="7"> <span class="co">#execution of the script:</span></a>
-<a class="sourceLine" id="cb15-8" title="8"> <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT</a>
-<a class="sourceLine" id="cb15-9" title="9"> <span class="co">#direct removal:</span></a>
-<a class="sourceLine" id="cb15-10" title="10"> <span class="co">#b_mtx_release &quot;$mutex&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1"> <span class="bu">local</span> <span class="va">mutex=</span><span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb16-2" title="2"> <span class="bu">local</span> <span class="va">mutexRet=</span><span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb16-3" title="3"> <span class="va">mutex=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_create</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to create a mutex.&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb16-4" title="4"> <span class="va">mutexRet=</span><span class="st">&quot;</span><span class="va">$(</span><span class="ex">b_mtx_try</span> <span class="st">&quot;</span><span class="va">$mutex</span><span class="st">&quot;</span><span class="va">)</span><span class="st">&quot;</span> <span class="kw">\</span></a>
+<a class="sourceLine" id="cb16-5" title="5"> <span class="kw">||</span> <span class="kw">{</span> <span class="va">B_ERR=</span><span class="st">&quot;Failed to obtain the mutex </span><span class="va">$mutex</span><span class="st">. Reason: </span><span class="va">$mutexRet</span><span class="st">&quot;</span> ; <span class="ex">B_E</span> <span class="kw">}</span></a>
+<a class="sourceLine" id="cb16-6" title="6"> <span class="co">#assuming the mutex is only meant to be removed after full</span></a>
+<a class="sourceLine" id="cb16-7" title="7"> <span class="co">#execution of the script:</span></a>
+<a class="sourceLine" id="cb16-8" title="8"> <span class="bu">trap</span> <span class="st">&quot;</span><span class="va">$mutexRet</span><span class="st">&quot;</span> EXIT</a>
+<a class="sourceLine" id="cb16-9" title="9"> <span class="co">#direct removal:</span></a>
+<a class="sourceLine" id="cb16-10" title="10"> <span class="co">#b_mtx_release &quot;$mutex&quot;</span></a></code></pre></div>
 </section>
 <section id="b_mtx_waitFor" class="level4">
 <h4>b_mtx_waitFor [mutex] [block ID] [claim stale] [maximum time]</h4>
@@ -2948,8 +2958,8 @@ timeout</p>
 <section id="tcolors" class="level2">
 <h2>tcolors</h2>
 <p>Defines some tput related constants. In order to change terminal colors you can then use something such as</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[red]})</span><span class="st">This is red, \</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="va">$(</span><span class="ex">tput</span> setaf <span class="va">${B_TCOLORS[blue]})</span><span class="st">this blue, </span><span class="va">$(</span><span class="ex">tput</span> sgr0<span class="va">)</span><span class="st">this normal.&quot;</span></a></code></pre></div>
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
@@ -3077,12 +3087,12 @@ See the strings manpage for further explanations.</p>
 <li>Even builtins such as <code>echo</code> do not necessarily play well with binary data. So it is recommended to pipe binary data through this function before further processing.</li>
 </ul>
 <p>Examples:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"> <span class="co">#check a file</span></a>
-<a class="sourceLine" id="cb18-2" title="2"> <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span></a>
-<a class="sourceLine" id="cb18-3" title="3"></a>
-<a class="sourceLine" id="cb18-4" title="4"> <span class="co">#read parts of a file as string</span></a>
-<a class="sourceLine" id="cb18-5" title="5"> <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb18-6" title="6"><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"> <span class="co">#check a file</span></a>
+<a class="sourceLine" id="cb19-2" title="2"> <span class="ex">b_types_parseString</span> <span class="op">&lt;</span> <span class="st">&quot;/path/to/potential/binary&quot;</span> <span class="op">&gt;</span> /dev/null <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;It is a string file.&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;It is a binary file.&quot;</span></a>
+<a class="sourceLine" id="cb19-3" title="3"></a>
+<a class="sourceLine" id="cb19-4" title="4"> <span class="co">#read parts of a file as string</span></a>
+<a class="sourceLine" id="cb19-5" title="5"> <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></a></code></pre></div>
 <p><span class="par">[encoding]: The encoding of the string lying in stdin. Use <a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a> for this parameter. Defaults to ${B_TYPES_ENCODINGS[“7-bit”]}, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing.</span></p>
 <p><span class="ret"><strong>returns</strong>: The data as String, if the input data was found to be a String. If no String was found to be lying in stdin, the output is an undefined string and a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -3118,8 +3128,8 @@ See the strings manpage for further explanations.</p>
 <p><small><em>ui/b_ui_passwordPrompt</em></small></p>
 <p>Prompt the user for a password. Should run inside the parent process (i.e. not inside a subshell).<br />
 Once you do not need the password anymore, it is recommended to wipe it from memory as such:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="co">#overwrite the password in memory with zeroes, then free it</span></a>
-<a class="sourceLine" id="cb19-2" title="2"><span class="va">pass=</span><span class="st">&quot;</span><span class="va">${pass//</span>?<span class="va">/</span>0<span class="va">}</span><span class="st">&quot;</span> ; <span class="va">pass=</span><span class="st">&quot;&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" title="1"><span class="co">#overwrite the password in memory with zeroes, then free it</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="va">pass=</span><span class="st">&quot;</span><span class="va">${pass//</span>?<span class="va">/</span>0<span class="va">}</span><span class="st">&quot;</span> ; <span class="va">pass=</span><span class="st">&quot;&quot;</span></a></code></pre></div>
 <p><span class="par">[output var]: The name of the variable to write the password to.</span></p>
 <p><span class="par">[ui mode]: How to request the password from the user: auto|gui|tty (default: auto).</span></p>
 <p><span class="par">[prompt string]: The string to present to the user asking for the password (default: “Password:”).</span></p>
@@ -3156,19 +3166,19 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p><a href="#b_cdoc_cbPrintNewline">b_cdoc_cbPrintNewline</a></p>
 <p><a href="#b_cdoc_generate">b_cdoc_generate</a></p>
 <p><a href="#b_cdoc_generateBlibStyle">b_cdoc_generateBlibStyle</a></p>
+<p><a href="#b_cdoc_getBlockCallback">b_cdoc_getBlockCallback</a></p>
 <p><a href="#b_cdoc_getDeps">b_cdoc_getDeps</a></p>
 <p><a href="#b_cdoc_getDocumentBeginCallback">b_cdoc_getDocumentBeginCallback</a></p>
 <p><a href="#b_cdoc_getDocumentEndCallback">b_cdoc_getDocumentEndCallback</a></p>
 <p><a href="#b_cdoc_getExtractionRegex">b_cdoc_getExtractionRegex</a></p>
 <p><a href="#b_cdoc_getFileFilterCallback">b_cdoc_getFileFilterCallback</a></p>
 <p><a href="#b_cdoc_getPostProcessingCallback">b_cdoc_getPostProcessingCallback</a></p>
-<p><a href="#b_cdoc_getSpaceCallback">b_cdoc_getSpaceCallback</a></p>
+<p><a href="#b_cdoc_setBlockCallback">b_cdoc_setBlockCallback</a></p>
 <p><a href="#b_cdoc_setDocumentBeginCallback">b_cdoc_setDocumentBeginCallback</a></p>
 <p><a href="#b_cdoc_setDocumentEndCallback">b_cdoc_setDocumentEndCallback</a></p>
 <p><a href="#b_cdoc_setExtractionRegex">b_cdoc_setExtractionRegex</a></p>
 <p><a href="#b_cdoc_setFileFilterCallback">b_cdoc_setFileFilterCallback</a></p>
 <p><a href="#b_cdoc_setPostProcessingCallback">b_cdoc_setPostProcessingCallback</a></p>
-<p><a href="#b_cdoc_setSpaceCallback">b_cdoc_setSpaceCallback</a></p>
 <p><a href="#b_checkDeps">b_checkDeps</a></p>
 <p><a href="#b_checkVersion">b_checkVersion</a></p>
 <p><a href="#B_CONF_DIR">B_CONF_DIR</a></p>
@@ -3259,6 +3269,7 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p><a href="#b_flog_setLogReductionLinesUpperBound">b_flog_setLogReductionLinesUpperBound</a></p>
 <p><a href="#B_FLOG_SEV">B_FLOG_SEV</a></p>
 <p><a href="#b_fs_createLoopDeviceIfNecessary">b_fs_createLoopDeviceIfNecessary</a></p>
+<p><a href="#b_fs_enumerate">b_fs_enumerate</a></p>
 <p><a href="#b_fs_getDeps">b_fs_getDeps</a></p>
 <p><a href="#b_fs_getLineCount">b_fs_getLineCount</a></p>
 <p><a href="#b_fs_getMountpoints">b_fs_getMountpoints</a></p>
@@ -3309,6 +3320,7 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p><a href="#b_keys_get">b_keys_get</a></p>
 <p><a href="#b_keys_getAll">b_keys_getAll</a></p>
 <p><a href="#b_keys_getContent">b_keys_getContent</a></p>
+<p><a href="#b_keys_getDefaultStore">b_keys_getDefaultStore</a></p>
 <p><a href="#b_keys_getDeps">b_keys_getDeps</a></p>
 <p><a href="#b_keys_init">b_keys_init</a></p>
 <p><a href="#B_LIB_DIR">B_LIB_DIR</a></p>
