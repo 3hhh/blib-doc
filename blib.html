@@ -963,7 +963,7 @@ Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any no
 <p>It should be possible to use this way of generating code documentation with most programming languages (incl. bash). The defaults however are set for bash and the blib way of documenting its code, i.e. you’ll have to use the getters and setters of this module if you want something different. For instance the default is to check for lines starting with <em>#+</em> (a special bash comment line) and add everything afterwards to the output documentation.</p>
 <p>Various callback functions can be used to add content to the output of b_cdoc_generate. See the documentation of that function for details.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
-0.4</p>
+0.6</p>
 <section id="dependencies-3" class="level3">
 <h3>Dependencies</h3>
 <p>mv<br />
@@ -995,24 +995,26 @@ mktemp</p>
 <p>See the setter.</p>
 <p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
 </section>
-<section id="b_cdoc_setFileFilterCallback" class="level4">
-<h4>b_cdoc_setFileFilterCallback [callback function name]</h4>
-<p><small><em>cdoc/b_cdoc_setFileFilterCallback</em></small></p>
-<p>Set the function to call by b_cdoc_generate exactly once right after it computed the list of applicable source code files.</p>
-<p>The callback function should be declared as follows:</p>
-<pre><code>callback_function_name [file list]
-[file list]: newline-separated list of files (no directories!)
-             that b_cdoc_generate computed for document generation
-             (in that order)
-returns:     the newline-separated list to use by b_cdoc_generate for
-             document generation (default: the input); a non-zero exit
-             code will abort further processing</code></pre>
+<section id="b_cdoc_setFileCallback" class="level4">
+<h4>b_cdoc_setFileCallback [callback function name]</h4>
+<p><small><em>cdoc/b_cdoc_setFileCallback</em></small></p>
+<p>Set the function to call by b_cdoc_generate exactly once before starting to process a source code file.</p>
+<p>The callback function can be used to filter certain files from processing or add them as-is.<br />
+It should be declared as follows:</p>
+<pre><code>callback_function_name [file] [output format]
+[file]:           The next file to process is passed here.
+[output format]:  chosen output format
+returns:          Nothing. Possible exit codes:
+                  0 = continue normal processing (default)
+                  1 = include the file as-is without any processing
+                  2 = silently ignore that file / do not process it
+                  other = abort all further processing with an error</code></pre>
 <p><span class="ret"><strong>returns</strong>: nothing</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
 </section>
-<section id="b_cdoc_getFileFilterCallback" class="level4">
-<h4>b_cdoc_getFileFilterCallback</h4>
-<p><small><em>cdoc/b_cdoc_getFileFilterCallback</em></small></p>
+<section id="b_cdoc_getFileCallback" class="level4">
+<h4>b_cdoc_getFileCallback</h4>
+<p><small><em>cdoc/b_cdoc_getFileCallback</em></small></p>
 <p>See the setter.</p>
 <p><span class="ret"><strong>returns</strong>: The property that was set.</span></p>
 </section>
@@ -3171,13 +3173,13 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p><a href="#b_cdoc_getDocumentBeginCallback">b_cdoc_getDocumentBeginCallback</a></p>
 <p><a href="#b_cdoc_getDocumentEndCallback">b_cdoc_getDocumentEndCallback</a></p>
 <p><a href="#b_cdoc_getExtractionRegex">b_cdoc_getExtractionRegex</a></p>
-<p><a href="#b_cdoc_getFileFilterCallback">b_cdoc_getFileFilterCallback</a></p>
+<p><a href="#b_cdoc_getFileCallback">b_cdoc_getFileCallback</a></p>
 <p><a href="#b_cdoc_getPostProcessingCallback">b_cdoc_getPostProcessingCallback</a></p>
 <p><a href="#b_cdoc_setBlockCallback">b_cdoc_setBlockCallback</a></p>
 <p><a href="#b_cdoc_setDocumentBeginCallback">b_cdoc_setDocumentBeginCallback</a></p>
 <p><a href="#b_cdoc_setDocumentEndCallback">b_cdoc_setDocumentEndCallback</a></p>
 <p><a href="#b_cdoc_setExtractionRegex">b_cdoc_setExtractionRegex</a></p>
-<p><a href="#b_cdoc_setFileFilterCallback">b_cdoc_setFileFilterCallback</a></p>
+<p><a href="#b_cdoc_setFileCallback">b_cdoc_setFileCallback</a></p>
 <p><a href="#b_cdoc_setPostProcessingCallback">b_cdoc_setPostProcessingCallback</a></p>
 <p><a href="#b_checkDeps">b_checkDeps</a></p>
 <p><a href="#b_checkVersion">b_checkVersion</a></p>
