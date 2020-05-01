@@ -1013,7 +1013,8 @@ Call <a href="#b_args_init">b_args_init</a> before parsing, if you desire any no
 0.6</p>
 <section id="dependencies-3" class="level3">
 <h3>Dependencies</h3>
-<p>mktemp<br />
+<p>cat<br />
+mktemp<br />
 mv<br />
 rm</p>
 </section>
@@ -1161,15 +1162,15 @@ The following example will call the block callback twice (once with three <code>
 <p><span class="par">[output file]: Path to the documentation file to generate. Should not exist.</span></p>
 <p><span class="par">[output format]: The target format of the documentation to generate. See <a href="https://pandoc.org/">pandoc</a> for a list of available output formats. If none is specified, <a href="https://pandoc.org/">pandoc</a> is bypassed and the input format is chosen as output format. Passing “pandoc” will let <a href="https://pandoc.org/">pandoc</a> decide based on the extension of the output file.</span></p>
 <p><span class="par">[additional pandoc options]: All remainining parameters will be directly passed to <a href="https://pandoc.org/">pandoc</a>. If none are provided, -s is implicitly added as default.</span></p>
-<p><span class="ret"><strong>returns</strong>: Sets a non-zero exit code and exits the script on errors. output from <a href="https://pandoc.org/">pandoc</a> and other calls may be printed. Otherwise nothing is returned.</span></p>
+<p><span class="ret"><strong>returns</strong>: Sets a non-zero exit code and exits the script on errors. Output from <a href="https://pandoc.org/">pandoc</a> and other calls may be printed. Otherwise nothing is returned.</span></p>
 <p><span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_cdoc_generateBlibStyle" class="level4">
-<h4>b_cdoc_generateBlibStyle [input files] [output file base path] [output format] [delete existing]</h4>
+<h4>b_cdoc_generateBlibStyle [input files] [output file] [output format] [delete existing]</h4>
 <p><small><em>cdoc/b_cdoc_generateBlibStyle</em></small></p>
 <p>A convenience wrapper for b_cdoc_generate which sets various reasonable parameters depending on the output format.</p>
 <p><span class="par">[input files]: see b_cdoc_generate</span></p>
-<p><span class="par">[output file base path]: path to a directory and base file name where to store the generated output documentation file; the final file name may differ as it is chosen by this function</span></p>
+<p><span class="par">[output file]: where to write the generated output documentation to</span></p>
 <p><span class="par">[output format]: currently one of raw|html|pdf|man is supported (default: raw)</span></p>
 <p><span class="par">[delete existing]: whether or not to delete previously created output files (default: true/0); if set to false (1), the function will error out if a previously created file was found</span></p>
 <p><span class="ret"><strong>returns</strong>: full path to the created documentation file on success; otherwise the function may error out</span></p>
