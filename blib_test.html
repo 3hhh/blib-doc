@@ -313,41 +313,46 @@ background-color: #ebf5fb;
 <li><a href="#imports-20">Imports</a></li>
 <li><a href="#functions-20">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#sqlite3">sqlite3</a><ul>
 <li><a href="#dependencies-21">Dependencies</a></li>
 <li><a href="#imports-21">Imports</a></li>
 <li><a href="#functions-21">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-22">Dependencies</a></li>
 <li><a href="#imports-22">Imports</a></li>
+<li><a href="#functions-22">Functions</a></li>
+</ul></li>
+<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#dependencies-23">Dependencies</a></li>
+<li><a href="#imports-23">Imports</a></li>
 <li><a href="#global-variables-6">Global Variables</a></li>
 </ul></li>
 <li><a href="#traps">traps</a><ul>
-<li><a href="#dependencies-23">Dependencies</a></li>
-<li><a href="#imports-23">Imports</a></li>
-<li><a href="#functions-22">Functions</a></li>
-</ul></li>
-<li><a href="#types">types</a><ul>
 <li><a href="#dependencies-24">Dependencies</a></li>
 <li><a href="#imports-24">Imports</a></li>
-<li><a href="#global-variables-7">Global Variables</a></li>
 <li><a href="#functions-23">Functions</a></li>
 </ul></li>
-<li><a href="#ui">ui</a><ul>
+<li><a href="#types">types</a><ul>
 <li><a href="#dependencies-25">Dependencies</a></li>
 <li><a href="#imports-25">Imports</a></li>
+<li><a href="#global-variables-7">Global Variables</a></li>
 <li><a href="#functions-24">Functions</a></li>
 </ul></li>
-<li><a href="#teststest_common.bash">tests/test_common.bash</a><ul>
+<li><a href="#ui">ui</a><ul>
 <li><a href="#dependencies-26">Dependencies</a></li>
 <li><a href="#imports-26">Imports</a></li>
-<li><a href="#global-variables-8">Global Variables</a></li>
 <li><a href="#functions-25">Functions</a></li>
 </ul></li>
-<li><a href="#testsuser_test_data.bash">tests/user_test_data.bash</a><ul>
+<li><a href="#teststest_common.bash">tests/test_common.bash</a><ul>
 <li><a href="#dependencies-27">Dependencies</a></li>
 <li><a href="#imports-27">Imports</a></li>
+<li><a href="#global-variables-8">Global Variables</a></li>
+<li><a href="#functions-26">Functions</a></li>
+</ul></li>
+<li><a href="#testsuser_test_data.bash">tests/user_test_data.bash</a><ul>
+<li><a href="#dependencies-28">Dependencies</a></li>
+<li><a href="#imports-28">Imports</a></li>
 <li><a href="#global-variables-9">Global Variables</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
@@ -2932,20 +2937,77 @@ Wait for the given process to exit. If it doesn’t exist, exit immediately.<br 
 </section>
 </section>
 </section>
-<section id="str" class="level2">
-<h2>str</h2>
-<p>Collection of string related functions.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.1</p>
+<section id="sqlite3" class="level2">
+<h2>sqlite3</h2>
+<p>Stateful sqlite driver for bash.</p>
+<p>This module provides all features of the sqlite interactive mode to non-interactive bash scripts. See <code>man sqlite3</code> for the available commands.</p>
+<p>Keeping a single database connection open usually exhibits better performance than calling <code>sqlite3</code> in batch mode over and over again.</p>
+<p>Side Note: If you want to read or write csv files, this module can also do the job for you with standard SQL syntax. See <code>man sqlite3</code> on how to read and write csv files with sqlite.</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.5</p>
 <section id="dependencies-21" class="level3">
 <h3>Dependencies</h3>
-<p>no dependencies</p>
+<p>mkfifo<br />
+mktemp<br />
+rm<br />
+sqlite3</p>
 </section>
 <section id="imports-21" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
 <section id="functions-21" class="level3">
+<h3>Functions</h3>
+<section id="b_sqlite3_open" class="level4">
+<h4>b_sqlite3_open [db file] [timeout]</h4>
+<p><small><em>sqlite3/b_sqlite3_open</em></small><br />
+Open a new sqlite connection to a database. This <strong>must</strong> be called exactly once before any calls to <a href="#b_sqlite3_exec">b_sqlite3_exec</a>.<br />
+<span class="par">[db file]: The database file to connect to (default: a new in-memory database). If it doesn’t exist, it may be created (the behaviour is identical to <code>sqlite3</code>).</span><br />
+<span class="par">[timeout]: Maximum time in seconds to wait for a command to execute on the database via <a href="#b_sqlite3_exec">b_sqlite3_exec</a>. Default: -1 = indefinitely</span><br />
+<span class="ret"><strong>returns</strong>: Nothing.</span><br />
+<span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_sqlite3_getOpen" class="level4">
+<h4>b_sqlite3_getOpen</h4>
+<p><small><em>sqlite3/b_sqlite3_getOpen</em></small><br />
+Retrieve the currently open database.<br />
+<span class="ret"><strong>returns</strong>: Prints the currently open database and an empty string for an unnamed database. Sets a zero exit code, if and only if a database is currently open.</span></p>
+</section>
+<section id="b_sqlite3_exec" class="level4">
+<h4>b_sqlite3_exec [command] [timeout] [filter input]</h4>
+<p><small><em>sqlite3/b_sqlite3_exec</em></small><br />
+Executes the given command on an open sqlite database (cf. <a href="#b_sqlite3_open">b_sqlite3_open</a>).<br />
+<span class="par">[command]: The command to execute. All commands supported by <code>sqlite3</code> in interactive mode incl. the SQL commands are supported. The only exception is the <code>.output</code> command. Please use the bash output redirection instead of <code>.output</code>. <strong>Warning</strong>: Incomplete (e.g. missing <code>;</code>) or incorrect commands may cause this function to make your bash script hang forever, if no [timeout] is specified.</span><br />
+<span class="par">[timeout]: Maximum time in seconds to wait for the command to execute on the database (default: the timeout initialized via <a href="#b_sqlite3_open">b_sqlite3_open</a>).</span><br />
+<span class="par">[filter input]: Whether or not to filter command input lines from the returned output (default: 0 = true).</span><br />
+<span class="ret"><strong>returns</strong>: The output provided by the database in response to the executed command incl. potential errors. The function attempts to set a non-zero exit code, if the output contains error messages. <a href="#B_E">B_E</a> is only called on timeouts or other database connectivity issues.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_sqlite3_close" class="level4">
+<h4>b_sqlite3_close</h4>
+<p><small><em>sqlite3/b_sqlite3_close</em></small><br />
+Closes a currently open database connection.<br />
+It is highly recommended to execute this function once you don’t need the database connection anymore (usually at the end of a script).<br />
+<span class="ret"><strong>returns</strong>: Nothing. A non-zero exit code indicates a failed close operation.</span><br />
+<span class="ann"><em><span class="citation" data-cites="StateChanging">@StateChanging</span></em></span></p>
+</section>
+</section>
+</section>
+<section id="str" class="level2">
+<h2>str</h2>
+<p>Collection of string related functions.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.1</p>
+<section id="dependencies-22" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="imports-22" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-22" class="level3">
 <h3>Functions</h3>
 <section id="b_str_stripQuotes" class="level4">
 <h4>b_str_stripQuotes [string]</h4>
@@ -2971,11 +3033,11 @@ remove any whitespace from around a string<br />
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-22" class="level3">
+<section id="dependencies-23" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
-<section id="imports-22" class="level3">
+<section id="imports-23" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -2994,15 +3056,15 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-23" class="level3">
+<section id="dependencies-24" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-23" class="level3">
+<section id="imports-24" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-22" class="level3">
+<section id="functions-23" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getCodeFor" class="level4">
 <h4>b_traps_getCodeFor [signal]</h4>
@@ -3049,7 +3111,7 @@ Remove the commands tagged with the given tag from the signal trap.<br />
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-24" class="level3">
+<section id="dependencies-25" class="level3">
 <h3>Dependencies</h3>
 <p>head<br />
 mkfifo<br />
@@ -3059,7 +3121,7 @@ strings<br />
 tee<br />
 wc</p>
 </section>
-<section id="imports-24" class="level3">
+<section id="imports-25" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3073,7 +3135,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-23" class="level3">
+<section id="functions-24" class="level3">
 <h3>Functions</h3>
 <section id="b_types_parseString" class="level4">
 <h4>b_types_parseString [encoding]</h4>
@@ -3110,15 +3172,15 @@ Check whether the given String is an integer (positive or negative) or not.<br /
 <p>Collection of user interface and user interaction related functions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-25" class="level3">
+<section id="dependencies-26" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-25" class="level3">
+<section id="imports-26" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-24" class="level3">
+<section id="functions-25" class="level3">
 <h3>Functions</h3>
 <section id="b_ui_passwordPrompt" class="level4">
 <h4>b_ui_passwordPrompt [output var] [ui mode] [prompt string]</h4>
@@ -3140,11 +3202,11 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p>Some code and vars meant to be shared across bats tests.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-26" class="level3">
+<section id="dependencies-27" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-26" class="level3">
+<section id="imports-27" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3158,7 +3220,7 @@ By default, bats creates a new shell environment for each test it runs, resettin
 The state can be managed with the load/save/clearBlibTestState functions below.</p>
 </section>
 </section>
-<section id="functions-25" class="level3">
+<section id="functions-26" class="level3">
 <h3>Functions</h3>
 <section id="loadBlib" class="level4">
 <h4>loadBlib</h4>
@@ -3276,11 +3338,11 @@ That file is meant for static bash varibles that must be set <em>by the user</em
 If that file doesn’t exist or could not be loaded, these tests may be skipped by blib.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-27" class="level3">
+<section id="dependencies-28" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-27" class="level3">
+<section id="imports-28" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3549,6 +3611,10 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_setErrorHandler">b_setErrorHandler</a></p>
 <p><a href="#b_setMessageHandler">b_setMessageHandler</a></p>
 <p><a href="#b_silence">b_silence</a></p>
+<p><a href="#b_sqlite3_close">b_sqlite3_close</a></p>
+<p><a href="#b_sqlite3_exec">b_sqlite3_exec</a></p>
+<p><a href="#b_sqlite3_getOpen">b_sqlite3_getOpen</a></p>
+<p><a href="#b_sqlite3_open">b_sqlite3_open</a></p>
 <p><a href="#b_str_stripQuotes">b_str_stripQuotes</a></p>
 <p><a href="#b_str_trim">b_str_trim</a></p>
 <p><a href="#B_TCOLORS">B_TCOLORS</a></p>
