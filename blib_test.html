@@ -260,8 +260,8 @@ background-color: #ebf5fb;
 <li><a href="#hash">hash</a><ul>
 <li><a href="#dependencies-10">Dependencies</a></li>
 <li><a href="#imports-10">Imports</a></li>
-<li><a href="#b_hash_md5">b_hash_md5 [file]</a></li>
-<li><a href="#b_hash_md5Str">b_hash_md5Str [string]</a></li>
+<li><a href="#b_hash_file">b_hash_file [file] [algorithm]</a></li>
+<li><a href="#b_hash_str">b_hash_str [string] [algorithm]</a></li>
 </ul></li>
 <li><a href="#http">http</a><ul>
 <li><a href="#dependencies-11">Dependencies</a></li>
@@ -1785,29 +1785,31 @@ Enumerate all files found in the given list of paths. Recurse into directories a
 <h2>hash</h2>
 <p>Hash functions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
-0.2</p>
+0.5</p>
 <section id="dependencies-10" class="level3">
 <h3>Dependencies</h3>
-<p>md5sum</p>
+<p>no dependencies</p>
 </section>
 <section id="imports-10" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="b_hash_md5" class="level3">
-<h3>b_hash_md5 [file]</h3>
-<p><small><em>hash/b_hash_md5</em></small><br />
-Compute the md5 sum of the given file.<br />
+<section id="b_hash_file" class="level3">
+<h3>b_hash_file [file] [algorithm]</h3>
+<p><small><em>hash/b_hash_file</em></small><br />
+Compute the hash of the given file.<br />
 <span class="par">[file]: Full path to the file.</span><br />
-<span class="ret"><strong>returns</strong>: The md5 sum of the given file.</span><br />
+<span class="par">[algorithm]: Algorithm to use. Currently supported: md5|sha1|sha224|sha256|sha384|sha512|crc|blake2 (default: md5).</span><br />
+<span class="ret"><strong>returns</strong>: The hash of the given file.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
-<section id="b_hash_md5Str" class="level3">
-<h3>b_hash_md5Str [string]</h3>
-<p><small><em>hash/b_hash_md5Str</em></small><br />
-Compute the md5 sum of the given string.<br />
+<section id="b_hash_str" class="level3">
+<h3>b_hash_str [string] [algorithm]</h3>
+<p><small><em>hash/b_hash_str</em></small><br />
+Compute the hash of the given string.<br />
 <span class="par">[string]: String which to compute the hash for.</span><br />
-<span class="ret"><strong>returns</strong>: The md5 sum of the given string.</span><br />
+<span class="par">[algorithm]: Algorithm to use. Currently supported: md5|sha1|sha224|sha256|sha384|sha512|crc|blake2 (default: md5).</span><br />
+<span class="ret"><strong>returns</strong>: The hash of the given string.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -3584,8 +3586,8 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_getDefaultMessageHandlerPrefix">b_getDefaultMessageHandlerPrefix</a></p>
 <p><a href="#b_getErrorHandler">b_getErrorHandler</a></p>
 <p><a href="#b_getMessageHandler">b_getMessageHandler</a></p>
-<p><a href="#b_hash_md5">b_hash_md5</a></p>
-<p><a href="#b_hash_md5Str">b_hash_md5Str</a></p>
+<p><a href="#b_hash_file">b_hash_file</a></p>
+<p><a href="#b_hash_str">b_hash_str</a></p>
 <p><a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a></p>
 <p><a href="#b_http_getOnlineStatus">b_http_getOnlineStatus</a></p>
 <p><a href="#b_http_rawUrlDecode">b_http_rawUrlDecode</a></p>
