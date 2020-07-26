@@ -350,6 +350,11 @@ background-color: #ebf5fb;
 <li><a href="#imports-27">Imports</a></li>
 <li><a href="#functions-25">Functions</a></li>
 </ul></li>
+<li><a href="#wm">wm</a><ul>
+<li><a href="#dependencies-28">Dependencies</a></li>
+<li><a href="#imports-28">Imports</a></li>
+<li><a href="#functions-26">Functions</a></li>
+</ul></li>
 <li><a href="#reflist">Reference List</a></li>
 </ul>
 </nav>
@@ -2564,6 +2569,7 @@ qvm-ls<br />
 qvm-pool<br />
 qvm-run<br />
 qvm-shutdown<br />
+qvm-unpause<br />
 setsid<br />
 sleep<br />
 sort<br />
@@ -2754,7 +2760,7 @@ Cross copy a file or directory from one VM to another, initiated by dom0. No use
 <section id="b_dom0_ensureRunning" class="level4">
 <h4>b_dom0_ensureRunning [vm 1] … [vm n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_ensureRunning</em></small><br />
-Start the given VMs if needed.<br />
+Start or unpause the given VMs if needed.<br />
 <span class="par">[vm i]: The VM to start.</span><br />
 <span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that could not be started (maybe they don’t exist?).</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -2762,7 +2768,7 @@ Start the given VMs if needed.<br />
 <section id="b_dom0_isRunning" class="level4">
 <h4>b_dom0_isRunning [vm 1] … [vm n]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_isRunning</em></small><br />
-Check whether the given VMs are running <em>and</em> fully operational / not hanging / not booting.<br />
+Check whether the given VMs are running <em>and</em> fully operational / not hanging / not paused / not booting.<br />
 In contrast <code>qvm-check --running [vm]</code> returns true for VMs which are currently booting and <code>qvm-ls</code> doesn’t check whether the OS of a VM is hanging.<br />
 <span class="par">[vm i]: The VM to check.</span><br />
 <span class="ret"><strong>returns</strong>: Nothing. <a href="#B_E">B_E</a> will be called for VMs that are not running (or don’t exist?).</span><br />
@@ -3237,6 +3243,43 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 </section>
 </section>
 </section>
+<section id="wm" class="level2">
+<h2>wm</h2>
+<p>Collection of functions related to window managers.</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.1</p>
+<section id="dependencies-28" class="level3">
+<h3>Dependencies</h3>
+<p>wmctrl</p>
+</section>
+<section id="imports-28" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-26" class="level3">
+<h3>Functions</h3>
+<section id="b_wm_getActiveWindowProperties" class="level4">
+<h4>b_wm_getActiveWindowProperties [variable name]</h4>
+<p><small><em>wm/b_wm_getActiveWindowProperties</em></small><br />
+Retrieve information about the currently active windows.<br />
+<span class="par">[variable name]: Name of the associative array to use as output.</span><br />
+<span class="ret"><strong>returns</strong>: A string specifying an associative array in bash syntax. You can eval that string to obtain all relevant data. On errors <a href="#B_E">B_E</a> is called.</span><br />
+The information is returned as an associative array containing the following data:<br />
+[window ID]_[id] = hexadecimal window ID<br />
+[window ID]_[desktop] = desktop number<br />
+[window ID]_[pid] = PID of the window<br />
+[window ID]_[x] = x-offset<br />
+[window ID]_[y] = y-offset<br />
+[window ID]_[width] = window width<br />
+[window ID]_[height] = window height<br />
+[window ID]_[class] = window class name<br />
+[window ID]_[client] = client machine name<br />
+[window ID]_[title] = window title<br />
+Missing data may result in an empty String for the respective property.<br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
 <section id="reflist" class="level2">
 <h2>Reference List</h2>
 <p><a href="#B_ARGS">B_ARGS</a></p>
@@ -3468,6 +3511,7 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p><a href="#b_types_parseString">b_types_parseString</a></p>
 <p><a href="#b_ui_passwordPrompt">b_ui_passwordPrompt</a></p>
 <p><a href="#b_version">b_version</a></p>
+<p><a href="#b_wm_getActiveWindowProperties">b_wm_getActiveWindowProperties</a></p>
 </section>
 </body>
 </html>
