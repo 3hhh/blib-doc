@@ -1248,7 +1248,7 @@ If you need to start it as a different user, simply run this function as a diffe
 <p><small><em>daemon/b_daemon_stop</em></small><br />
 Stop the background process.<br />
 <span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span><br />
-<span class="par">[termination signal]: A number specifying the signal to send to the daemon (default: 15 / SIGTERM). See <code>kill -l</code> for an overview.</span><br />
+<span class="par">[termination signal]: A number or string specifying the signal to send to the daemon (default: 15 / SIGTERM). See <code>kill -l</code> for an overview.</span><br />
 <span class="par">[kill timeout]: Time in seconds after which the background process will be killed, if it remains unresponsive to the termination signal (default: 0 = wait indefinitely).</span><br />
 <span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon terminated by itself. An exit code of 2 indicates that the daemon had to be killed. An exit code of 3 means that it wasn’t running. <a href="#B_E">B_E</a> is called on unexpected errors.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -1287,6 +1287,16 @@ Check the status of the background process and print informational messages to s
 Get the process ID of the background process.<br />
 <span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span><br />
 <span class="ret"><strong>returns</strong>: The process ID and sets a zero exit code, if it could be obtained. Please note that the process may be dead anyway (use <a href="#b_daemon_statusPid">b_daemon_statusPid</a> for that). Otherwise a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_daemon_sendSignal" class="level4">
+<h4>b_daemon_sendSignal [id] [signal]</h4>
+<p><small><em>daemon/b_daemon_sendSignal</em></small><br />
+Send a signal to the daemon.<br />
+For termination signals, please use <a href="#b_daemon_stop">b_daemon_stop</a> instead.<br />
+<span class="par">[id]: Unique identifying String of the daemon to distinguish it from others.</span><br />
+<span class="par">[signal]: A number or string specifying the signal to send to the daemon. See <code>kill -l</code> for an overview.</span><br />
+<span class="ret"><strong>returns</strong>: Sets a zero exit code, if the daemon was running and a non-zero exit code otherwise. <a href="#B_E">B_E</a> is only called on exceptional errors.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -2957,11 +2967,12 @@ Run multiple <code>test</code> checks inside the given VM with a single <code>qv
 <section id="proc" class="level2">
 <h2>proc</h2>
 <p>Collection of process and thread related functions.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.2</p>
 <section id="dependencies-21" class="level3">
 <h3>Dependencies</h3>
-<p>tail<br />
+<p>kill<br />
+tail<br />
 timeout</p>
 </section>
 <section id="imports-21" class="level3">
@@ -2991,6 +3002,14 @@ Wait for the given process to exit. If it doesn’t exist, exit immediately.<br 
 <span class="par">[pid]: Process ID of the process to wait for. Doesn’t need to be a child.</span><br />
 <span class="par">[maximum time]: Maximum time in seconds to wait for the process to exit (default: 0 = indefinitely).</span><br />
 <span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code. Use <a href="#b_proc_pidExists">b_proc_pidExists</a> if you need to know whether the process finished.</span></p>
+</section>
+<section id="b_proc_resolveSignal" class="level4">
+<h4>b_proc_resolveSignal [signal]</h4>
+<p><small><em>proc/b_proc_resolveSignal</em></small><br />
+Resolve process (kill) signal names to their numeric identifiers.<br />
+<span class="par">[signal]: Signal name (string) or numeric identifier.</span><br />
+<span class="ret"><strong>returns</strong>: The numeric identifier corresponding to the given signal.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
 </section>
@@ -3166,8 +3185,8 @@ Remove the commands tagged with the given tag from the signal trap.<br />
 <section id="types" class="level2">
 <h2>types</h2>
 <p>Functions for data type checks and conversions.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.2</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.4</p>
 <section id="dependencies-26" class="level3">
 <h3>Dependencies</h3>
 <p>head<br />
@@ -3221,6 +3240,51 @@ Checks whether whatever is lying in stdin is a string (and not binary) and if so
 Check whether the given String is an integer (positive or negative) or not.<br />
 <span class="par">[string]: The string to check. If it may be binary data, please make sure to pass it through <a href="#b_types_parseString">b_types_parseString</a> first.</span><br />
 <span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code if and only if the given string represents an integer.</span></p>
+</section>
+<section id="b_types_assertInteger" class="level4">
+<h4>b_types_assertInteger [string] [error msg]</h4>
+<p><small><em>types/b_types_assertInteger</em></small><br />
+Check whether the given String is an integer (positive or negative) and if not, error out.<br />
+<span class="par">[string]: The string to check. If it may be binary data, please make sure to pass it through <a href="#b_types_parseString">b_types_parseString</a> first.</span><br />
+<span class="par">[error msg]: Error message to use, if the check fails (optional).</span><br />
+<span class="ret"><strong>returns</strong>: Nothing. If it’s no integer, <a href="#B_E">B_E</a> is called.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_types_looksLikeArray" class="level4">
+<h4>b_types_looksLikeArray [string]</h4>
+<p><small><em>types/b_types_looksLikeArray</em></small><br />
+Check whether the given String “looks like” a bash array or not.<br />
+It may still contain malicious code or whatnot. So you <strong>must not</strong> rely on this function when processing untrusted input.<br />
+<span class="par">[string]: The string to check. Use <code>&quot;$(declare -p var)&quot;</code> on variables to obtain it.</span><br />
+<span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code if the given string looks like it could be <code>eval</code>’ed to a bash array. References (<code>declare -n</code>) will result in a non-zero exit code.</span></p>
+</section>
+<section id="b_types_assertLooksLikeArray" class="level4">
+<h4>b_types_assertLooksLikeArray [string] [error msg]</h4>
+<p><small><em>types/b_types_assertLooksLikeArray</em></small><br />
+Check whether the given String “looks like” a bash array and if not, error out.<br />
+It may still contain malicious code or whatnot. So you <strong>must not</strong> rely on this function when processing untrusted input.<br />
+<span class="par">[string]: The string to check. Use <code>&quot;$(declare -p var)&quot;</code> on variables to obtain it.</span><br />
+<span class="par">[error msg]: Error message to use, if the check fails (optional).</span><br />
+<span class="ret"><strong>returns</strong>: Nothing. If doesn’t look like a bash array, <a href="#B_E">B_E</a> is called.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_types_looksLikeMap" class="level4">
+<h4>b_types_looksLikeMap [string]</h4>
+<p><small><em>types/b_types_looksLikeMap</em></small><br />
+Check whether the given String “looks like” a bash map / associative array or not.<br />
+It may still contain malicious code or whatnot. So you <strong>must not</strong> rely on this function when processing untrusted input.<br />
+<span class="par">[string]: The string to check. Use <code>&quot;$(declare -p var)&quot;</code> on variables to obtain it.</span><br />
+<span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code if the given string looks like it could be <code>eval</code>’ed to a bash associative array. References (<code>declare -n</code>) will result in a non-zero exit code.</span></p>
+</section>
+<section id="b_types_assertLooksLikeMap" class="level4">
+<h4>b_types_assertLooksLikeMap [string] [error msg]</h4>
+<p><small><em>types/b_types_assertLooksLikeMap</em></small><br />
+Check whether the given String “looks like” a bash map / associative array and if not, error out.<br />
+It may still contain malicious code or whatnot. So you <strong>must not</strong> rely on this function when processing untrusted input.<br />
+<span class="par">[string]: The string to check. Use <code>&quot;$(declare -p var)&quot;</code> on variables to obtain it.</span><br />
+<span class="par">[error msg]: Error message to use, if the check fails (optional).</span><br />
+<span class="ret"><strong>returns</strong>: Nothing. If doesn’t look like a bash array, <a href="#B_E">B_E</a> is called.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
 </section>
@@ -3536,6 +3600,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#B_DAEMON_ID">B_DAEMON_ID</a></p>
 <p><a href="#b_daemon_init">b_daemon_init</a></p>
 <p><a href="#b_daemon_restart">b_daemon_restart</a></p>
+<p><a href="#b_daemon_sendSignal">b_daemon_sendSignal</a></p>
 <p><a href="#b_daemon_start">b_daemon_start</a></p>
 <p><a href="#b_daemon_status">b_daemon_status</a></p>
 <p><a href="#b_daemon_statusPid">b_daemon_statusPid</a></p>
@@ -3695,6 +3760,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_printStackTrace">b_printStackTrace</a></p>
 <p><a href="#b_proc_childExists">b_proc_childExists</a></p>
 <p><a href="#b_proc_pidExists">b_proc_pidExists</a></p>
+<p><a href="#b_proc_resolveSignal">b_proc_resolveSignal</a></p>
 <p><a href="#b_proc_waitForPid">b_proc_waitForPid</a></p>
 <p><a href="#B_RC">B_RC</a></p>
 <p><a href="#b_resetErrorHandler">b_resetErrorHandler</a></p>
@@ -3719,8 +3785,13 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_traps_getCodeFor">b_traps_getCodeFor</a></p>
 <p><a href="#b_traps_prepend">b_traps_prepend</a></p>
 <p><a href="#b_traps_remove">b_traps_remove</a></p>
+<p><a href="#b_types_assertInteger">b_types_assertInteger</a></p>
+<p><a href="#b_types_assertLooksLikeArray">b_types_assertLooksLikeArray</a></p>
+<p><a href="#b_types_assertLooksLikeMap">b_types_assertLooksLikeMap</a></p>
 <p><a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a></p>
 <p><a href="#b_types_isInteger">b_types_isInteger</a></p>
+<p><a href="#b_types_looksLikeArray">b_types_looksLikeArray</a></p>
+<p><a href="#b_types_looksLikeMap">b_types_looksLikeMap</a></p>
 <p><a href="#b_types_parseString">b_types_parseString</a></p>
 <p><a href="#b_ui_passwordPrompt">b_ui_passwordPrompt</a></p>
 <p><a href="#b_version">b_version</a></p>
