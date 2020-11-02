@@ -570,7 +570,7 @@ As any error handler it must</p>
 </ol>
 <p><span class="par">[error out]: Whether or not to call exit after the error message handling, if the error couldn’t be handled (default: 0 = always error out / call exit). If set to 1, <a href="#B_E">B_E</a> will allow e.g. functions to return to their callers.</span><br />
 <span class="par">[send err]: Whether or not to send the error message to the user (default: 0 = send).</span><br />
-<span class="par">[send stack trace]: Whether or not to send a stack trace to the user (default: 0 = send).</span><br />
+<span class="par">[send stack trace]: Whether or not to send a stack trace to the user (default: identical to [send err]).</span><br />
 <span class="ret"><strong>returns</strong>: see the description above</span></p>
 </section>
 <section id="b_setBE" class="level4">
@@ -1828,7 +1828,7 @@ Compute the hash of the given string.<br />
 </section>
 <section id="imports-11" class="level3">
 <h3>Imports</h3>
-<p>no imports</p>
+<p><a href="#types">types</a></p>
 </section>
 <section id="global-variables-5" class="level3">
 <h3>Global Variables</h3>
@@ -1865,6 +1865,15 @@ One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited duri
 <span class="par">[timeout]: Timeout in seconds for hanging checks (default: 5).</span><br />
 <span class="ret"><strong>returns</strong>: 0, if we’re online, 1 if only DNS works, 2 if neither DNS nor http(s) worked, 3 if the check timed out; <a href="#B_E">B_E</a> will be called if the status cannot be determined.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_http_testProxy" class="level4">
+<h4>b_http_testProxy [proxy string] [intransparent only] [timeout]</h4>
+<p><small><em>http/b_http_testProxy</em></small><br />
+Test whether the given proxy is working as advertised.<br />
+<span class="par">[proxy string]: Connection string to test, e.g. <code>https://1.1.1.1:234</code>.</span><br />
+<span class="par">[intransparent only]: If set to 0 (default), only accept intransparent proxies (i.e. those not revealing your IP).</span><br />
+<span class="par">[timeout]: Time in seconds after which to consider the proxy non-responsive (default: 5).</span><br />
+<span class="ret"><strong>returns</strong>: Nothing, but sets a zero exit code, if and only if the proxy appears to work.</span></p>
 </section>
 </section>
 </section>
@@ -2557,7 +2566,7 @@ Check whether the OS running this function is a Qubes OS in a VM.<br />
 <h2>os/qubes4/dom0</h2>
 <p>Collection of functions supporting scripting in Qubes OS 4.x dom0.</p>
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data’s confidentiality.</p>
-<p>Copyright (C) 2019 David Hobach LGPLv3<br />
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.5</p>
 <section id="dependencies-20" class="level3">
 <h3>Dependencies</h3>
@@ -2575,6 +2584,7 @@ qubesdb-write<br />
 qubes-prefs<br />
 qvm-block<br />
 qvm-check<br />
+qvm-firewall<br />
 qvm-ls<br />
 qvm-pool<br />
 qvm-run<br />
@@ -2949,6 +2959,27 @@ Run multiple <code>test</code> checks inside the given VM with a single <code>qv
 <span class="par">[operator]: The test operator to use for the list of parameters, e.g. <code>-f</code>.</span><br />
 <span class="par">[list]: Newline-separated list of parameters to check, e.g. a list of files for the <code>-f</code> operator.</span><br />
 <span class="ret"><strong>returns</strong>: The subset of the list that matched the operator and sets a zero exit code on success.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_applyFirewall" class="level4">
+<h4>b_dom0_applyFirewall [vm] [rules]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_applyFirewall</em></small><br />
+Apply the given rules to the VM firewall.<br />
+<strong>Important</strong>: Since the rules are applied iteratively, there may be short timeframes during which a VM may have a more permissive firewall than in the end.<br />
+<span class="par">[vm]: VM for which to apply the firewall rules.</span><br />
+<span class="par">[rules]: Newline-separated list of firewall rules in <em>raw</em> format (cf. <code>man qvm-firewall</code>). The rules are added in the order as specified.</span><br />
+(This corresponds to the <code>qvm-firewall</code> output.) Previously applied rules are left untouched.<br />
+Empty lines and lines starting with <code>#</code> (comments) are ignored.<br />
+<span class="ret"><strong>returns</strong>: Nothing. If a rule cannot be added for whatever reason, the entire firewall is cleared to a drop-all state for security reasons.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_clearFirewall" class="level4">
+<h4>b_dom0_clearFirewall [vm]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_clearFirewall</em></small><br />
+Clears the given VM firewall entirely (no rules left). This will make the VM firewall drop all connections.<br />
+Existing connections may continue to work as long as the VM and the connection remain up (this is a known Qubes OS quirk).<br />
+<span class="par">[vm]: VM for which to clear all rules.</span><br />
+<span class="ret"><strong>returns</strong>: Nothing. Errors may result in leftover rules which should generally allow less.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -3409,8 +3440,10 @@ Missing data may result in an empty String for the respective property.<br />
 <p><a href="#b_dmcrypt_init">b_dmcrypt_init</a></p>
 <p><a href="#b_dmcrypt_isOpen">b_dmcrypt_isOpen</a></p>
 <p><a href="#b_dmcrypt_open">b_dmcrypt_open</a></p>
+<p><a href="#b_dom0_applyFirewall">b_dom0_applyFirewall</a></p>
 <p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
 <p><a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a></p>
+<p><a href="#b_dom0_clearFirewall">b_dom0_clearFirewall</a></p>
 <p><a href="#b_dom0_closeCrypt">b_dom0_closeCrypt</a></p>
 <p><a href="#b_dom0_copy">b_dom0_copy</a></p>
 <p><a href="#b_dom0_createLoopDeviceIfNecessary">b_dom0_createLoopDeviceIfNecessary</a></p>
@@ -3487,6 +3520,7 @@ Missing data may result in an empty String for the respective property.<br />
 <p><a href="#b_http_getOnlineStatus">b_http_getOnlineStatus</a></p>
 <p><a href="#b_http_rawUrlDecode">b_http_rawUrlDecode</a></p>
 <p><a href="#b_http_rawUrlEncode">b_http_rawUrlEncode</a></p>
+<p><a href="#b_http_testProxy">b_http_testProxy</a></p>
 <p><a href="#b_import">b_import</a></p>
 <p><a href="#b_info">b_info</a></p>
 <p><a href="#b_ini_assertNames">b_ini_assertNames</a></p>
