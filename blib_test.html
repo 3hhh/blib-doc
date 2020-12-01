@@ -304,67 +304,73 @@ background-color: #ebf5fb;
 <li><a href="#imports-18">Imports</a></li>
 <li><a href="#functions-17">Functions</a></li>
 </ul></li>
-<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#net">net</a><ul>
 <li><a href="#dependencies-19">Dependencies</a></li>
 <li><a href="#imports-19">Imports</a></li>
+<li><a href="#global-variables-6">Global Variables</a></li>
 <li><a href="#functions-18">Functions</a></li>
 </ul></li>
-<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#ososid">os/osid</a><ul>
 <li><a href="#dependencies-20">Dependencies</a></li>
 <li><a href="#imports-20">Imports</a></li>
 <li><a href="#functions-19">Functions</a></li>
 </ul></li>
-<li><a href="#proc">proc</a><ul>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-21">Dependencies</a></li>
 <li><a href="#imports-21">Imports</a></li>
 <li><a href="#functions-20">Functions</a></li>
 </ul></li>
-<li><a href="#sqlite3">sqlite3</a><ul>
+<li><a href="#proc">proc</a><ul>
 <li><a href="#dependencies-22">Dependencies</a></li>
 <li><a href="#imports-22">Imports</a></li>
 <li><a href="#functions-21">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#sqlite3">sqlite3</a><ul>
 <li><a href="#dependencies-23">Dependencies</a></li>
 <li><a href="#imports-23">Imports</a></li>
 <li><a href="#functions-22">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-24">Dependencies</a></li>
 <li><a href="#imports-24">Imports</a></li>
-<li><a href="#global-variables-6">Global Variables</a></li>
-</ul></li>
-<li><a href="#traps">traps</a><ul>
-<li><a href="#dependencies-25">Dependencies</a></li>
-<li><a href="#imports-25">Imports</a></li>
 <li><a href="#functions-23">Functions</a></li>
 </ul></li>
-<li><a href="#types">types</a><ul>
+<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#dependencies-25">Dependencies</a></li>
+<li><a href="#imports-25">Imports</a></li>
+<li><a href="#global-variables-7">Global Variables</a></li>
+</ul></li>
+<li><a href="#traps">traps</a><ul>
 <li><a href="#dependencies-26">Dependencies</a></li>
 <li><a href="#imports-26">Imports</a></li>
-<li><a href="#global-variables-7">Global Variables</a></li>
 <li><a href="#functions-24">Functions</a></li>
 </ul></li>
-<li><a href="#ui">ui</a><ul>
+<li><a href="#types">types</a><ul>
 <li><a href="#dependencies-27">Dependencies</a></li>
 <li><a href="#imports-27">Imports</a></li>
+<li><a href="#global-variables-8">Global Variables</a></li>
 <li><a href="#functions-25">Functions</a></li>
 </ul></li>
-<li><a href="#wm">wm</a><ul>
+<li><a href="#ui">ui</a><ul>
 <li><a href="#dependencies-28">Dependencies</a></li>
 <li><a href="#imports-28">Imports</a></li>
 <li><a href="#functions-26">Functions</a></li>
 </ul></li>
-<li><a href="#teststest_common.bash">tests/test_common.bash</a><ul>
+<li><a href="#wm">wm</a><ul>
 <li><a href="#dependencies-29">Dependencies</a></li>
 <li><a href="#imports-29">Imports</a></li>
-<li><a href="#global-variables-8">Global Variables</a></li>
 <li><a href="#functions-27">Functions</a></li>
 </ul></li>
-<li><a href="#testsuser_test_data.bash">tests/user_test_data.bash</a><ul>
+<li><a href="#teststest_common.bash">tests/test_common.bash</a><ul>
 <li><a href="#dependencies-30">Dependencies</a></li>
 <li><a href="#imports-30">Imports</a></li>
 <li><a href="#global-variables-9">Global Variables</a></li>
+<li><a href="#functions-28">Functions</a></li>
+</ul></li>
+<li><a href="#testsuser_test_data.bash">tests/user_test_data.bash</a><ul>
+<li><a href="#dependencies-31">Dependencies</a></li>
+<li><a href="#imports-31">Imports</a></li>
+<li><a href="#global-variables-10">Global Variables</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
 </ul>
@@ -1873,6 +1879,7 @@ Decode the given string encoded with b_str_rawUrlEncode or an equivalent functio
 <p><small><em>http/b_http_getOnlineStatus</em></small><br />
 Find out whether we are online or not by attempting an http connection.<br />
 One of <a href="#B_HTTP_CHECKURLS">B_HTTP_CHECKURLS</a> is possibly visited during the process.<br />
+Use <a href="#b_net_getDNSStatus">b_net_getDNSStatus</a> for DNS-only checks.<br />
 <span class="par">[timeout]: Timeout in seconds for hanging checks (default: 5).</span><br />
 <span class="ret"><strong>returns</strong>: 0, if we’re online, 1 if only DNS works, 2 if neither DNS nor http(s) worked, 3 if the check timed out; <a href="#B_E">B_E</a> will be called if the status cannot be determined.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
@@ -2489,20 +2496,67 @@ This function should only be called when all processes finished reading and writ
 </section>
 </section>
 </section>
-<section id="ososid" class="level2">
-<h2>os/osid</h2>
-<p>Functions for operating system identification.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.2</p>
+<section id="net" class="level2">
+<h2>net</h2>
+<p>Collection of network related functions.</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.1</p>
 <section id="dependencies-19" class="level3">
 <h3>Dependencies</h3>
-<p>no dependencies</p>
+<p>dig</p>
 </section>
 <section id="imports-19" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
+<section id="global-variables-6" class="level3">
+<h3>Global Variables</h3>
+<section id="B_NET_CHECKHOSTS" class="level4">
+<h4>B_NET_CHECKHOSTS</h4>
+<p><small><em>net/B_NET_CHECKHOSTS</em></small><br />
+Each call to <a href="#b_net_getDNSStatus">b_net_getDNSStatus</a> causes one of the host records in this array to be requested.<br />
+It is recommended to pick a relatively large number of URLs with SSL support to remain relatively anonymous, if <a href="#b_net_getDNSStatus">b_net_getDNSStatus</a> is called multiple times.<br />
+Defaults to the European/US Alexa Top 10 (which hopefully blends in to the masses).</p>
+</section>
+<section id="B_NET_DNSSERVERS" class="level4">
+<h4>B_NET_DNSSERVERS</h4>
+<p><small><em>net/B_NET_DNSSERVERS</em></small><br />
+Each call to <a href="#b_net_getDNSStatus">b_net_getDNSStatus</a> with a <code>random</code> [server] causes one of the IPs in this array to be used as DNS server.<br />
+Defaults to common large-scale free DNS providers (that probably save your requests).<br />
+Sources:<br />
+- https://www.techradar.com/news/best-dns-server<br />
+- https://dnsmap.io/articles/most-popular-dns-servers</p>
+</section>
+</section>
 <section id="functions-18" class="level3">
+<h3>Functions</h3>
+<section id="b_net_getDNSStatus" class="level4">
+<h4>b_net_getDNSStatus [timeout] [server]</h4>
+<p><small><em>net/b_net_getDNSStatus</em></small><br />
+Find out whether DNS appears to work or not by testing it.<br />
+One of <a href="#B_NET_CHECKHOSTS">B_NET_CHECKHOSTS</a> is possibly requested during the process.<br />
+Use <a href="#b_http_getOnlineStatus">b_http_getOnlineStatus</a> for http checks.<br />
+<span class="par">[timeout]: Timeout in seconds for hanging checks (default: 5).</span><br />
+<span class="par">[server]: DNS server to use (default: the OS default). Passing <code>random</code> will pick a random DNS server.</span><br />
+<span class="ret"><strong>returns</strong>: 0 if DNS works as expected, 1 if DNS works but returns NXDOMAIN and 2 on timeout; <a href="#B_E">B_E</a> will be called if the status cannot be determined.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+</section>
+</section>
+<section id="ososid" class="level2">
+<h2>os/osid</h2>
+<p>Functions for operating system identification.</p>
+<p>Copyright (C) 2018 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-20" class="level3">
+<h3>Dependencies</h3>
+<p>no dependencies</p>
+</section>
+<section id="imports-20" class="level3">
+<h3>Imports</h3>
+<p>no imports</p>
+</section>
+<section id="functions-19" class="level3">
 <h3>Functions</h3>
 <section id="b_osid_init" class="level4">
 <h4>b_osid_init [force]</h4>
@@ -2579,7 +2633,7 @@ Check whether the OS running this function is a Qubes OS in a VM.<br />
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data’s confidentiality.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-20" class="level3">
+<section id="dependencies-21" class="level3">
 <h3>Dependencies</h3>
 <p>basename<br />
 cat<br />
@@ -2609,14 +2663,14 @@ tee<br />
 timeout<br />
 xxd</p>
 </section>
-<section id="imports-20" class="level3">
+<section id="imports-21" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a><br />
 <a href="#proc">proc</a><br />
 <a href="#types">types</a><br />
 <a href="#ui">ui</a></p>
 </section>
-<section id="functions-19" class="level3">
+<section id="functions-20" class="level3">
 <h3>Functions</h3>
 <section id="b_dom0_setVMDeps" class="level4">
 <h4>b_dom0_setVMDeps [list] [keep defaults]</h4>
@@ -3000,17 +3054,17 @@ Existing connections may continue to work as long as the VM and the connection r
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-21" class="level3">
+<section id="dependencies-22" class="level3">
 <h3>Dependencies</h3>
 <p>kill<br />
 tail<br />
 timeout</p>
 </section>
-<section id="imports-21" class="level3">
+<section id="imports-22" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-20" class="level3">
+<section id="functions-21" class="level3">
 <h3>Functions</h3>
 <section id="b_proc_pidExists" class="level4">
 <h4>b_proc_pidExists [pid]</h4>
@@ -3052,18 +3106,18 @@ Resolve process (kill) signal names to their numeric identifiers.<br />
 <p>Side Note: If you want to read or write csv files, this module can also do the job for you with standard SQL syntax. See <code>man sqlite3</code> on how to read and write csv files with sqlite.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-22" class="level3">
+<section id="dependencies-23" class="level3">
 <h3>Dependencies</h3>
 <p>mkfifo<br />
 mktemp<br />
 rm<br />
 sqlite3</p>
 </section>
-<section id="imports-22" class="level3">
+<section id="imports-23" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-21" class="level3">
+<section id="functions-22" class="level3">
 <h3>Functions</h3>
 <section id="b_sqlite3_open" class="level4">
 <h4>b_sqlite3_open [db file] [timeout]</h4>
@@ -3106,15 +3160,15 @@ It is highly recommended to execute this function once you don’t need the data
 <p>Collection of string related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-23" class="level3">
+<section id="dependencies-24" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-23" class="level3">
+<section id="imports-24" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-22" class="level3">
+<section id="functions-23" class="level3">
 <h3>Functions</h3>
 <section id="b_str_stripQuotes" class="level4">
 <h4>b_str_stripQuotes [string]</h4>
@@ -3140,15 +3194,15 @@ remove any whitespace from around a string<br />
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-24" class="level3">
+<section id="dependencies-25" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
-<section id="imports-24" class="level3">
+<section id="imports-25" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="global-variables-6" class="level3">
+<section id="global-variables-7" class="level3">
 <h3>Global Variables</h3>
 <section id="B_TCOLORS" class="level4">
 <h4>B_TCOLORS</h4>
@@ -3163,15 +3217,15 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-25" class="level3">
+<section id="dependencies-26" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-25" class="level3">
+<section id="imports-26" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-23" class="level3">
+<section id="functions-24" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getCodeFor" class="level4">
 <h4>b_traps_getCodeFor [signal]</h4>
@@ -3218,7 +3272,7 @@ Remove the commands tagged with the given tag from the signal trap.<br />
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.4</p>
-<section id="dependencies-26" class="level3">
+<section id="dependencies-27" class="level3">
 <h3>Dependencies</h3>
 <p>head<br />
 mkfifo<br />
@@ -3228,11 +3282,11 @@ strings<br />
 tee<br />
 wc</p>
 </section>
-<section id="imports-26" class="level3">
+<section id="imports-27" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="global-variables-7" class="level3">
+<section id="global-variables-8" class="level3">
 <h3>Global Variables</h3>
 <section id="B_TYPES_ENCODINGS" class="level4">
 <h4>B_TYPES_ENCODINGS</h4>
@@ -3242,7 +3296,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-24" class="level3">
+<section id="functions-25" class="level3">
 <h3>Functions</h3>
 <section id="b_types_parseString" class="level4">
 <h4>b_types_parseString [encoding]</h4>
@@ -3324,15 +3378,15 @@ It may still contain malicious code or whatnot. So you <strong>must not</strong>
 <p>Collection of user interface and user interaction related functions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-27" class="level3">
+<section id="dependencies-28" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-27" class="level3">
+<section id="imports-28" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-25" class="level3">
+<section id="functions-26" class="level3">
 <h3>Functions</h3>
 <section id="b_ui_passwordPrompt" class="level4">
 <h4>b_ui_passwordPrompt [output var] [ui mode] [prompt string]</h4>
@@ -3354,15 +3408,15 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p>Collection of functions related to window managers.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-28" class="level3">
+<section id="dependencies-29" class="level3">
 <h3>Dependencies</h3>
 <p>wmctrl</p>
 </section>
-<section id="imports-28" class="level3">
+<section id="imports-29" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-26" class="level3">
+<section id="functions-27" class="level3">
 <h3>Functions</h3>
 <section id="b_wm_getActiveWindowProperties" class="level4">
 <h4>b_wm_getActiveWindowProperties [variable name]</h4>
@@ -3391,15 +3445,15 @@ Missing data may result in an empty String for the respective property.<br />
 <p>Some code and vars meant to be shared across bats tests.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-29" class="level3">
+<section id="dependencies-30" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-29" class="level3">
+<section id="imports-30" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="global-variables-8" class="level3">
+<section id="global-variables-9" class="level3">
 <h3>Global Variables</h3>
 <section id="TEST_STATE" class="level4">
 <h4>TEST_STATE</h4>
@@ -3409,7 +3463,7 @@ By default, bats creates a new shell environment for each test it runs, resettin
 The state can be managed with the load/save/clearBlibTestState functions below.</p>
 </section>
 </section>
-<section id="functions-27" class="level3">
+<section id="functions-28" class="level3">
 <h3>Functions</h3>
 <section id="loadBlib" class="level4">
 <h4>loadBlib</h4>
@@ -3527,15 +3581,15 @@ That file is meant for static bash varibles that must be set <em>by the user</em
 If that file doesn’t exist or could not be loaded, these tests may be skipped by blib.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-30" class="level3">
+<section id="dependencies-31" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-30" class="level3">
+<section id="imports-31" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="global-variables-9" class="level3">
+<section id="global-variables-10" class="level3">
 <h3>Global Variables</h3>
 <section id="UTD_ONLINE" class="level4">
 <h4>UTD_ONLINE</h4>
@@ -3779,6 +3833,9 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_multiw_remove">b_multiw_remove</a></p>
 <p><a href="#b_multiw_setMaxHangTime">b_multiw_setMaxHangTime</a></p>
 <p><a href="#b_multiw_write">b_multiw_write</a></p>
+<p><a href="#B_NET_CHECKHOSTS">B_NET_CHECKHOSTS</a></p>
+<p><a href="#B_NET_DNSSERVERS">B_NET_DNSSERVERS</a></p>
+<p><a href="#b_net_getDNSStatus">b_net_getDNSStatus</a></p>
 <p><a href="#b_nop">b_nop</a></p>
 <p><a href="#b_osid_init">b_osid_init</a></p>
 <p><a href="#b_osid_isCentOS">b_osid_isCentOS</a></p>
