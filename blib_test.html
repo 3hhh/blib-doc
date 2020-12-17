@@ -839,8 +839,8 @@ Test whether the given name represents a blib module name.<br />
 <em>Recommendation</em>: Use long options for those options which require parameters and single letter options for everything else.</li>
 <li>Everything after a space-separated double dash (<code>--</code>) is not considered an option, but a regular argument.</li>
 </ul>
-<p>Copyright (C) 2019 David Hobach LGPLv3<br />
-0.8</p>
+<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+0.9</p>
 <section id="dependencies-1" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
@@ -951,6 +951,20 @@ Convenience wrapper for <a href="#b_args_getOption">b_args_getOption</a> that al
 <p><small><em>args/b_args_getOptionCount</em></small><br />
 Get the number of options that were set.<br />
 <span class="ret"><strong>returns</strong>: Number of options (incl. repeated options).</span></p>
+</section>
+<section id="b_args_getAll" class="level4">
+<h4>b_args_getAll [exclude regex 1] … [exclude regex n]</h4>
+<p><small><em>args/b_args_getAll</em></small><br />
+Retrieve all arguments (excl. options).<br />
+<span class="par">[exclude regex i]: Arguments matching any of the given regular expressions are excluded from the return value.</span><br />
+<span class="ret"><strong>returns</strong>: All arguments as a single escaped string that can be used to pass them to functions or other scripts (without quotes).</span></p>
+</section>
+<section id="b_args_getAllOptions" class="level4">
+<h4>b_args_getAllOptions [exclude regex 1] … [exclude regex n]</h4>
+<p><small><em>args/b_args_getAllOptions</em></small><br />
+Retrieve all options.<br />
+<span class="par">[exclude regex i]: Options matching any of the given regular expressions are excluded from the return value.</span><br />
+<span class="ret"><strong>returns</strong>: All options as a single escaped string that can be used to pass them to functions or other scripts (without quotes).</span></p>
 </section>
 </section>
 </section>
@@ -2654,7 +2668,6 @@ qvm-ls<br />
 qvm-pool<br />
 qvm-run<br />
 qvm-shutdown<br />
-qvm-unpause<br />
 setsid<br />
 sleep<br />
 sort<br />
@@ -3647,6 +3660,8 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#B_ARGS">B_ARGS</a></p>
 <p><a href="#b_args_assertOptions">b_args_assertOptions</a></p>
 <p><a href="#b_args_get">b_args_get</a></p>
+<p><a href="#b_args_getAll">b_args_getAll</a></p>
+<p><a href="#b_args_getAllOptions">b_args_getAllOptions</a></p>
 <p><a href="#b_args_getCount">b_args_getCount</a></p>
 <p><a href="#b_args_getInt">b_args_getInt</a></p>
 <p><a href="#b_args_getOption">b_args_getOption</a></p>
