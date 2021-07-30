@@ -310,66 +310,71 @@ background-color: #ebf5fb;
 <li><a href="#global-variables-6">Global Variables</a></li>
 <li><a href="#functions-18">Functions</a></li>
 </ul></li>
-<li><a href="#ososid">os/osid</a><ul>
+<li><a href="#notify">notify</a><ul>
 <li><a href="#dependencies-20">Dependencies</a></li>
 <li><a href="#imports-20">Imports</a></li>
 <li><a href="#functions-19">Functions</a></li>
 </ul></li>
-<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
+<li><a href="#ososid">os/osid</a><ul>
 <li><a href="#dependencies-21">Dependencies</a></li>
 <li><a href="#imports-21">Imports</a></li>
 <li><a href="#functions-20">Functions</a></li>
 </ul></li>
-<li><a href="#proc">proc</a><ul>
+<li><a href="#osqubes4dom0">os/qubes4/dom0</a><ul>
 <li><a href="#dependencies-22">Dependencies</a></li>
 <li><a href="#imports-22">Imports</a></li>
 <li><a href="#functions-21">Functions</a></li>
 </ul></li>
-<li><a href="#sqlite3">sqlite3</a><ul>
+<li><a href="#proc">proc</a><ul>
 <li><a href="#dependencies-23">Dependencies</a></li>
 <li><a href="#imports-23">Imports</a></li>
 <li><a href="#functions-22">Functions</a></li>
 </ul></li>
-<li><a href="#str">str</a><ul>
+<li><a href="#sqlite3">sqlite3</a><ul>
 <li><a href="#dependencies-24">Dependencies</a></li>
 <li><a href="#imports-24">Imports</a></li>
 <li><a href="#functions-23">Functions</a></li>
 </ul></li>
-<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#str">str</a><ul>
 <li><a href="#dependencies-25">Dependencies</a></li>
 <li><a href="#imports-25">Imports</a></li>
+<li><a href="#functions-24">Functions</a></li>
+</ul></li>
+<li><a href="#tcolors">tcolors</a><ul>
+<li><a href="#dependencies-26">Dependencies</a></li>
+<li><a href="#imports-26">Imports</a></li>
 <li><a href="#global-variables-7">Global Variables</a></li>
 </ul></li>
 <li><a href="#traps">traps</a><ul>
-<li><a href="#dependencies-26">Dependencies</a></li>
-<li><a href="#imports-26">Imports</a></li>
-<li><a href="#functions-24">Functions</a></li>
-</ul></li>
-<li><a href="#types">types</a><ul>
 <li><a href="#dependencies-27">Dependencies</a></li>
 <li><a href="#imports-27">Imports</a></li>
-<li><a href="#global-variables-8">Global Variables</a></li>
 <li><a href="#functions-25">Functions</a></li>
 </ul></li>
-<li><a href="#ui">ui</a><ul>
+<li><a href="#types">types</a><ul>
 <li><a href="#dependencies-28">Dependencies</a></li>
 <li><a href="#imports-28">Imports</a></li>
+<li><a href="#global-variables-8">Global Variables</a></li>
 <li><a href="#functions-26">Functions</a></li>
 </ul></li>
-<li><a href="#wm">wm</a><ul>
+<li><a href="#ui">ui</a><ul>
 <li><a href="#dependencies-29">Dependencies</a></li>
 <li><a href="#imports-29">Imports</a></li>
 <li><a href="#functions-27">Functions</a></li>
 </ul></li>
-<li><a href="#teststest_common.bash">tests/test_common.bash</a><ul>
+<li><a href="#wm">wm</a><ul>
 <li><a href="#dependencies-30">Dependencies</a></li>
 <li><a href="#imports-30">Imports</a></li>
-<li><a href="#global-variables-9">Global Variables</a></li>
 <li><a href="#functions-28">Functions</a></li>
 </ul></li>
-<li><a href="#testsuser_test_data.bash">tests/user_test_data.bash</a><ul>
+<li><a href="#teststest_common.bash">tests/test_common.bash</a><ul>
 <li><a href="#dependencies-31">Dependencies</a></li>
 <li><a href="#imports-31">Imports</a></li>
+<li><a href="#global-variables-9">Global Variables</a></li>
+<li><a href="#functions-29">Functions</a></li>
+</ul></li>
+<li><a href="#testsuser_test_data.bash">tests/user_test_data.bash</a><ul>
+<li><a href="#dependencies-32">Dependencies</a></li>
+<li><a href="#imports-32">Imports</a></li>
 <li><a href="#global-variables-10">Global Variables</a></li>
 </ul></li>
 <li><a href="#reflist">Reference List</a></li>
@@ -1761,12 +1766,13 @@ Get all mountpoints for the given device.<br />
 <span class="ret"><strong>returns</strong>: A newline-separated list of mountpoints where the given device is mounted to. Sets a non-zero exit code if no such mountpoints were found.</span></p>
 </section>
 <section id="b_fs_mountIfNecessary" class="level4">
-<h4>b_fs_mountIfNecessary [device] [mount point] [enforce]</h4>
+<h4>b_fs_mountIfNecessary [device] [mount point] [enforce] [mount options]</h4>
 <p><small><em>fs/b_fs_mountIfNecessary</em></small><br />
 Mount the given device if it isn’t already mounted.<br />
 <span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span><br />
 <span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span><br />
-<span class="par">[enforce]: If set to 0, enforce the given mount point to be used in addition to potentially existing ones (default: 1).</span><br />
+<span class="par">[enforce]: If set to 0, enforce the given mount point to be used in addition to potentially existing ones (default: 1). Mount options are ignored.</span><br />
+<span class="par">[mount options]: Options to pass to <code>mount</code>, if it needs to be executed (default: none).</span><br />
 <span class="ret"><strong>returns</strong>: The chosen mount point or a newline-separated list of existing mount points on success; sets a non-zero exit code on failure.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2557,20 +2563,64 @@ Use <a href="#b_http_getOnlineStatus">b_http_getOnlineStatus</a> for http checks
 </section>
 </section>
 </section>
+<section id="notify" class="level2">
+<h2>notify</h2>
+<p>Collection of notification related functions.</p>
+<p>Copyright (C) 2021 David Hobach LGPLv3<br />
+0.5</p>
+<section id="dependencies-20" class="level3">
+<h3>Dependencies</h3>
+<p>getent<br />
+notify-send<br />
+su</p>
+</section>
+<section id="imports-20" class="level3">
+<h3>Imports</h3>
+<p><a href="#fs">fs</a></p>
+</section>
+<section id="functions-19" class="level3">
+<h3>Functions</h3>
+<section id="b_notify_waitForUserDbus" class="level4">
+<h4>b_notify_waitForUserDbus [user] [maximum time]</h4>
+<p><small><em>notify/b_notify_waitForUserDbus</em></small><br />
+Wait for <em>some</em> dbus user session to come up at <code>/run/user/[uid]/bus</code>. As dbus is required for notifications to work, waiting may be required for early notifications.<br />
+<span class="par">[maximum time]: Maximum time in s to wait for the file to appear (default: forever).</span><br />
+<span class="par">[user]: Name of the user whose instance to wait for (default: first user with a readable home directory).</span><br />
+<span class="ret"><strong>returns</strong>: Sets a zero exit code and returns the identified dbus instance, if a dbus instance came up and a non-zero exit code on timeout. <a href="#B_E">B_E</a> is used for exceptional errors.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_notify_send" class="level4">
+<h4>b_notify_send [arg 1] … [arg n]</h4>
+<p><small><em>notify/b_notify_send</em></small><br />
+Send out a notification to the user via <code>notify-send</code>.<br />
+If run as root, may send the notification to <em>all</em> active users.<br />
+Calling <code>notify-send</code> directly can be problematic depending on the user, dbus session, environment variables, … This function aims to circumvent these potential issues.<br />
+<span class="par">[arg i]: All arguments are directly passed to <code>notify-send</code>.</span><br />
+<span class="ret"><strong>returns</strong>: Nothing. Errors during notification sending will trigger <a href="#B_E">B_E</a>.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_notify_sendNoError" class="level4">
+<h4>b_notify_sendNoError [arg 1] … [arg n]</h4>
+<p><small><em>notify/b_notify_sendNoError</em></small><br />
+Convenience variant of <a href="#b_notify_send">b_notify_send</a> that does not exit and only prints errors with <a href="#b_defaultErrorHandler">b_defaultErrorHandler</a>. This function should e.g. be used in custom error handlers to avoid recursion.<br />
+<span class="ret"><strong>returns</strong>: Sets a non-zero exit code on errors.</span></p>
+</section>
+</section>
+</section>
 <section id="ososid" class="level2">
 <h2>os/osid</h2>
 <p>Functions for operating system identification.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-20" class="level3">
+<section id="dependencies-21" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-20" class="level3">
+<section id="imports-21" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-19" class="level3">
+<section id="functions-20" class="level3">
 <h3>Functions</h3>
 <section id="b_osid_init" class="level4">
 <h4>b_osid_init [force]</h4>
@@ -2645,9 +2695,9 @@ Check whether the OS running this function is a Qubes OS in a VM.<br />
 <h2>os/qubes4/dom0</h2>
 <p>Collection of functions supporting scripting in Qubes OS 4.x dom0.</p>
 <p><strong>Important</strong>: Whenever you parse output from VMs to dom0, you <strong>must</strong> be extra careful and assume it totally untrusted as parsing bugs are a plausible attack vector for compromised VMs. Passing data to potentially compromised VMs of course also exposes that data’s confidentiality.</p>
-<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+<p>Copyright (C) 2021 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-21" class="level3">
+<section id="dependencies-22" class="level3">
 <h3>Dependencies</h3>
 <p>basename<br />
 cat<br />
@@ -2668,6 +2718,7 @@ qvm-ls<br />
 qvm-pool<br />
 qvm-run<br />
 qvm-shutdown<br />
+readlink<br />
 setsid<br />
 sleep<br />
 sort<br />
@@ -2676,14 +2727,14 @@ tee<br />
 timeout<br />
 xxd</p>
 </section>
-<section id="imports-21" class="level3">
+<section id="imports-22" class="level3">
 <h3>Imports</h3>
 <p><a href="#fs">fs</a><br />
 <a href="#proc">proc</a><br />
 <a href="#types">types</a><br />
 <a href="#ui">ui</a></p>
 </section>
-<section id="functions-20" class="level3">
+<section id="functions-21" class="level3">
 <h3>Functions</h3>
 <section id="b_dom0_setVMDeps" class="level4">
 <h4>b_dom0_setVMDeps [list] [keep defaults]</h4>
@@ -2798,13 +2849,14 @@ Check whether the device is mounted in the given VM.<br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_mountIfNecessary" class="level4">
-<h4>b_dom0_mountIfNecessary [vm] [device] [mount point] [enforce]</h4>
+<h4>b_dom0_mountIfNecessary [vm] [device] [mount point] [enforce] [mount options]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_mountIfNecessary</em></small><br />
 Mount the given device in the target VM if it isn’t already mounted there. Actually a wrapper for <a href="#b_fs_mountIfNecessary">b_fs_mountIfNecessary</a>.<br />
 <span class="par">[vm]: VM where to execute.</span><br />
 <span class="par">[device]: Full path to the device (incl. /dev/) to mount.</span><br />
 <span class="par">[mount point]: Full path where to mount the device. If no mount point is specified, a /tmp/ mount point is chosen. Non-existing directories are created. Is ignored if another mount point already exists.</span><br />
 <span class="par">[enforce]: If set to 0, enforce the given mount point to be used in addition to potentially existing ones (default: 1).</span><br />
+<span class="par">[mount options]: Options to pass to <code>mount</code>, if it needs to be executed (default: none).</span><br />
 <span class="ret"><strong>returns</strong>: The chosen mount point or a newline-separated list of existing mount points on success; sets a non-zero exit code on failure. As these strings are returned from the VM, extra care must be taken when parsing them.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -2946,6 +2998,17 @@ More simple, but less flexible than <a href="#b_dom0_parseQvmBlock">b_dom0_parse
 <span class="ret"><strong>returns</strong>: The value of the requested field and sets a zero exit code on success. Sets a non-zero exit code if no matching value could be found. On errors <a href="#B_E">B_E</a> is called.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
+<section id="b_dom0_attachDevice" class="level4">
+<h4>b_dom0_attachDevice [dom0 device] [target VM] [rw flag] [force]</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_attachDevice</em></small><br />
+Attach the given device from dom0 (!) as block device to the target VM.<br />
+<span class="par">[dom0 device]: Full path to the device node (incl. /dev/) <em>in dom0</em>.</span><br />
+<span class="par">[target VM]: VM to attach the device to. Must be started.</span><br />
+<span class="par">[rw flag]: If set to 0, attaches the dom0 device in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span><br />
+<span class="par">[force]: If set to 0, attempt to force Qubes OS to recognize the device (default: 1). This is required for e.g. VM images. Please call <a href="#b_dom0_detachDevice">b_dom0_detachDevice</a> with the clean flag for the detach operation, if set to 0.</span><br />
+<span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
 <section id="b_dom0_attachFile" class="level4">
 <h4>b_dom0_attachFile [dom0 file] [target VM] [rw flag] [force]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_attachFile</em></small><br />
@@ -2954,19 +3017,28 @@ The function may attempt to acquire root privileges (and thus display a password
 <span class="par">[dom0 file]: Full path to the file <em>in dom0</em> to attach.</span><br />
 <span class="par">[target VM]: VM to attach the file to. Must be started.</span><br />
 <span class="par">[rw flag]: If set to 0, attaches the dom0 file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span><br />
-<span class="par">[force]: If set to 0, attempt to force Qubes OS to recognize the device (default: 1). This is required for e.g. VM images.</span><br />
+<span class="par">[force]: If set to 0, attempt to force Qubes OS to recognize the device (default: 1). This is required for e.g. VM images. Please call <a href="#b_dom0_detachDevice">b_dom0_detachDevice</a> with the clean flag for the detach operation, if set to 0.</span><br />
 <span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_attachVMDisk" class="level4">
-<h4>b_dom0_attachVMDisk [source VM] [target VM] [rw flag]</h4>
+<h4>b_dom0_attachVMDisk [source VM] [target VM] [rw flag] [pool driver] [disk path]</h4>
 <p><small><em>os/qubes4/dom0/b_dom0_attachVMDisk</em></small><br />
 Attach the entire private disk image (private.img) of the source VM to the target VM.<br />
 <strong>Warning</strong>: This is contradictory to all Qubes principles and should only be done if you know exactly what you’re doing. Qubes OS even has some countermeasures to prevent accidental use of this feature which are bypassed here.<br />
 <span class="par">[source VM]: Name of the VM whose private disk to attach to the target VM. <em>All data</em> of that VM will be shared with the target VM. Will be shut down as part of this function and must remain shut down as long as the disk is attached.</span><br />
 <span class="par">[target VM]: VM where to attach the disk as block device to. Must be started.</span><br />
 <span class="par">[rw flag]: If set to 0, attaches the disk file in r/w (read-write) mode. If set to 1 (default), attaches the file in r/o (read only) mode.</span><br />
+<span class="par">[pool driver]: Driver of the pool that the disk was created in: One of file, file-reflink or lvm_thin (default: driver of your system’s default pool).</span><br />
+<span class="par">[disk path]: Full path to the disk. Default: Path to the private volume of the [source VM] in the default pool of the respective [pool type]. May override the [source VM] parameter.</span><br />
 <span class="ret"><strong>returns</strong>: The full path to the device created in the target VM and sets a zero exit code on success. Otherwise a non-zero exit code is set. Please call <a href="#b_dom0_detachDevice">b_dom0_detachDevice</a> with the clean flag for the detach operation.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_dom0_getDefaultPoolDriver" class="level4">
+<h4>b_dom0_getDefaultPoolDriver</h4>
+<p><small><em>os/qubes4/dom0/b_dom0_getDefaultPoolDriver</em></small><br />
+Retrieve the driver name of the system’s default pool.<br />
+<span class="ret"><strong>returns</strong>: Driver name of the system’s default pool.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 <section id="b_dom0_crossAttachDevice" class="level4">
@@ -3067,17 +3139,17 @@ Existing connections may continue to work as long as the VM and the connection r
 <p>Collection of process and thread related functions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-22" class="level3">
+<section id="dependencies-23" class="level3">
 <h3>Dependencies</h3>
 <p>kill<br />
 tail<br />
 timeout</p>
 </section>
-<section id="imports-22" class="level3">
+<section id="imports-23" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-21" class="level3">
+<section id="functions-22" class="level3">
 <h3>Functions</h3>
 <section id="b_proc_pidExists" class="level4">
 <h4>b_proc_pidExists [pid]</h4>
@@ -3119,18 +3191,18 @@ Resolve process (kill) signal names to their numeric identifiers.<br />
 <p>Side Note: If you want to read or write csv files, this module can also do the job for you with standard SQL syntax. See <code>man sqlite3</code> on how to read and write csv files with sqlite.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-23" class="level3">
+<section id="dependencies-24" class="level3">
 <h3>Dependencies</h3>
 <p>mkfifo<br />
 mktemp<br />
 rm<br />
 sqlite3</p>
 </section>
-<section id="imports-23" class="level3">
+<section id="imports-24" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-22" class="level3">
+<section id="functions-23" class="level3">
 <h3>Functions</h3>
 <section id="b_sqlite3_open" class="level4">
 <h4>b_sqlite3_open [db file] [timeout]</h4>
@@ -3171,17 +3243,17 @@ It is highly recommended to execute this function once you don’t need the data
 <section id="str" class="level2">
 <h2>str</h2>
 <p>Collection of string related functions.</p>
-<p>Copyright (C) 2018 David Hobach LGPLv3<br />
-0.1</p>
-<section id="dependencies-24" class="level3">
+<p>Copyright (C) 2021 David Hobach LGPLv3<br />
+0.2</p>
+<section id="dependencies-25" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-24" class="level3">
+<section id="imports-25" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-23" class="level3">
+<section id="functions-24" class="level3">
 <h3>Functions</h3>
 <section id="b_str_stripQuotes" class="level4">
 <h4>b_str_stripQuotes [string]</h4>
@@ -3193,9 +3265,17 @@ Remove any single or double quotes around the given string.<br />
 <section id="b_str_trim" class="level4">
 <h4>b_str_trim [string]</h4>
 <p><small><em>str/b_str_trim</em></small><br />
-remove any whitespace from around a string<br />
+Remove any whitespace from around a string.<br />
 <span class="par">[string]: string to trim</span><br />
 <span class="ret"><strong>returns</strong>: [string] beginning and ending without whitespace; the exit code is always zero</span></p>
+</section>
+<section id="b_str_prefixLines" class="level4">
+<h4>b_str_prefixLines [string] [prefix]</h4>
+<p><small><em>str/b_str_prefixLines</em></small><br />
+Prefix all lines of the given string with a given prefix.<br />
+<span class="par">[string]: Each line of this string will be prefixed.</span><br />
+<span class="par">[prefix]: The string to put in front of each line.</span><br />
+<span class="ret"><strong>returns</strong>: All lines of the input string, each of them prefixed with the given prefix.</span></p>
 </section>
 </section>
 </section>
@@ -3207,11 +3287,11 @@ remove any whitespace from around a string<br />
 <p>tput can do a lot more than colors, see: man tput &amp; man terminfo.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-25" class="level3">
+<section id="dependencies-26" class="level3">
 <h3>Dependencies</h3>
 <p>tput</p>
 </section>
-<section id="imports-25" class="level3">
+<section id="imports-26" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3230,15 +3310,15 @@ Currently supported values: black|red|green|yellow|blue|magenta|cyan|white</p>
 <p>Collection of trap related functions.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-26" class="level3">
+<section id="dependencies-27" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-26" class="level3">
+<section id="imports-27" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-24" class="level3">
+<section id="functions-25" class="level3">
 <h3>Functions</h3>
 <section id="b_traps_getCodeFor" class="level4">
 <h4>b_traps_getCodeFor [signal]</h4>
@@ -3285,7 +3365,7 @@ Remove the commands tagged with the given tag from the signal trap.<br />
 <p>Functions for data type checks and conversions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.4</p>
-<section id="dependencies-27" class="level3">
+<section id="dependencies-28" class="level3">
 <h3>Dependencies</h3>
 <p>head<br />
 mkfifo<br />
@@ -3295,7 +3375,7 @@ strings<br />
 tee<br />
 wc</p>
 </section>
-<section id="imports-27" class="level3">
+<section id="imports-28" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3309,7 +3389,7 @@ Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-
 See the strings manpage for further explanations.</p>
 </section>
 </section>
-<section id="functions-25" class="level3">
+<section id="functions-26" class="level3">
 <h3>Functions</h3>
 <section id="b_types_parseString" class="level4">
 <h4>b_types_parseString [encoding]</h4>
@@ -3391,15 +3471,15 @@ It may still contain malicious code or whatnot. So you <strong>must not</strong>
 <p>Collection of user interface and user interaction related functions.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.2</p>
-<section id="dependencies-28" class="level3">
+<section id="dependencies-29" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-28" class="level3">
+<section id="imports-29" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-26" class="level3">
+<section id="functions-27" class="level3">
 <h3>Functions</h3>
 <section id="b_ui_passwordPrompt" class="level4">
 <h4>b_ui_passwordPrompt [output var] [ui mode] [prompt string]</h4>
@@ -3421,15 +3501,15 @@ Once you do not need the password anymore, it is recommended to wipe it from mem
 <p>Collection of functions related to window managers.</p>
 <p>Copyright (C) 2020 David Hobach LGPLv3<br />
 0.1</p>
-<section id="dependencies-29" class="level3">
+<section id="dependencies-30" class="level3">
 <h3>Dependencies</h3>
 <p>wmctrl</p>
 </section>
-<section id="imports-29" class="level3">
+<section id="imports-30" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
-<section id="functions-27" class="level3">
+<section id="functions-28" class="level3">
 <h3>Functions</h3>
 <section id="b_wm_getActiveWindowProperties" class="level4">
 <h4>b_wm_getActiveWindowProperties [variable name]</h4>
@@ -3458,11 +3538,11 @@ Missing data may result in an empty String for the respective property.<br />
 <p>Some code and vars meant to be shared across bats tests.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-30" class="level3">
+<section id="dependencies-31" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-30" class="level3">
+<section id="imports-31" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3476,7 +3556,7 @@ By default, bats creates a new shell environment for each test it runs, resettin
 The state can be managed with the load/save/clearBlibTestState functions below.</p>
 </section>
 </section>
-<section id="functions-28" class="level3">
+<section id="functions-29" class="level3">
 <h3>Functions</h3>
 <section id="loadBlib" class="level4">
 <h4>loadBlib</h4>
@@ -3594,11 +3674,11 @@ That file is meant for static bash varibles that must be set <em>by the user</em
 If that file doesn’t exist or could not be loaded, these tests may be skipped by blib.</p>
 <p>Copyright (C) 2018 David Hobach LGPLv3<br />
 0.5</p>
-<section id="dependencies-31" class="level3">
+<section id="dependencies-32" class="level3">
 <h3>Dependencies</h3>
 <p>no dependencies</p>
 </section>
-<section id="imports-31" class="level3">
+<section id="imports-32" class="level3">
 <h3>Imports</h3>
 <p>no imports</p>
 </section>
@@ -3723,6 +3803,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_dmcrypt_isOpen">b_dmcrypt_isOpen</a></p>
 <p><a href="#b_dmcrypt_open">b_dmcrypt_open</a></p>
 <p><a href="#b_dom0_applyFirewall">b_dom0_applyFirewall</a></p>
+<p><a href="#b_dom0_attachDevice">b_dom0_attachDevice</a></p>
 <p><a href="#b_dom0_attachFile">b_dom0_attachFile</a></p>
 <p><a href="#b_dom0_attachVMDisk">b_dom0_attachVMDisk</a></p>
 <p><a href="#b_dom0_clearFirewall">b_dom0_clearFirewall</a></p>
@@ -3741,6 +3822,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_dom0_execIn">b_dom0_execIn</a></p>
 <p><a href="#b_dom0_execStrIn">b_dom0_execStrIn</a></p>
 <p><a href="#b_dom0_exists">b_dom0_exists</a></p>
+<p><a href="#b_dom0_getDefaultPoolDriver">b_dom0_getDefaultPoolDriver</a></p>
 <p><a href="#b_dom0_getDispVMs">b_dom0_getDispVMs</a></p>
 <p><a href="#b_dom0_getQvmBlockInfo">b_dom0_getQvmBlockInfo</a></p>
 <p><a href="#b_dom0_getVMDeps">b_dom0_getVMDeps</a></p>
@@ -3852,6 +3934,9 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#B_NET_DNSSERVERS">B_NET_DNSSERVERS</a></p>
 <p><a href="#b_net_getDNSStatus">b_net_getDNSStatus</a></p>
 <p><a href="#b_nop">b_nop</a></p>
+<p><a href="#b_notify_send">b_notify_send</a></p>
+<p><a href="#b_notify_sendNoError">b_notify_sendNoError</a></p>
+<p><a href="#b_notify_waitForUserDbus">b_notify_waitForUserDbus</a></p>
 <p><a href="#b_osid_init">b_osid_init</a></p>
 <p><a href="#b_osid_isCentOS">b_osid_isCentOS</a></p>
 <p><a href="#b_osid_isDebian">b_osid_isDebian</a></p>
@@ -3883,6 +3968,7 @@ Tests requiring admin privileges (e.g. mounting devices) may require this to be
 <p><a href="#b_sqlite3_exec">b_sqlite3_exec</a></p>
 <p><a href="#b_sqlite3_getOpen">b_sqlite3_getOpen</a></p>
 <p><a href="#b_sqlite3_open">b_sqlite3_open</a></p>
+<p><a href="#b_str_prefixLines">b_str_prefixLines</a></p>
 <p><a href="#b_str_stripQuotes">b_str_stripQuotes</a></p>
 <p><a href="#b_str_trim">b_str_trim</a></p>
 <p><a href="#B_TCOLORS">B_TCOLORS</a></p>
