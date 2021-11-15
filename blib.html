@@ -373,7 +373,7 @@ background-color: #ebf5fb;
 <h2>blib</h2>
 <p>blib - a bash library</p>
 <p>The basic functions which are imported by default.</p>
-<p>Copyright (C) 2020 David Hobach LGPLv3<br />
+<p>Copyright (C) 2021 David Hobach LGPLv3<br />
 version: Execute <code>blib version</code> or use <a href="#b_version">b_version</a>.</p>
 <section id="disclaimer" class="level3">
 <h3>Disclaimer</h3>
@@ -440,6 +440,11 @@ whoami</p>
 </section>
 <section id="global-variables" class="level3">
 <h3>Global Variables</h3>
+<section id="B_LIB_DIR" class="level4">
+<h4>B_LIB_DIR</h4>
+<p><small><em>blib/B_LIB_DIR</em></small><br />
+Path of the blib installation directory.</p>
+</section>
 <section id="B_TEST_MODE" class="level4">
 <h4>B_TEST_MODE</h4>
 <p><small><em>blib/B_TEST_MODE</em></small><br />
@@ -463,15 +468,10 @@ Global variable used for error handling throughout blib, cf. <a href="#B_E">B_E<
 Can be used to set the return code for <a href="#B_E">B_E</a> in the case of an error. It defaults to 1.</p>
 <p>This should be set to an integer value between 1 and 255. Any other value may cause undefined behaviour.</p>
 </section>
-<section id="B_LIB_DIR" class="level4">
-<h4>B_LIB_DIR</h4>
-<p><small><em>blib/B_LIB_DIR</em></small><br />
-Path of the blib installation directory.</p>
-</section>
 <section id="B_CONF_DIR" class="level4">
 <h4>B_CONF_DIR</h4>
 <p><small><em>blib/B_CONF_DIR</em></small><br />
-Path to blib configuration directory. Modules may create subfolders named by their module name there. May not exist.</p>
+Path to the blib configuration directory. Modules may create subfolders named by their module name there. May not exist.</p>
 </section>
 <section id="B_SCRIPT" class="level4">
 <h4>B_SCRIPT</h4>
@@ -2556,10 +2556,11 @@ Use <a href="#b_http_getOnlineStatus">b_http_getOnlineStatus</a> for http checks
 <h2>notify</h2>
 <p>Collection of notification related functions.</p>
 <p>Copyright (C) 2021 David Hobach LGPLv3<br />
-0.5</p>
+0.6</p>
 <section id="dependencies-20" class="level3">
 <h3>Dependencies</h3>
 <p>getent<br />
+id<br />
 notify-send<br />
 su</p>
 </section>
@@ -2582,7 +2583,7 @@ Wait for <em>some</em> dbus user session to come up at <code>/run/user/[uid]/bus
 <h4>b_notify_send [arg 1] … [arg n]</h4>
 <p><small><em>notify/b_notify_send</em></small><br />
 Send out a notification to the user via <code>notify-send</code>.<br />
-If run as root, may send the notification to <em>all</em> active users.<br />
+If run as root, may send the notification to <em>all</em> active non-root users.<br />
 Calling <code>notify-send</code> directly can be problematic depending on the user, dbus session, environment variables, … This function aims to circumvent these potential issues.<br />
 <span class="par">[arg i]: All arguments are directly passed to <code>notify-send</code>.</span><br />
 <span class="ret"><strong>returns</strong>: Nothing. Errors during notification sending will trigger <a href="#B_E">B_E</a>.</span><br />
@@ -3131,6 +3132,7 @@ Existing connections may continue to work as long as the VM and the connection r
 <section id="dependencies-23" class="level3">
 <h3>Dependencies</h3>
 <p>kill<br />
+killall<br />
 tail<br />
 timeout</p>
 </section>
@@ -3158,7 +3160,7 @@ Check whether the given process ID exists <em>and</em> is a <em>direct</em> chil
 <h4>b_proc_waitForPid [pid] [maximum time]</h4>
 <p><small><em>proc/b_proc_waitForPid</em></small><br />
 Wait for the given process to exit. If it doesn’t exist, exit immediately.<br />
-<span class="par">[pid]: Process ID of the process to wait for. Doesn’t need to be a child.</span><br />
+<span class="par">[pid]: Process ID of the process to wait for.</span><br />
 <span class="par">[maximum time]: Maximum time in seconds to wait for the process to exit (default: 0 = indefinitely).</span><br />
 <span class="ret"><strong>returns</strong>: Nothing, always sets a zero exit code. Use <a href="#b_proc_pidExists">b_proc_pidExists</a> if you need to know whether the process finished.</span></p>
 </section>
@@ -3168,6 +3170,26 @@ Wait for the given process to exit. If it doesn’t exist, exit immediately.<br 
 Resolve process (kill) signal names to their numeric identifiers.<br />
 <span class="par">[signal]: Signal name (string) or numeric identifier.</span><br />
 <span class="ret"><strong>returns</strong>: The numeric identifier corresponding to the given signal.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_proc_killAndWait" class="level4">
+<h4>b_proc_killAndWait [pid] [signal] [timeout]</h4>
+<p><small><em>proc/b_proc_killAndWait</em></small><br />
+Send a kill/exit signal to a process and wait for it to terminate.<br />
+<span class="par">[pid]: Process ID of the process to wait to terminate.</span><br />
+<span class="par">[signal]: Signal name (string) or numeric identifier to send (default: SIGTERM).</span><br />
+<span class="par">[timeout]: Time in seconds after which to send a SIGKILL if the process doesn’t terminate (default: 0 = wait forever).</span><br />
+<span class="ret"><strong>returns</strong>: A zero exit code, if the process terminated without timeout or could not be found.</span><br />
+<span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
+</section>
+<section id="b_proc_killByRegexAndWait" class="level4">
+<h4>b_proc_killByRegexAndWait [regex] [signal] [timeout]</h4>
+<p><small><em>proc/b_proc_killByRegexAndWait</em></small><br />
+Kill/Terminate all matching processes.<br />
+<span class="par">[regex]: Regular expression matched against running process names. Matching processes will be terminated.</span><br />
+<span class="par">[signal]: Signal name (string) or numeric identifier to send (default: SIGTERM).</span><br />
+<span class="par">[timeout]: Time in seconds after which to send a SIGKILL if the processes don’t terminate (default: 0 = wait forever).</span><br />
+<span class="ret"><strong>returns</strong>: A zero exit code, if the process terminated without timeout or could not be found.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
 </section>
@@ -3352,15 +3374,15 @@ Remove the commands tagged with the given tag from the signal trap.<br />
 <section id="types" class="level2">
 <h2>types</h2>
 <p>Functions for data type checks and conversions.</p>
-<p>Copyright (C) 2020 David Hobach LGPLv3<br />
-0.4</p>
+<p>Copyright (C) 2021 David Hobach LGPLv3<br />
+0.5</p>
 <section id="dependencies-28" class="level3">
 <h3>Dependencies</h3>
 <p>head<br />
 mkfifo<br />
 mktemp<br />
+python3<br />
 rm<br />
-strings<br />
 tee<br />
 wc</p>
 </section>
@@ -3373,15 +3395,13 @@ wc</p>
 <section id="B_TYPES_ENCODINGS" class="level4">
 <h4>B_TYPES_ENCODINGS</h4>
 <p><small><em>types/B_TYPES_ENCODINGS</em></small><br />
-Global map for human readable string encodings which can be used for <a href="#b_typesParseString">b_types_parseString</a>.<br />
-Currently supported values: 7-bit|8-bit|16-bit-bigendian|16-bit-littleendian|32-bit-bigendian|32-bit-littleendian<br />
-See the strings manpage for further explanations.</p>
+Deprecated global map for human readable string encodings which can be used for <a href="#b_typesParseString">b_types_parseString</a>.</p>
 </section>
 </section>
 <section id="functions-26" class="level3">
 <h3>Functions</h3>
 <section id="b_types_parseString" class="level4">
-<h4>b_types_parseString [encoding]</h4>
+<h4>b_types_parseString [encoding] [max bytes]</h4>
 <p><small><em>types/b_types_parseString</em></small><br />
 Checks whether whatever is lying in stdin is a string (and not binary) and if so, prints it to stdout.</p>
 <p><strong>Important</strong>:</p>
@@ -3397,7 +3417,8 @@ Checks whether whatever is lying in stdin is a string (and not binary) and if so
 <a class="sourceLine" id="cb19-4" title="4"> <span class="co">#read parts of a file as string</span></a>
 <a class="sourceLine" id="cb19-5" title="5"> <span class="va">str=</span><span class="st">&quot;</span><span class="va">$(</span><span class="fu">dd</span> if=<span class="st">&quot;/path/to/another/file&quot;</span> bs=1 skip=8 <span class="kw">|</span> <span class="ex">b_types_parseString</span><span class="va">)</span><span class="st">&quot;</span></a>
 <a class="sourceLine" id="cb19-6" title="6"><span class="bu"> [</span> <span class="va">$?</span> <span class="ot">-eq</span> 0<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Found the following string: </span><span class="va">$str</span><span class="st">&quot;</span></a></code></pre></div>
-<p><span class="par">[encoding]: The encoding of the string lying in stdin. Use <a href="#B_TYPES_ENCODINGS">B_TYPES_ENCODINGS</a> for this parameter. Defaults to ${B_TYPES_ENCODINGS[“7-bit”]}, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing.</span><br />
+<p><span class="par">[encoding]: The encoding of the string lying in stdin. Defaults to <code>ascii</code>, which makes sense in 99% of all cases as scripts should use ASCII only anyway (when no user-interaction is involved) in order to remain portable. Keep in mind that bash also needs to support the target encoding in order to support further processing. Currently available encodings: <a href="https://docs.python.org/3.7/library/codecs.html#standard-encodings" class="uri">https://docs.python.org/3.7/library/codecs.html#standard-encodings</a></span><br />
+<span class="par">[max bytes]: Maximum number of bytes to read per line (default: -1/infinite). Ignore additional bytes. Useful to avoid memory DoS for untrusted input.</span><br />
 <span class="ret"><strong>returns</strong>: The data as String, if the input data was found to be a String. If no String was found to be lying in stdin, the output is an undefined string and a non-zero exit code is set. <a href="#B_E">B_E</a> is only called on exceptional errors.</span><br />
 <span class="ann"><em><span class="citation" data-cites="B_E">@B_E</span></em></span></p>
 </section>
@@ -3737,6 +3758,8 @@ Missing data may result in an empty String for the respective property.<br />
 <p><a href="#b_osid_isUbuntu">b_osid_isUbuntu</a></p>
 <p><a href="#b_printStackTrace">b_printStackTrace</a></p>
 <p><a href="#b_proc_childExists">b_proc_childExists</a></p>
+<p><a href="#b_proc_killAndWait">b_proc_killAndWait</a></p>
+<p><a href="#b_proc_killByRegexAndWait">b_proc_killByRegexAndWait</a></p>
 <p><a href="#b_proc_pidExists">b_proc_pidExists</a></p>
 <p><a href="#b_proc_resolveSignal">b_proc_resolveSignal</a></p>
 <p><a href="#b_proc_waitForPid">b_proc_waitForPid</a></p>
